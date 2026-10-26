@@ -1,0 +1,88 @@
+/* ========================================================================= */
+/* Aurora Blur - React Bits Pro Component                                    */
+/* Docs: https://pro.reactbits.dev/docs/components/aurora-blur               */
+/* ========================================================================= */
+
+.aurora-blur-fixed {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.aurora-blur-fixed canvas,
+.aurora-blur canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.aurora-blur {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Translucent frosted styling for sections over Aurora Blur */
+html.dark #myskills {
+  background-color: rgba(9, 12, 16, 0.55) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+html.dark #projects {
+  background-color: rgba(5, 7, 10, 0.5) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+html.dark #about {
+  background-color: rgba(3, 5, 8, 0.45) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+html.dark #experience {
+  background-color: rgba(6, 9, 12, 0.55) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+html.light #myskills {
+  background-color: rgba(241, 245, 249, 0.7) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+html.light #projects {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+html.light #about {
+  background-color: rgba(248, 250, 252, 0.65) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+html.light #experience {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Ensure #contact section preserves its solid Side Rays background and completely covers Aurora */
+#contact {
+  position: relative !important;
+  z-index: 20 !important;
+  background-color: #09090b !important;
+}

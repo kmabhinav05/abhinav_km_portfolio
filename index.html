@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="assets/css/staggered-text.css">
   <link rel="stylesheet" href="assets/css/chroma-waves.css">
   <link rel="stylesheet" href="assets/css/gyroscope-cursor.css">
+  <link rel="stylesheet" href="assets/css/aurora-blur.css">
 
   <!-- React Bits Components (Offline & Local) -->
   <script src="assets/js/matter.min.js"></script>
@@ -34,6 +35,7 @@
   <script src="assets/js/staggered-text.js" defer></script>
   <script src="assets/js/chroma-waves.js" defer></script>
   <script src="assets/js/gyroscope-cursor.js" defer></script>
+  <script src="assets/js/aurora-blur.js" defer></script>
 
   <!-- Instant Theme Detection Script (Prevents Theme Flash) -->
   <script>
@@ -795,6 +797,14 @@
 <body class="selection:bg-white selection:text-black">
 
   <!-- ========================================================================= -->
+  <!-- REACT BITS AURORA BLUR COMPONENT (Background for all sections)            -->
+  <!-- Docs: https://pro.reactbits.dev/docs/components/aurora-blur               -->
+  <!-- ========================================================================= -->
+  <div id="aurora-blur-bg" class="aurora-blur-fixed" data-speed="1.5" data-noise-scale="3.5" data-bloom-intensity="2.0" aria-hidden="true">
+    <canvas id="aurora-blur-canvas"></canvas>
+  </div>
+
+  <!-- ========================================================================= -->
   <!-- 1. REACT BITS GYROSCOPE CURSOR (Directional Arrow with Spring Physics)    -->
   <!-- ========================================================================= -->
   <!-- Auto-rendered by assets/js/gyroscope-cursor.js with color="#00d1ff" & outlineColor="#00fff4" -->
@@ -842,32 +852,12 @@
   <main class="w-full">
 
     <!-- ========================================================================= -->
-    <!-- 3. HERO SECTION WITH REACT BITS CHROMA WAVES BACKGROUND                   -->
+    <!-- 3. HERO SECTION (With React Bits Aurora Blur Background)                  -->
     <!-- ========================================================================= -->
-    <section id="hero" class="w-full min-h-screen pt-28 sm:pt-24 pb-8 px-6 sm:px-10 md:px-16 rounded-b-3xl md:rounded-b-4xl flex flex-col justify-between items-start relative select-none shadow-2xl overflow-hidden">
+    <section id="hero" class="w-full min-h-screen pt-28 sm:pt-24 pb-8 px-6 sm:px-10 md:px-16 rounded-b-3xl md:rounded-b-4xl flex flex-col justify-between items-start relative select-none shadow-2xl overflow-hidden bg-transparent">
       
-      <!-- React Bits ChromaWaves Component Background -->
-      <div
-        id="hero-chroma-waves"
-        class="chroma-waves absolute inset-0 w-full h-full pointer-events-none z-0"
-        data-speed="0.5"
-        data-color="#FFFFFF"
-        data-background-color="#8B5CF6"
-        data-wave-frequency="0.2"
-        data-wave-amplitude="0.3"
-        data-distortion="1.5"
-        data-chroma-shift="0.25"
-        data-noise-level="0.08"
-        data-flatness="1.0"
-        data-opacity="0.9"
-        data-quality="high"
-        aria-hidden="true"
-      >
-        <canvas id="chroma-waves-canvas" class="w-full h-full block"></canvas>
-      </div>
-
-      <!-- Soft White Grain Texture Overlay for tactile finish -->
-      <div class="grain-overlay absolute inset-0 pointer-events-none z-[1] opacity-50"></div>
+      <!-- Soft Grain Texture Overlay for tactile finish -->
+      <div class="grain-overlay absolute inset-0 pointer-events-none z-[1] opacity-40"></div>
       <div class="hero-fade absolute inset-0 pointer-events-none z-[2]"></div>
 
       <!-- Top Tag -->
