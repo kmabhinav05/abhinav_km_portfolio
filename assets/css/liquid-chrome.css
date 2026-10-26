@@ -40,3 +40,88 @@
 html.light .contact-blend-overlay {
   background: linear-gradient(to bottom, rgba(248, 250, 252, 0) 0%, rgba(15, 23, 42, 0.4) 40%, rgba(15, 23, 42, 0.85) 80%, rgba(15, 23, 42, 0.95) 100%);
 }
+
+/* Contact Section Headline Center Alignment */
+#contact .staggered-text-root {
+  display: block !important;
+  text-align: center !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+#contact .staggered-segment-wrapper {
+  text-align: center !important;
+}
+
+/* Contact Form Card & Inputs */
+.contact-form-card {
+  background-color: rgba(18, 22, 20, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+}
+
+.contact-input {
+  background-color: rgba(9, 13, 11, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #f1f5f9;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.contact-input::placeholder {
+  color: #64748b;
+}
+
+.contact-input:focus {
+  border-color: #00d1ff;
+  box-shadow: 0 0 0 1px #00d1ff;
+  outline: none;
+}
+
+.contact-submit-btn {
+  background-color: #f8fafc;
+  color: #090d0c;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.contact-submit-btn:hover {
+  background-color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
+}
+
+/* Light Mode Overrides for Contact Form */
+html.light #contact .contact-form-card {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(226, 232, 240, 0.95) !important;
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.06) !important;
+}
+
+html.light #contact .contact-input {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light #contact .contact-input::placeholder {
+  color: #94a3b8 !important;
+}
+
+html.light #contact .contact-input:focus {
+  border-color: #0f172a !important;
+  box-shadow: 0 0 0 1px #0f172a !important;
+}
+
+html.light #contact label {
+  color: #334155 !important;
+}
+
+html.light #contact .contact-submit-btn {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+}
+
+html.light #contact .contact-submit-btn:hover {
+  background-color: #1e293b !important;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.25) !important;
+}

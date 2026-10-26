@@ -1383,8 +1383,8 @@
 
       
 
-      <div class="relative z-10 space-y-16">
-        <h2 class="staggered-text flicker font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-center font-bold tracking-tight select-none max-w-5xl mx-auto leading-tight"
+      <div class="relative z-10 space-y-12 sm:space-y-16 flex flex-col items-center text-center">
+        <h2 class="staggered-text flicker font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-center font-bold tracking-tight select-none max-w-4xl mx-auto leading-tight"
             data-staggered-text="Let’s turn your data into decisions."
             data-segment-by="words"
             data-direction="top"
@@ -1395,14 +1395,72 @@
           Let’s turn your data into decisions.
         </h2>
 
-        <div class="space-y-8 text-center max-w-3xl mx-auto">
-          <p class="text-stone-400 text-base sm:text-lg">
-            Just drop a mail at :
-          </p>
+        <!-- Interactive Contact Form: Name, Gmail, Message -->
+        <div class="w-full max-w-xl mx-auto contact-form-card rounded-2xl p-6 sm:p-8 backdrop-blur-md transition-all duration-300">
+          <form id="portfolio-contact-form" class="space-y-5 text-left" novalidate>
+            <!-- Name Input -->
+            <div class="space-y-1.5">
+              <label for="contact-name" class="block text-xs font-mono uppercase tracking-wider font-semibold">
+                Your Name
+              </label>
+              <input
+                type="text"
+                id="contact-name"
+                name="name"
+                placeholder="e.g. Alex Rivera"
+                required
+                class="contact-input w-full px-4 py-3 rounded-xl text-sm outline-none"
+              />
+            </div>
 
-          <a href="mailto:kmabhinav25@gmail.com" class="inline-block text-2xl sm:text-4xl font-semibold font-serif hover:text-stone-300 transition underline underline-offset-8">
-            kmabhinav25@gmail.com
-          </a>
+            <!-- Gmail / Email Input -->
+            <div class="space-y-1.5">
+              <label for="contact-email" class="block text-xs font-mono uppercase tracking-wider font-semibold">
+                Gmail / Email
+              </label>
+              <input
+                type="email"
+                id="contact-email"
+                name="email"
+                placeholder="you@gmail.com"
+                required
+                class="contact-input w-full px-4 py-3 rounded-xl text-sm outline-none"
+              />
+            </div>
+
+            <!-- Message Textarea -->
+            <div class="space-y-1.5">
+              <label for="contact-message" class="block text-xs font-mono uppercase tracking-wider font-semibold">
+                Message
+              </label>
+              <textarea
+                id="contact-message"
+                name="message"
+                rows="4"
+                placeholder="Share your data challenges, project goals, or how we can collaborate..."
+                required
+                class="contact-input w-full px-4 py-3 rounded-xl text-sm outline-none resize-none"
+              ></textarea>
+            </div>
+
+            <!-- Submit Button & Feedback Status -->
+            <div class="pt-2">
+              <button
+                type="submit"
+                id="contact-submit-btn"
+                class="contact-submit-btn w-full py-3.5 px-6 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 cursor-pointer shadow-md"
+              >
+                <span>Send Message</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+              <p id="contact-form-status" class="text-xs text-center mt-3 hidden font-mono"></p>
+            </div>
+          </form>
+        </div>
+
+        <div class="space-y-4 text-center max-w-3xl mx-auto pt-2">
 
           <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
             <a href="tel:+919207302577" class="flex items-center gap-2 rounded-2xl py-2 px-4 text-xs sm:text-sm bg-emerald-900/90 hover:bg-emerald-800 text-white font-medium transition backdrop-blur-sm border border-emerald-700/50 shadow-lg">
@@ -1626,6 +1684,61 @@
               updateTheme(e.matches ? 'dark' : 'light');
             }
           } catch (err) {}
+        });
+      })();
+
+      // 7. Interactive Contact Form Handler (Name, Gmail, Message)
+      (function initContactForm() {
+        const form = document.getElementById('portfolio-contact-form');
+        const statusEl = document.getElementById('contact-form-status');
+        if (!form) return;
+
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const nameInput = document.getElementById('contact-name');
+          const emailInput = document.getElementById('contact-email');
+          const messageInput = document.getElementById('contact-message');
+
+          const name = (nameInput?.value || '').trim();
+          const email = (emailInput?.value || '').trim();
+          const message = (messageInput?.value || '').trim();
+
+          // Validation
+          if (!name || !email || !message) {
+            if (statusEl) {
+              statusEl.textContent = 'Please fill out your Name, Gmail/Email, and Message.';
+              statusEl.className = 'text-xs text-center mt-3 text-rose-400 font-mono block';
+            }
+            return;
+          }
+
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(email)) {
+            if (statusEl) {
+              statusEl.textContent = 'Please enter a valid email address.';
+              statusEl.className = 'text-xs text-center mt-3 text-rose-400 font-mono block';
+            }
+            return;
+          }
+
+          // Build prefilled email client link
+          const subject = encodeURIComponent(`Portfolio Inquiry from ${name}`);
+          const body = encodeURIComponent(
+            `Hi Abhinav,\n\n${message}\n\n---\nBest regards,\n${name}\nGmail/Email: ${email}`
+          );
+          const mailtoUri = `mailto:kmabhinav25@gmail.com?subject=${subject}&body=${body}`;
+
+          if (statusEl) {
+            statusEl.textContent = `Opening your email client to send to kmabhinav25@gmail.com... Thank you, ${name}!`;
+            statusEl.className = 'text-xs text-center mt-3 text-emerald-400 font-mono block';
+          }
+
+          // Trigger mail client
+          window.location.href = mailtoUri;
+
+          setTimeout(() => {
+            form.reset();
+          }, 3500);
         });
       })();
     });
