@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="assets/css/staggered-text.css">
   <link rel="stylesheet" href="assets/css/glow-cursor.css">
   <link rel="stylesheet" href="assets/css/aurora-blur.css">
+  <link rel="stylesheet" href="assets/css/hold-button.css">
 
   <!-- React Bits Components (Offline & Local) -->
   <script src="assets/js/matter.min.js"></script>
@@ -34,6 +35,7 @@
   <script src="assets/js/staggered-text.js" defer></script>
   <script src="assets/js/glow-cursor.js" defer></script>
   <script src="assets/js/aurora-blur.js" defer></script>
+  <script src="assets/js/hold-button.js" defer></script>
 
   <!-- Instant Theme Detection Script (Prevents Theme Flash) -->
   <script>
@@ -100,25 +102,17 @@
     }
 
     html.light #navbar {
-      background-color: rgba(255, 255, 255, 0.94) !important;
+      background-color: rgba(255, 255, 255, 0.88) !important;
       border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
       color: #0f172a !important;
     }
     html.light .brand-text { color: #0f172a !important; }
     html.light .brand-sub { color: #64748b !important; }
 
-    html.light .theme-toggle-btn {
-      background-color: #f1f5f9;
-      border: 1px solid #e2e8f0;
-      color: #0f172a;
-    }
-    html.light .theme-toggle-btn:hover {
-      background-color: #e2e8f0;
-    }
-
     html.light .cv-btn {
       background-color: #0f172a !important;
       color: #ffffff !important;
+      border: 1px solid #0f172a !important;
     }
     html.light .cv-btn:hover {
       background-color: #1e293b !important;
@@ -126,7 +120,7 @@
 
     /* Hero Light */
     html.light #hero {
-      background-color: #ffffff !important;
+      background-color: transparent !important;
       color: #0f172a !important;
     }
     html.light #hero .hero-tag {
@@ -272,33 +266,26 @@
     }
 
     html.dark #navbar {
-      background-color: rgba(9, 13, 12, 0.88) !important;
+      background-color: rgba(6, 9, 8, 0.88) !important;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
       color: #ffffff !important;
     }
     html.dark .brand-text { color: #ffffff !important; }
     html.dark .brand-sub { color: #94a3b8 !important; }
 
-    html.dark .theme-toggle-btn {
-      background-color: #141a18;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #f8fafc;
-    }
-    html.dark .theme-toggle-btn:hover {
-      background-color: #1e2624;
-    }
-
     html.dark .cv-btn {
-      background-color: #ffffff !important;
-      color: #090d0c !important;
+      background-color: rgba(255, 255, 255, 0.08) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      color: #ffffff !important;
     }
     html.dark .cv-btn:hover {
-      background-color: #f1f5f9 !important;
+      background-color: rgba(255, 255, 255, 0.16) !important;
+      border-color: rgba(255, 255, 255, 0.25) !important;
     }
 
     /* Hero Dark */
     html.dark #hero {
-      background-color: #080c0b !important;
+      background-color: transparent !important;
       color: #ffffff !important;
     }
     html.dark #hero .hero-tag {
@@ -445,11 +432,11 @@
     }
 
     /* Fixed Navigation */
+    /* Fixed Navigation Base */
     #navbar {
-      background-color: rgba(255, 255, 255, 0.96) !important;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
     }
 
     /* Grain texture overlay */
@@ -825,22 +812,8 @@
     <!-- Right Controls: Theme Toggle & CV Action Link -->
     <div class="flex items-center gap-2 sm:gap-3">
       <!-- Theme Toggle Button (Sun / Moon) -->
-      <button
-        id="theme-toggle"
-        type="button"
-        class="theme-toggle-btn shadow-sm"
-        aria-label="Toggle light or dark theme"
-        title="Toggle Theme"
-      >
-        <!-- Sun Icon (shown in dark mode) -->
-        <svg id="theme-icon-sun" class="w-4 h-4 hidden text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-        <!-- Moon Icon (shown in light mode) -->
-        <svg id="theme-icon-moon" class="w-4 h-4 text-stone-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-        </svg>
-      </button>
+      <!-- React Bits HoldButton Theme Controller Root -->
+      <div id="theme-hold-root" class="flex items-center"></div>
 
       <!-- CV Action Link -->
       <a href="https://drive.google.com/file/d/1OkKjk7z9MdCexpCY57LlAkbwtGp0alJ0/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="cv-btn hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold shadow-sm">
@@ -1714,10 +1687,68 @@
         }
       })();
 
-      // 6. Interactive Light & Dark Theme Controller
+      // 6. Interactive Light & Dark Theme Controller powered by React Bits HoldButton
       (function initThemeToggle() {
         const STORAGE_KEY = 'portfolio-theme';
         const root = document.documentElement;
+        const container = document.getElementById('theme-hold-root');
+
+        const sunSvg = `<svg class="w-3.5 h-3.5 text-amber-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>`;
+        const moonSvg = `<svg class="w-3.5 h-3.5 text-indigo-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>`;
+
+        let holdBtnInstance = null;
+
+        function getThemeConfig(isDark) {
+          if (isDark) {
+            return {
+              children: '<span class="hidden sm:inline">Hold for </span>Light',
+              doneLabel: 'Light Mode!',
+              icon: sunSvg,
+              doneIcon: sunSvg,
+              backgroundColor: '#151b19',
+              fillColor: '#f59e0b',
+              textColor: '#f1f5f9',
+              fillTextColor: '#090d0c',
+              size: 'sm',
+              radius: 9999,
+              fillDirection: 'right',
+              holdTime: 1100,
+              releaseTime: 200,
+              pressScale: 0.96,
+              wave: true,
+              waveAmplitude: 5,
+              glow: true,
+              resetAfter: 900
+            };
+          } else {
+            return {
+              children: '<span class="hidden sm:inline">Hold for </span>Dark',
+              doneLabel: 'Dark Mode!',
+              icon: moonSvg,
+              doneIcon: moonSvg,
+              backgroundColor: '#eef2f6',
+              fillColor: '#6366f1',
+              textColor: '#0f172a',
+              fillTextColor: '#ffffff',
+              size: 'sm',
+              radius: 9999,
+              fillDirection: 'right',
+              holdTime: 1100,
+              releaseTime: 200,
+              pressScale: 0.96,
+              wave: true,
+              waveAmplitude: 5,
+              glow: true,
+              resetAfter: 900
+            };
+          }
+        }
+
+        function toggleTheme() {
+          const isDark = root.classList.contains('dark');
+          const next = isDark ? 'light' : 'dark';
+          updateTheme(next);
+        }
 
         function updateTheme(theme) {
           const isDark = theme === 'dark';
@@ -1733,17 +1764,9 @@
             localStorage.setItem(STORAGE_KEY, theme);
           } catch (e) {}
 
-          // Update icons
-          const sunIcon = document.getElementById('theme-icon-sun');
-          const moonIcon = document.getElementById('theme-icon-moon');
-          if (sunIcon && moonIcon) {
-            if (isDark) {
-              sunIcon.classList.remove('hidden');
-              moonIcon.classList.add('hidden');
-            } else {
-              sunIcon.classList.add('hidden');
-              moonIcon.classList.remove('hidden');
-            }
+          // Update HoldButton config
+          if (holdBtnInstance) {
+            holdBtnInstance.setProps(getThemeConfig(isDark));
           }
 
           // Dynamically update WarpText headline color
@@ -1757,13 +1780,19 @@
           }
         }
 
-        const toggleBtn = document.getElementById('theme-toggle');
-        if (toggleBtn) {
-          toggleBtn.addEventListener('click', () => {
-            const current = root.classList.contains('dark') ? 'dark' : 'light';
-            const next = current === 'dark' ? 'light' : 'dark';
-            updateTheme(next);
-          });
+        function mountHoldButton() {
+          if (!container || !window.HoldButton) return;
+          const isDark = root.classList.contains('dark');
+          const cfg = getThemeConfig(isDark);
+          cfg.onHold = () => toggleTheme();
+          cfg.onTap = () => toggleTheme();
+          holdBtnInstance = new window.HoldButton(container, cfg);
+        }
+
+        if (window.HoldButton) {
+          mountHoldButton();
+        } else {
+          window.addEventListener('load', mountHoldButton);
         }
 
         // Initialize state
