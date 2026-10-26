@@ -46,9 +46,9 @@ html.dark .gooey-nav {
 .gooey-nav--md {
   --gn-pad: 5px;
   --gn-gap: 3px;
-  --gn-font: 13px;
-  --gn-x: 14px;
-  --gn-y: 7px;
+  --gn-font: 14px;
+  --gn-x: 16px;
+  --gn-y: 8px;
 }
 
 .gooey-nav--lg {

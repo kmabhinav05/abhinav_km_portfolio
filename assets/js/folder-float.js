@@ -99,6 +99,9 @@
     }
   };
 
+  // Registry of all active folders for exclusive accordion opening
+  const allFolders = [];
+
   function initFolder(folderEl) {
     const folderId = folderEl.getAttribute('data-folder-id');
     const config = SKILLS_DATA[folderId];
@@ -371,6 +374,13 @@
       isOpen = open;
 
       if (isOpen) {
+        // Automatically close all other open skill folders (accordion behavior)
+        allFolders.forEach(other => {
+          if (other.el !== folderEl && other.isOpen()) {
+            other.setOpen(false);
+          }
+        });
+
         folderEl.setAttribute('data-open', '');
         pillEls.forEach(el => {
           el.tabIndex = 0;
@@ -421,6 +431,24 @@
         setOpen(false);
       }
     });
+
+    // Register folder controller
+    allFolders.push({
+      el: folderEl,
+      setOpen: val => setOpen(val),
+      isOpen: () => isOpen
+    });
+  }
+
+  // Close any open folder when tapping outside any skill folder
+  if (typeof document !== 'undefined') {
+    document.addEventListener('pointerdown', e => {
+      if (!e.target.closest('.folder-float')) {
+        allFolders.forEach(f => {
+          if (f.isOpen()) f.setOpen(false);
+        });
+      }
+    });
   }
 
   // Initialize all FolderFloat components when DOM is ready
@@ -429,9 +457,11 @@
     folders.forEach(initFolder);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAllFolders);
-  } else {
-    initAllFolders();
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAllFolders);
+    } else {
+      initAllFolders();
+    }
   }
 })();

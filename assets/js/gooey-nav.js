@@ -774,7 +774,7 @@ void main() {
           { label: 'Experience', href: '#experience' },
           { label: 'Contact', href: '#contact' }
         ],
-        size: 'sm',
+        size: 'md',
         frame: true,
         animationTime: 600,
         particleCount: 15,
