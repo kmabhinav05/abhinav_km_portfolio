@@ -24,7 +24,7 @@
   <link rel="stylesheet" href="assets/css/warp-text.css">
   <link rel="stylesheet" href="assets/css/staggered-text.css">
   <link rel="stylesheet" href="assets/css/chroma-waves.css">
-  <link rel="stylesheet" href="assets/css/gyroscope-cursor.css">
+  <link rel="stylesheet" href="assets/css/glow-cursor.css">
   <link rel="stylesheet" href="assets/css/aurora-blur.css">
 
   <!-- React Bits Components (Offline & Local) -->
@@ -34,7 +34,7 @@
   <script src="assets/js/warp-text.js" defer></script>
   <script src="assets/js/staggered-text.js" defer></script>
   <script src="assets/js/chroma-waves.js" defer></script>
-  <script src="assets/js/gyroscope-cursor.js" defer></script>
+  <script src="assets/js/glow-cursor.js" defer></script>
   <script src="assets/js/aurora-blur.js" defer></script>
 
   <!-- Instant Theme Detection Script (Prevents Theme Flash) -->
@@ -68,7 +68,7 @@
       margin: 0;
       padding: 0;
       overflow-x: hidden;
-      cursor: none; /* Inverting magnetic cursor */
+      cursor: default;
       transition: background-color 0.35s ease, color 0.35s ease;
     }
 
@@ -805,9 +805,12 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- 1. REACT BITS GYROSCOPE CURSOR (Directional Arrow with Spring Physics)    -->
+  <!-- 1. REACT BITS GLOW CURSOR (WebGL2 Real-time Fluid Light Trails)           -->
+  <!-- Docs: https://pro.reactbits.dev/docs/components/glow-cursor               -->
   <!-- ========================================================================= -->
-  <!-- Auto-rendered by assets/js/gyroscope-cursor.js with color="#00d1ff" & outlineColor="#00fff4" -->
+  <div id="glow-cursor-container" class="glow-cursor-fixed" aria-hidden="true">
+    <canvas class="glow-cursor__canvas"></canvas>
+  </div>
 
   <!-- ========================================================================= -->
   <!-- 2. MINIMAL FIXED NAVIGATION (React Bits GooeyNav WebGL2 Liquid Navigation)-->
@@ -1456,7 +1459,7 @@
   <!-- ========================================================================= -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // 1. React Bits Gyroscope Cursor initialized via assets/js/gyroscope-cursor.js
+      // 1. React Bits GlowCursor initialized via assets/js/glow-cursor.js
 
       // 2. Typewriter Effect
       const typewriterEl = document.getElementById('typewriter-text');
