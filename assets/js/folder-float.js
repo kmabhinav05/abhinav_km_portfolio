@@ -192,12 +192,9 @@
       document.fonts.ready.then(measure);
     }
 
-    let cachedContainerRect = null;
     function pointerAt(e) {
-      if (!cachedContainerRect) {
-        cachedContainerRect = itemsContainer.getBoundingClientRect();
-      }
-      return { x: e.clientX - cachedContainerRect.left, y: e.clientY - cachedContainerRect.top };
+      const r = itemsContainer.getBoundingClientRect();
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
     }
 
     function pickItem(item, i, el) {
@@ -251,7 +248,6 @@
     }
 
     function onPointerUp(e, i, item) {
-      cachedContainerRect = null;
       const d = world.drag;
       if (!d || d.i !== i || d.id !== e.pointerId) return;
       world.drag = null;
@@ -459,20 +455,6 @@
   function initAllFolders() {
     const folders = document.querySelectorAll('.folder-float');
     folders.forEach(initFolder);
-
-    // Auto-sleep physics and close open folders when #myskills is offscreen
-    const skillsSec = document.getElementById('myskills');
-    if (skillsSec && 'IntersectionObserver' in window) {
-      const skillsObserver = new IntersectionObserver((entries) => {
-        const entry = entries[0];
-        if (entry && !entry.isIntersecting) {
-          allFolders.forEach(f => {
-            if (f.isOpen()) f.setOpen(false);
-          });
-        }
-      }, { threshold: 0.05 });
-      skillsObserver.observe(skillsSec);
-    }
   }
 
   if (typeof document !== 'undefined') {
