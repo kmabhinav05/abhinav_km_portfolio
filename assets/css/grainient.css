@@ -1,9 +1,28 @@
 /* ========================================================================= */
-/* Aurora Blur - React Bits Pro Component                                    */
-/* Docs: https://pro.reactbits.dev/docs/components/aurora-blur               */
+/* React Bits Grainient Component CSS                                        */
+/* Docs: https://reactbits.dev/components/grainient                          */
 /* ========================================================================= */
 
-.aurora-blur-fixed {
+.grainient-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.grainient-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================================================================= */
+/* FULL-PAGE FIXED BACKGROUND                                                */
+/* ========================================================================= */
+
+.grainient-fixed {
   position: fixed;
   inset: 0;
   width: 100vw;
@@ -11,32 +30,23 @@
   z-index: -1;
   pointer-events: none;
   overflow: hidden;
-  opacity: 1;
   transform: translate3d(0, 0, 0);
   will-change: transform;
 }
 
-.aurora-blur-fixed canvas,
-.aurora-blur canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.aurora-blur {
+.grainient-fixed canvas {
   position: absolute;
   inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
-  overflow: hidden;
-  pointer-events: none;
 }
 
 /* ========================================================================= */
 /* SEAMLESS FULL-PAGE FLOW (Zero backdrop-filter overhead for pure 60fps)     */
 /* ========================================================================= */
 
-/* Dark Mode: Full-page continuous flow over animated Aurora */
+/* Dark Mode: Full-page continuous flow over animated Grainient */
 html.dark #hero,
 html.dark #myskills,
 html.dark #projects,
@@ -45,7 +55,7 @@ html.dark #experience {
   background-color: transparent !important;
 }
 
-/* Light Mode: Full-page continuous flow over animated Aurora */
+/* Light Mode: Full-page continuous flow over animated Grainient */
 html.light #hero,
 html.light #myskills,
 html.light #projects,

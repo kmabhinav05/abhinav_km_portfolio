@@ -24,7 +24,7 @@
   <link rel="stylesheet" href="assets/css/warp-text.css">
   <link rel="stylesheet" href="assets/css/staggered-text.css">
   <link rel="stylesheet" href="assets/css/glow-cursor.css">
-  <link rel="stylesheet" href="assets/css/aurora-blur.css">
+  <link rel="stylesheet" href="assets/css/grainient.css">
   <link rel="stylesheet" href="assets/css/hold-button.css">
 
   <!-- React Bits Components (Offline & Local) -->
@@ -34,7 +34,7 @@
   <script src="assets/js/warp-text.js" defer></script>
   <script src="assets/js/staggered-text.js" defer></script>
   <script src="assets/js/glow-cursor.js" defer></script>
-  <script src="assets/js/aurora-blur.js" defer></script>
+  <script src="assets/js/grainient.js" defer></script>
   <script src="assets/js/hold-button.js" defer></script>
 
   <!-- Instant Theme Detection Script (Prevents Theme Flash) -->
@@ -782,11 +782,11 @@
 <body class="selection:bg-white selection:text-black">
 
   <!-- ========================================================================= -->
-  <!-- REACT BITS AURORA BLUR COMPONENT (Background for all sections)            -->
-  <!-- Docs: https://pro.reactbits.dev/docs/components/aurora-blur               -->
+  <!-- REACT BITS GRAINIENT COMPONENT (Overall Website Background)               -->
+  <!-- Docs: https://reactbits.dev/components/grainient                          -->
   <!-- ========================================================================= -->
-  <div id="aurora-blur-bg" class="aurora-blur-fixed" data-speed="1.5" data-noise-scale="3.5" data-bloom-intensity="2.0" aria-hidden="true">
-    <canvas id="aurora-blur-canvas"></canvas>
+  <div id="grainient-bg" class="grainient-fixed" aria-hidden="true">
+    <canvas class="grainient-canvas"></canvas>
   </div>
 
   <!-- ========================================================================= -->
@@ -825,7 +825,7 @@
   <main class="w-full">
 
     <!-- ========================================================================= -->
-    <!-- 3. HERO SECTION (With React Bits Aurora Blur Background)                  -->
+    <!-- 3. HERO SECTION (With React Bits Grainient Fluid Background)             -->
     <!-- ========================================================================= -->
     <section id="hero" class="w-full min-h-screen pt-36 sm:pt-32 md:pt-36 pb-12 px-6 sm:px-10 md:px-16 flex flex-col justify-between items-start relative select-none overflow-hidden bg-transparent">
       
@@ -1488,7 +1488,7 @@
         revealItems.forEach(item => item.classList.add('revealed'));
       }
 
-      // 4. ReactBits AuroraBlur Universal Animated Background (initialized via assets/js/aurora-blur.js)
+      // 4. ReactBits Grainient Interactive Liquid Background (initialized via assets/js/grainient.js)
 
       // 5. ReactBits Side-Rays WebGL Shader Engine (for "Where to find me" contact section)
       (function initSideRays() {
@@ -1776,6 +1776,9 @@
           // Dynamically update GooeyNav WebGL theme
           if (window.gooeyNavInstance && typeof window.gooeyNavInstance.setTheme === 'function') {
             window.gooeyNavInstance.setTheme(theme);
+            if (window.grainientInstance && typeof window.grainientInstance.setTheme === 'function') {
+              window.grainientInstance.setTheme(theme);
+            }
           }
         }
 

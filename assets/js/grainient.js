@@ -1,0 +1,734 @@
+/**
+ * React Bits Grainient Component (Vanilla JS & WebGL2 Implementation)
+ * Docs: https://reactbits.dev/components/grainient
+ */
+(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    module.exports = factory();
+  } else {
+    root.Grainient = factory();
+  }
+})(typeof self !== 'undefined' ? self : this, function() {
+  'use strict';
+
+  const MAX_COLORS = 8;
+  const MAX_STIRS = 24;
+  const MAX_TWIRLS = 4;
+  const STIR_LIFE = 1.3;
+  const STIR_STEP = 0.06;
+  const TWIRL_LIFE = 2.6;
+  const INTRO_SECONDS = 1.6;
+  const DEFAULT_COLORS = ['#120f17', '#2a0f0a', '#9a3412', '#f97316', '#fed7aa'];
+  const TYPES = { linear: 0, radial: 1 };
+  const LIFT = 0.2;
+
+  const VERTEX = `#version 300 es
+out vec2 vUv;
+void main() {
+  vec2 p = vec2(float((gl_VertexID << 1) & 2), float(gl_VertexID & 2));
+  vUv = p;
+  gl_Position = vec4(p * 2.0 - 1.0, 0.0, 1.0);
+}`;
+
+  const FIELD = `#version 300 es
+precision highp float;
+precision highp int;
+uniform float uAspect;
+uniform float uTime;
+uniform vec3 uRamp[8];
+uniform int uCount;
+uniform int uType;
+uniform vec2 uDir;
+uniform float uExtent;
+uniform float uBands;
+uniform float uSoftness;
+uniform float uFlow;
+uniform float uScale;
+uniform float uSilk;
+uniform vec4 uStir[24];
+uniform float uStirWeight[24];
+uniform vec4 uTwirl[4];
+uniform vec2 uSeed;
+uniform float uContrast;
+uniform float uSaturation;
+uniform float uSettle;
+uniform float uReveal;
+in vec2 vUv;
+out vec4 outColor;
+
+vec2 hash2(vec2 p) {
+  vec3 q = fract(vec3(p.xyx) * vec3(0.1031, 0.103, 0.0973));
+  q += dot(q, q.yzx + 33.33);
+  return fract((q.xx + q.yz) * q.zy) * 2.0 - 1.0;
+}
+
+float noise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  vec2 u = f * f * f * (f * (f * 6.0 - 15.0) + 10.0);
+  float a = dot(hash2(i), f);
+  float b = dot(hash2(i + vec2(1.0, 0.0)), f - vec2(1.0, 0.0));
+  float c = dot(hash2(i + vec2(0.0, 1.0)), f - vec2(0.0, 1.0));
+  float d = dot(hash2(i + vec2(1.0, 1.0)), f - vec2(1.0, 1.0));
+  return 0.5 + 0.5 * mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
+}
+
+vec2 drift(vec2 p, float t) {
+  vec2 w1 = vec2(
+    noise(p * 0.85 + vec2(t * 0.11, t * 0.07)),
+    noise(p * 0.85 + vec2(4.1, 1.7) - vec2(t * 0.08, t * 0.12))
+  );
+  vec2 w2 = vec2(
+    noise(p * 1.55 + w1 * 1.8 + vec2(1.3, 7.1) + t * 0.05),
+    noise(p * 1.55 + w1 * 1.8 + vec2(6.4, 2.2) - t * 0.06)
+  );
+  return (w1 - 0.5) * 1.1 + (w2 - 0.5) * 0.55;
+}
+
+vec2 warp(vec2 p) {
+  vec2 q = p / uScale;
+  if (uType == 1) {
+    float turn = uTime * 0.35;
+    q = mat2(cos(turn), sin(turn), -sin(turn), cos(turn)) * q;
+  } else {
+    q += vec2(-uDir.y, uDir.x) * uTime * 0.45;
+  }
+  return p + drift(q + uSeed, uTime) * uFlow * uScale * uSettle;
+}
+
+float coord(vec2 p) {
+  vec2 w = warp(p);
+  return uType == 1 ? 1.0 - length(w) * 1.1 : dot(w, uDir) / uExtent + 0.5;
+}
+
+vec3 labToRgb(vec3 lab) {
+  float l = lab.x + 0.3963377774 * lab.y + 0.2158037573 * lab.z;
+  float m = lab.x - 0.1055613458 * lab.y - 0.0638541728 * lab.z;
+  float s = lab.x - 0.0894841775 * lab.y - 1.2914855480 * lab.z;
+  l = l * l * l;
+  m = m * m * m;
+  s = s * s * s;
+  return vec3(
+    4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+    -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+    -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s
+  );
+}
+
+vec3 encode(vec3 c) {
+  c = clamp(c, 0.0, 1.0);
+  return mix(c * 12.92, 1.055 * pow(c, vec3(1.0 / 2.4)) - 0.055, step(0.0031308, c));
+}
+
+void main() {
+  vec2 p = (vUv - 0.5) * vec2(uAspect, 1.0);
+  for (int i = 0; i < 24; i++) {
+    float w = uStirWeight[i];
+    if (w <= 0.0) continue;
+    vec2 d = p - uStir[i].xy;
+    p -= uStir[i].zw * w * exp(-dot(d, d) / 0.045);
+  }
+  for (int i = 0; i < 4; i++) {
+    float angle = uTwirl[i].z;
+    if (angle == 0.0) continue;
+    vec2 d = p - uTwirl[i].xy;
+    float a = angle * exp(-dot(d, d) / (uTwirl[i].w * uTwirl[i].w));
+    float c = cos(a);
+    float s = sin(a);
+    p = uTwirl[i].xy + mat2(c, -s, s, c) * d;
+  }
+  float raw = coord(p);
+  float s = raw;
+  if (uBands > 1.0) {
+    s *= uBands;
+    float cycle = floor(s);
+    s = fract(s);
+    if (mod(cycle, 2.0) > 0.5) s = 1.0 - s;
+  }
+  s = clamp(s, 0.0, 1.0);
+  float scaled = s * float(uCount - 1);
+  int index = int(min(floor(scaled), float(uCount - 2)));
+  float f = scaled - float(index);
+  float edge = max(uSoftness * 0.5, fwidth(scaled) * 0.75);
+  float shaped = smoothstep(0.5 - edge, 0.5 + edge, f);
+  vec3 from = uRamp[0];
+  vec3 to = uRamp[1];
+  for (int i = 0; i < 7; i++) {
+    if (i == index) {
+      from = uRamp[i];
+      to = uRamp[i + 1];
+    }
+  }
+  vec3 lab = mix(from, to, shaped);
+  if (uSilk > 0.0) {
+    vec2 grad = vec2(coord(p + vec2(0.004, 0.0)) - raw, coord(p + vec2(0.0, 0.004)) - raw) / 0.004;
+    vec2 slope = grad * sin(3.14159265 * clamp(raw, 0.0, 1.0) * uBands) * uSilk * 4.0;
+    vec3 normal = normalize(vec3(-slope, 1.0));
+    vec3 light = normalize(vec3(-uDir.y, uDir.x, 1.2));
+    float diffuse = dot(normal, light) - light.z;
+    lab = uRamp[0] + (lab - uRamp[0]) * (1.0 + (diffuse * 0.35 + max(diffuse, 0.0) * diffuse * 0.6) * uSilk);
+  }
+  lab = mix(uRamp[0], lab, smoothstep(0.0, 1.0, uReveal * 1.5 - length(vUv - 0.5) * 0.6));
+  lab.x = (lab.x - 0.55) * uContrast + 0.55;
+  lab.yz *= uSaturation;
+  outColor = vec4(encode(labToRgb(lab)), 1.0);
+}`;
+
+  const COMPOSITE = `#version 300 es
+precision highp float;
+uniform sampler2D uField;
+uniform float uGrain;
+uniform float uGrainSize;
+uniform float uFrame;
+in vec2 vUv;
+out vec4 outColor;
+
+float hash(vec2 p) {
+  vec3 q = fract(vec3(p.xyx) * 0.1031);
+  q += dot(q, q.yzx + 33.33);
+  return fract((q.x + q.y) * q.z);
+}
+
+float clump(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  vec2 u = f * f * (3.0 - 2.0 * f);
+  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y);
+}
+
+void main() {
+  vec3 color = texture(uField, vUv).rgb;
+  vec2 pixel = gl_FragCoord.xy + uFrame * vec2(17.0, 59.0);
+  float fine = hash(pixel) + hash(pixel + 7.13) - 1.0;
+  float coarse = (clump(pixel / max(uGrainSize, 1.0)) - 0.5) * 2.0;
+  float grain = mix(fine, coarse, clamp(uGrainSize - 1.0, 0.0, 1.0) * 0.8);
+  float luma = dot(color, vec3(0.2126, 0.7152, 0.0722));
+  color += grain * uGrain * (0.45 + 2.2 * luma * (1.0 - luma));
+  outColor = vec4(clamp(color, 0.0, 1.0), 1.0);
+}`;
+
+  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+  const toLinear = value => (value <= 0.04045 ? value / 12.92 : Math.pow((value + 0.055) / 1.055, 2.4));
+
+  const toLab = ([r, g, b]) => {
+    const lr = toLinear(r);
+    const lg = toLinear(g);
+    const lb = toLinear(b);
+    const l = Math.cbrt(0.4122214708 * lr + 0.5363325363 * lg + 0.0514459929 * lb);
+    const m = Math.cbrt(0.2119034982 * lr + 0.6806995451 * lg + 0.1073969566 * lb);
+    const s = Math.cbrt(0.0883024619 * lr + 0.2817188376 * lg + 0.6299787005 * lb);
+    return [
+      0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s,
+      1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s,
+      0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s
+    ];
+  };
+
+  const compile = (gl, type, source) => {
+    const shader = gl.createShader(type);
+    if (!shader) return null;
+    gl.shaderSource(shader, source);
+    gl.compileShader(shader);
+    if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) return shader;
+    console.error('Grainient shader error:', gl.getShaderInfoLog(shader));
+    gl.deleteShader(shader);
+    return null;
+  };
+
+  const link = (gl, fragmentSource) => {
+    const vertex = compile(gl, gl.VERTEX_SHADER, VERTEX);
+    const fragment = compile(gl, gl.FRAGMENT_SHADER, fragmentSource);
+    const program = gl.createProgram();
+    if (!vertex || !fragment || !program) return null;
+    gl.attachShader(program, vertex);
+    gl.attachShader(program, fragment);
+    gl.linkProgram(program);
+    gl.deleteShader(vertex);
+    gl.deleteShader(fragment);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      console.error('Grainient link error:', gl.getProgramInfoLog(program));
+      gl.deleteProgram(program);
+      return null;
+    }
+    const uniforms = {};
+    const count = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
+    for (let i = 0; i < count; i++) {
+      const info = gl.getActiveUniform(program, i);
+      if (!info) continue;
+      const name = info.name.replace(/\[0\]$/, '');
+      uniforms[name] = gl.getUniformLocation(program, name);
+    }
+    return { program, uniforms };
+  };
+
+  class Grainient {
+    constructor(container, options = {}) {
+      if (!container) throw new Error('Grainient requires a container');
+      this.container = container;
+
+      // Palettes for Dark and Light modes
+      this.darkPalette = ['#060908', '#0c1a16', '#10382d', '#059669', '#7ff3ff'];
+      this.lightPalette = ['#f8fafc', '#e2e8f0', '#cbd5e1', '#93c5fd', '#38bdf8'];
+
+      const isLight = document.documentElement.classList.contains('light');
+
+      this.settings = Object.assign({
+        colors: isLight ? this.lightPalette : this.darkPalette,
+        type: TYPES.linear,
+        angle: 55,
+        bands: 1,
+        speed: 0.85,
+        flow: 0.8,
+        scale: 1,
+        softness: 1,
+        silk: 0.35,
+        grainAmount: 0.07,
+        grainSize: 1.2,
+        grainAnimated: true,
+        contrast: 1,
+        saturation: 1,
+        variation: 0,
+        interactive: true,
+        stir: 1,
+        clickSwirl: true,
+        intro: true,
+        lightMode: isLight,
+        dpr: 1.5
+      }, options);
+
+      this.initCanvas();
+      this.initGL();
+      this.bindEvents();
+    }
+
+    initCanvas() {
+      let canvas = this.container.querySelector('canvas');
+      if (!canvas) {
+        canvas = document.createElement('canvas');
+        canvas.className = 'grainient-canvas';
+        this.container.appendChild(canvas);
+      }
+      this.canvas = canvas;
+    }
+
+    initGL() {
+      const gl = this.canvas.getContext('webgl2', {
+        alpha: false,
+        antialias: false,
+        depth: false,
+        stencil: false
+      });
+      if (!gl) {
+        console.warn('WebGL2 not supported for Grainient');
+        return;
+      }
+      this.gl = gl;
+
+      const field = link(gl, FIELD);
+      const composite = link(gl, COMPOSITE);
+      if (!field || !composite) return;
+
+      this.field = field;
+      this.composite = composite;
+      this.fu = field.uniforms;
+      this.cu = composite.uniforms;
+
+      this.vao = gl.createVertexArray();
+      this.target = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, this.target);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+
+      this.buffer = gl.createFramebuffer();
+      this.fieldSize = { width: 0, height: 0 };
+
+      this.probe = document.createElement('canvas').getContext('2d', { willReadFrequently: true });
+      this.colorCache = new Map();
+
+      this.reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+      this.view = { width: 1, height: 1, ratio: 1 };
+      this.ramp = new Float32Array(MAX_COLORS * 3);
+      this.stirs = new Float32Array(MAX_STIRS * 4);
+      this.stirWeights = new Float32Array(MAX_STIRS);
+      this.twirls = new Float32Array(MAX_TWIRLS * 4);
+      this.trail = [];
+      this.spins = [];
+      this.pointer = { x: 0.5, y: 0.5, sx: 0.5, sy: 0.5, vx: 0, inside: false, fresh: true };
+
+      this.paletteKey = '';
+      this.time = 0;
+      this.introClock = this.settings.intro && !this.reduce ? 0 : 1;
+      this.frameSeed = 0;
+      this.grainClock = 0;
+      this.raf = 0;
+      this.last = 0;
+      this.visible = true;
+
+      this.resize();
+    }
+
+    parse(value) {
+      const key = String(value);
+      const cached = this.colorCache.get(key);
+      if (cached) return cached;
+      let rgb = [0, 0, 0];
+      if (this.probe) {
+        this.probe.clearRect(0, 0, 1, 1);
+        this.probe.fillStyle = '#000000';
+        this.probe.fillStyle = key;
+        this.probe.fillRect(0, 0, 1, 1);
+        const [r, g, b] = this.probe.getImageData(0, 0, 1, 1).data;
+        rgb = [r / 255, g / 255, b / 255];
+      }
+      this.colorCache.set(key, rgb);
+      return rgb;
+    }
+
+    syncPalette() {
+      const s = this.settings;
+      const key = `${s.colors.join(',')}|${s.lightMode}`;
+      if (key === this.paletteKey) return;
+      this.paletteKey = key;
+      const labs = s.colors.map(color => toLab(this.parse(color)));
+      if (!s.lightMode) {
+        labs.forEach((lab, i) => this.ramp.set(lab, i * 3));
+      } else {
+        const blank = labs.map(([L]) => Math.abs(L - labs[0][0]) < 0.1);
+        const tints = labs.filter((_, i) => !blank[i]).reverse();
+        labs.forEach((_, i) => {
+          const [L, a, b] = blank[i] ? [1, 0, 0] : tints.shift();
+          this.ramp.set([L + (1 - L) * LIFT, a * (1 - LIFT), b * (1 - LIFT)], i * 3);
+        });
+      }
+    }
+
+    draw() {
+      const gl = this.gl;
+      if (!gl || !this.field) return;
+      const s = this.settings;
+      const aspect = this.view.width / this.view.height;
+
+      this.syncPalette();
+
+      gl.bindVertexArray(this.vao);
+      gl.disable(gl.BLEND);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, this.buffer);
+      gl.viewport(0, 0, this.fieldSize.width, this.fieldSize.height);
+      gl.useProgram(this.field.program);
+
+      gl.uniform1f(this.fu.uAspect, aspect);
+      gl.uniform1f(this.fu.uTime, this.time);
+      gl.uniform3fv(this.fu.uRamp, this.ramp);
+      gl.uniform1i(this.fu.uCount, s.colors.length);
+
+      const radians = (s.angle * Math.PI) / 180;
+      gl.uniform1i(this.fu.uType, s.type);
+      gl.uniform2f(this.fu.uDir, Math.sin(radians), Math.cos(radians));
+      gl.uniform1f(this.fu.uExtent, aspect * Math.abs(Math.sin(radians)) + Math.abs(Math.cos(radians)));
+      gl.uniform1f(this.fu.uBands, s.bands);
+      gl.uniform1f(this.fu.uSoftness, s.softness);
+      gl.uniform1f(this.fu.uFlow, s.flow);
+      gl.uniform1f(this.fu.uScale, s.scale);
+      gl.uniform1f(this.fu.uSilk, s.silk);
+      gl.uniform4fv(this.fu.uStir, this.stirs);
+      gl.uniform1fv(this.fu.uStirWeight, this.stirWeights);
+      gl.uniform4fv(this.fu.uTwirl, this.twirls);
+      gl.uniform2f(this.fu.uSeed, s.variation * 3.17, s.variation * 1.91);
+      gl.uniform1f(this.fu.uContrast, s.contrast);
+      gl.uniform1f(this.fu.uSaturation, s.saturation);
+      gl.uniform1f(this.fu.uSettle, this.introClock * this.introClock * (3 - 2 * this.introClock));
+      gl.uniform1f(this.fu.uReveal, this.introClock);
+
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      gl.viewport(0, 0, this.canvas.width, this.canvas.height);
+      gl.useProgram(this.composite.program);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, this.target);
+      gl.uniform1i(this.cu.uField, 0);
+      gl.uniform1f(this.cu.uGrain, s.grainAmount);
+      gl.uniform1f(this.cu.uGrainSize, s.grainSize * this.view.ratio);
+      gl.uniform1f(this.cu.uFrame, this.frameSeed);
+
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
+
+    resize() {
+      const gl = this.gl;
+      if (!gl) return;
+      const s = this.settings;
+
+      this.view.width = Math.max(1, this.container.clientWidth || window.innerWidth);
+      this.view.height = Math.max(1, this.container.clientHeight || window.innerHeight);
+      this.view.ratio = Math.min(s.dpr || window.devicePixelRatio || 1, 1.5);
+
+      this.canvas.width = Math.max(1, Math.round(this.view.width * this.view.ratio));
+      this.canvas.height = Math.max(1, Math.round(this.view.height * this.view.ratio));
+
+      const width = Math.max(1, Math.round(this.canvas.width / 2));
+      const height = Math.max(1, Math.round(this.canvas.height / 2));
+
+      if (width !== this.fieldSize.width || height !== this.fieldSize.height) {
+        this.fieldSize.width = width;
+        this.fieldSize.height = height;
+        gl.bindTexture(gl.TEXTURE_2D, this.target);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, this.buffer);
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.target, 0);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      }
+
+      this.draw();
+      this.wake();
+    }
+
+    updateTouches(dt, aspect) {
+      const s = this.settings;
+      const follow = 1 - Math.exp(-dt / 0.06);
+      const px = this.pointer.sx;
+      const py = this.pointer.sy;
+      this.pointer.sx += (this.pointer.x - this.pointer.sx) * follow;
+      this.pointer.sy += (this.pointer.y - this.pointer.sy) * follow;
+      const vx = ((this.pointer.sx - px) / dt) * aspect;
+      const vy = (this.pointer.sy - py) / dt;
+      this.pointer.vx = vx;
+
+      const head = this.trail[0];
+      this.trail.forEach(sample => {
+        if (sample.done) sample.age += dt;
+      });
+
+      if (s.interactive && this.pointer.inside && Math.hypot(vx, vy) > 0.02 && !this.reduce) {
+        if (!head || head.done) {
+          this.trail.unshift({ x: 0, y: 0, vx: 0, vy: 0, age: 0, grow: 0, done: false });
+          if (this.trail.length > MAX_STIRS) this.trail.pop();
+        }
+        const live = this.trail[0];
+        live.x = (this.pointer.sx - 0.5) * aspect;
+        live.y = this.pointer.sy - 0.5;
+        live.vx = vx;
+        live.vy = vy;
+        live.grow = Math.min(1, live.grow + dt / STIR_STEP);
+        live.done = live.grow >= 1;
+      } else if (head) {
+        head.done = true;
+      }
+
+      while (this.trail.length && this.trail[this.trail.length - 1].age > STIR_LIFE) {
+        this.trail.pop();
+      }
+
+      for (let i = 0; i < MAX_STIRS; i++) {
+        const sample = this.trail[i];
+        if (!sample) {
+          this.stirWeights[i] = 0;
+          continue;
+        }
+        const fade = 1 - sample.age / STIR_LIFE;
+        const cap = Math.min(1, 2.2 / Math.max(Math.hypot(sample.vx, sample.vy), 0.001));
+        this.stirs.set([sample.x, sample.y, sample.vx * cap, sample.vy * cap], i * 4);
+        this.stirWeights[i] = fade * fade * sample.grow * s.stir * 0.05;
+      }
+
+      this.spins.forEach(spin => {
+        spin.age += dt;
+      });
+
+      while (this.spins.length && this.spins[this.spins.length - 1].age > TWIRL_LIFE) {
+        this.spins.pop();
+      }
+
+      for (let i = 0; i < MAX_TWIRLS; i++) {
+        const spin = this.spins[i];
+        if (!spin) {
+          this.twirls[i * 4 + 2] = 0;
+          continue;
+        }
+        const k = spin.age / TWIRL_LIFE;
+        const envelope = Math.min(1, spin.age / 0.18) * (1 - k) * (1 - k);
+        this.twirls.set([spin.x, spin.y, spin.direction * 2.4 * envelope, 0.16 + 0.1 * Math.min(1, spin.age / 0.5)], i * 4);
+      }
+    }
+
+    frame(now) {
+      this.raf = 0;
+      if (!this.visible || document.hidden) return;
+
+      const s = this.settings;
+      const dt = this.last ? clamp((now - this.last) / 1000, 0.001, 0.05) : 1 / 60;
+      this.last = now;
+
+      if (!this.reduce) this.time += dt * s.speed * 0.16;
+      if (this.introClock < 1) this.introClock = Math.min(1, this.introClock + dt / INTRO_SECONDS);
+
+      this.grainClock += dt;
+      if (s.grainAnimated && !this.reduce && this.grainClock > 1 / 24) {
+        this.grainClock = 0;
+        this.frameSeed = (this.frameSeed + 1) % 97;
+      }
+
+      this.updateTouches(dt, this.view.width / this.view.height);
+      this.draw();
+
+      const busy =
+        (!this.reduce && (s.speed > 0 || s.grainAnimated)) ||
+        this.introClock < 1 ||
+        this.trail.length > 0 ||
+        this.spins.length > 0;
+
+      if (busy) {
+        this.raf = requestAnimationFrame(t => this.frame(t));
+      } else {
+        this.last = 0;
+      }
+    }
+
+    wake() {
+      if (!this.raf && this.visible && !document.hidden) {
+        this.raf = requestAnimationFrame(t => this.frame(t));
+      }
+    }
+
+    locate(event) {
+      const rect = this.container.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / Math.max(1, rect.width);
+      const y = 1 - (event.clientY - rect.top) / Math.max(1, rect.height);
+      this.pointer.inside = x >= 0 && x <= 1 && y >= 0 && y <= 1;
+      this.pointer.x = x;
+      this.pointer.y = y;
+      if (this.pointer.fresh || !this.pointer.inside) {
+        this.pointer.sx = x;
+        this.pointer.sy = y;
+        this.pointer.fresh = false;
+      }
+    }
+
+    bindEvents() {
+      this.onPointerMove = e => {
+        this.locate(e);
+        if (this.pointer.inside || this.trail.length) this.wake();
+      };
+
+      this.onPointerDown = e => {
+        this.locate(e);
+        const s = this.settings;
+        if (!this.pointer.inside || !s.clickSwirl || this.reduce) return;
+        this.spins.unshift({
+          x: (this.pointer.x - 0.5) * (this.view.width / this.view.height),
+          y: this.pointer.y - 0.5,
+          age: 0,
+          direction: this.pointer.vx < 0 ? 1 : -1
+        });
+        if (this.spins.length > MAX_TWIRLS) this.spins.pop();
+        this.wake();
+      };
+
+      this.onPointerLeave = () => {
+        this.pointer.inside = false;
+      };
+
+      this.onVisibility = () => {
+        this.last = 0;
+        this.wake();
+      };
+
+      this.resizeObserver = new ResizeObserver(() => this.resize());
+      this.resizeObserver.observe(this.container);
+
+      this.intersectionObserver = new IntersectionObserver(entries => {
+        this.visible = entries.some(entry => entry.isIntersecting);
+        if (this.visible) {
+          this.last = 0;
+          this.wake();
+        }
+      });
+      this.intersectionObserver.observe(this.container);
+
+      window.addEventListener('pointermove', this.onPointerMove, { passive: true });
+      window.addEventListener('pointerdown', this.onPointerDown, { passive: true });
+      document.documentElement.addEventListener('pointerleave', this.onPointerLeave);
+      document.addEventListener('visibilitychange', this.onVisibility);
+
+      this.themeObserver = new MutationObserver(() => {
+        const isLight = document.documentElement.classList.contains('light');
+        this.setTheme(isLight ? 'light' : 'dark');
+      });
+      this.themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class']
+      });
+    }
+
+    /**
+     * Dynamically update theme for seamless light/dark mode adaptation
+     * @param {'dark' | 'light'} theme
+     */
+    setTheme(theme) {
+      const isLight = theme === 'light';
+      this.settings.lightMode = isLight;
+      this.settings.colors = isLight ? this.lightPalette : this.darkPalette;
+      this.paletteKey = '';
+      this.syncPalette();
+      this.draw();
+      this.wake();
+    }
+
+    setOptions(newOpts = {}) {
+      Object.assign(this.settings, newOpts);
+      this.paletteKey = '';
+      this.draw();
+      this.wake();
+    }
+
+    destroy() {
+      cancelAnimationFrame(this.raf);
+      if (this.resizeObserver) this.resizeObserver.disconnect();
+      if (this.intersectionObserver) this.intersectionObserver.disconnect();
+      if (this.themeObserver) this.themeObserver.disconnect();
+      window.removeEventListener('pointermove', this.onPointerMove);
+      window.removeEventListener('pointerdown', this.onPointerDown);
+      document.documentElement.removeEventListener('pointerleave', this.onPointerLeave);
+      document.removeEventListener('visibilitychange', this.onVisibility);
+
+      const gl = this.gl;
+      if (gl) {
+        gl.deleteTexture(this.target);
+        gl.deleteFramebuffer(this.buffer);
+        gl.deleteVertexArray(this.vao);
+        if (this.field) gl.deleteProgram(this.field.program);
+        if (this.composite) gl.deleteProgram(this.composite.program);
+        gl.getExtension('WEBGL_lose_context')?.loseContext();
+      }
+    }
+  }
+
+  // Auto-init for overall website background
+  function initGrainient() {
+    const el = document.getElementById('grainient-bg');
+    if (el && !window.grainientInstance) {
+      window.grainientInstance = new Grainient(el, {
+        angle: 55,
+        flow: 0.8,
+        silk: 0.35,
+        grainAmount: 0.08,
+        speed: 0.85
+      });
+    }
+  }
+
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initGrainient);
+    } else {
+      initGrainient();
+    }
+  }
+
+  return Grainient;
+});
