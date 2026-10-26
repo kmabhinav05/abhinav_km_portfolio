@@ -195,8 +195,10 @@
         const delayMs = this.getDelayForIndex(idx, total);
         if (delayMs > maxDelay) maxDelay = delayMs;
         seg.style.transitionDelay = `${delayMs}ms`;
+      });
 
-        requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        this.segments.forEach(seg => {
           seg.classList.remove('is-hidden');
           seg.classList.add('is-visible');
         });

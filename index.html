@@ -40,6 +40,8 @@
   <script src="assets/js/liquid-chrome.js" defer></script>
   <script src="assets/js/bell-toggle.js" defer></script>
   <script src="assets/js/hold-button.js" defer></script>
+  <script src="assets/js/smooth-scroll.js" defer></script>
+  <script src="assets/js/perf-monitor.js" defer></script>
 
   <!-- Instant Theme Detection Script (Prevents Theme Flash) -->
   <script>
@@ -488,15 +490,70 @@
       animation: flicker 4.5s infinite;
     }
 
-    /* Scroll reveal transitions */
+    /* ========================================================================= */
+    /* 60 FPS GPU PERFORMANCE & HARDWARE ACCELERATION RULES                      */
+    /* ========================================================================= */
+    
+    /* Hardware-composite Fixed Navigation */
+    #navbar {
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+
+    /* Section Render Isolation: Skips offscreen layout and paint */
+    #myskills,
+    #projects,
+    #profile,
+    #experience,
+    #contact {
+      content-visibility: auto;
+      contain-intrinsic-size: 850px;
+    }
+
+    /* Bento Card Layout Containment */
+    .bento-card {
+      contain: layout paint;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+
+    /* Hardware-Accelerated Scroll Reveals with Release after Animation */
     .reveal-item {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translate3d(0, 24px, 0);
+      transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+      backface-visibility: hidden;
     }
     .reveal-item.revealed {
       opacity: 1;
-      transform: translateY(0);
+      transform: translate3d(0, 0, 0);
+      will-change: auto;
+    }
+
+    /* Prefers-reduced-motion Accessibility Fallback */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal-item {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        will-change: auto !important;
+      }
+      .staggered-segment {
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+        filter: none !important;
+        will-change: auto !important;
+      }
     }
 
     /* Hide scrollbar */
@@ -1486,8 +1543,9 @@
     document.addEventListener('DOMContentLoaded', function() {
       // 1. React Bits GlowCursor initialized via assets/js/glow-cursor.js
 
-      // 2. Typewriter Effect
+      // 2. Typewriter Effect (Intersection-aware for zero offscreen CPU usage)
       const typewriterEl = document.getElementById('typewriter-text');
+      const heroSec = document.getElementById('hero');
       if (typewriterEl) {
         const phrases = [
           'SQL • PostgreSQL • MySQL',
@@ -1499,8 +1557,11 @@
         let phraseIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
+        let typeTimer = null;
+        let isHeroVisible = true;
 
         function type() {
+          if (!isHeroVisible) return;
           const currentPhrase = phrases[phraseIndex];
           if (isDeleting) {
             typewriterEl.textContent = currentPhrase.substring(0, charIndex - 1);
@@ -1521,9 +1582,22 @@
             typingSpeed = 300;
           }
 
-          setTimeout(type, typingSpeed);
+          typeTimer = setTimeout(type, typingSpeed);
         }
-        type();
+
+        if ('IntersectionObserver' in window && heroSec) {
+          const typeObserver = new IntersectionObserver((entries) => {
+            const entry = entries[0];
+            isHeroVisible = Boolean(entry && entry.isIntersecting);
+            clearTimeout(typeTimer);
+            if (isHeroVisible) {
+              typeTimer = setTimeout(type, 150);
+            }
+          }, { threshold: 0.05 });
+          typeObserver.observe(heroSec);
+        } else {
+          type();
+        }
       }
 
       // 3. Scroll Reveal Observer
