@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="assets/css/glow-cursor.css">
   <link rel="stylesheet" href="assets/css/grainient.css">
   <link rel="stylesheet" href="assets/css/liquid-chrome.css">
+  <link rel="stylesheet" href="assets/css/bell-toggle.css">
   <link rel="stylesheet" href="assets/css/hold-button.css">
 
   <!-- React Bits Components (Offline & Local) -->
@@ -37,6 +38,7 @@
   <script src="assets/js/glow-cursor.js" defer></script>
   <script src="assets/js/grainient.js" defer></script>
   <script src="assets/js/liquid-chrome.js" defer></script>
+  <script src="assets/js/bell-toggle.js" defer></script>
   <script src="assets/js/hold-button.js" defer></script>
 
   <!-- Instant Theme Detection Script (Prevents Theme Flash) -->
@@ -1443,18 +1445,9 @@
               ></textarea>
             </div>
 
-            <!-- Submit Button & Feedback Status -->
-            <div class="pt-2">
-              <button
-                type="submit"
-                id="contact-submit-btn"
-                class="contact-submit-btn w-full py-3.5 px-6 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 cursor-pointer shadow-md"
-              >
-                <span>Send Message</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </button>
+            <!-- React Bits BellToggle Action Button & Feedback Status -->
+            <div class="pt-2 flex flex-col items-center">
+              <div id="contact-bell-toggle-root" class="flex justify-center"></div>
               <p id="contact-form-status" class="text-xs text-center mt-3 hidden font-mono"></p>
             </div>
           </form>
@@ -1687,14 +1680,39 @@
         });
       })();
 
-      // 7. Interactive Contact Form Handler (Name, Gmail, Message)
+      // 7. Interactive Contact Form Handler powered by React Bits BellToggle
       (function initContactForm() {
         const form = document.getElementById('portfolio-contact-form');
         const statusEl = document.getElementById('contact-form-status');
+        const bellRoot = document.getElementById('contact-bell-toggle-root');
         if (!form) return;
 
-        form.addEventListener('submit', function(e) {
-          e.preventDefault();
+        let bellInstance = null;
+        function mountBell() {
+          if (!bellRoot || !window.BellToggle || bellInstance) return;
+          bellInstance = new window.BellToggle(bellRoot, {
+            offLabel: 'Send Message',
+            onLabel: 'Sent Successfully!',
+            size: 'md',
+            radius: 22,
+            ringAmplitude: 18,
+            ringPasses: 5,
+            ringDuration: 820,
+            waves: true,
+            onClick: function(e) {
+              e.preventDefault();
+              submitForm();
+            }
+          });
+        }
+
+        if (window.BellToggle) {
+          mountBell();
+        } else {
+          window.addEventListener('load', mountBell);
+        }
+
+        function submitForm() {
           const nameInput = document.getElementById('contact-name');
           const emailInput = document.getElementById('contact-email');
           const messageInput = document.getElementById('contact-message');
@@ -1721,6 +1739,11 @@
             return;
           }
 
+          // Trigger BellToggle animation to "Sent Successfully!"
+          if (bellInstance) {
+            bellInstance.setOn(true);
+          }
+
           // Build prefilled email client link
           const subject = encodeURIComponent(`Portfolio Inquiry from ${name}`);
           const body = encodeURIComponent(
@@ -1738,7 +1761,18 @@
 
           setTimeout(() => {
             form.reset();
-          }, 3500);
+            if (bellInstance) {
+              bellInstance.setOn(false);
+            }
+            if (statusEl) {
+              statusEl.className = 'text-xs text-center mt-3 hidden font-mono';
+            }
+          }, 4500);
+        }
+
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          submitForm();
         });
       })();
     });
