@@ -172,13 +172,58 @@ html.dark .gooey-nav {
   }
 }
 
-/* Mobile responsive scroll if tight */
-@media (max-width: 640px) {
+/* Responsive Mobile & Tablet Styles */
+@media (max-width: 1024px) {
+  .gooey-nav {
+    --gn-x: 12px;
+    --gn-font: 12.5px;
+  }
+}
+
+@media (max-width: 768px) {
   .gooey-nav {
     --gn-pad: 3px;
     --gn-gap: 2px;
     --gn-font: 11px;
-    --gn-x: 9px;
+    --gn-x: 7.5px;
     --gn-y: 5px;
+    max-width: 100%;
   }
+
+  .gooey-nav__stage {
+    max-width: 100%;
+  }
+
+  .gooey-nav__list {
+    justify-content: center;
+  }
+
+  .gooey-nav__link {
+    padding: 5px 7.5px;
+    font-size: 11px;
+    letter-spacing: -0.01em;
+  }
+}
+
+@media (max-width: 375px) {
+  .gooey-nav {
+    --gn-pad: 2.5px;
+    --gn-gap: 1px;
+    --gn-font: 10px;
+    --gn-x: 5.5px;
+    --gn-y: 4px;
+  }
+
+  .gooey-nav__link {
+    padding: 4px 5.5px;
+    font-size: 10px;
+  }
+}
+
+#gooey-nav-root {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+#gooey-nav-root::-webkit-scrollbar {
+  display: none;
 }

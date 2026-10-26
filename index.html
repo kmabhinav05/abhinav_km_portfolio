@@ -813,25 +813,33 @@
   <!-- ========================================================================= -->
   <!-- 2. MINIMAL FIXED NAVIGATION (React Bits GooeyNav WebGL2 Liquid Navigation)-->
   <!-- ========================================================================= -->
-  <header id="navbar" class="fixed top-0 left-0 w-full flex justify-between items-center py-4 sm:py-4.5 md:py-5 px-6 sm:px-10 md:px-16 z-40 select-none">
-    <!-- Brand / Home link -->
-    <a href="#hero" class="text-lg sm:text-xl md:text-2xl tracking-tighter font-bold px-2.5 py-1.5 flex items-center">
-      <span class="brand-text">Abhinav</span><span class="brand-sub font-normal">.km</span>
-    </a>
+  <header id="navbar" class="fixed top-0 left-0 w-full z-40 select-none py-2 sm:py-3 md:py-4 px-3 sm:px-6 md:px-12 transition-colors duration-300">
+    <div class="w-full flex flex-col md:flex-row md:justify-between md:items-center gap-1.5 sm:gap-2 md:gap-4 max-w-7xl mx-auto">
+      <!-- Top Row on Mobile: Brand on Left, Theme Toggle on Right -->
+      <div class="w-full md:w-auto flex justify-between items-center px-1">
+        <a href="#hero" class="text-lg sm:text-xl md:text-2xl tracking-tighter font-bold flex items-center">
+          <span class="brand-text">Abhinav</span><span class="brand-sub font-normal">.km</span>
+        </a>
+        <!-- Mobile Controls (Theme Toggle) -->
+        <div class="flex md:hidden items-center gap-2">
+          <div id="theme-hold-mobile" class="flex items-center"></div>
+        </div>
+      </div>
 
-    <!-- React Bits GooeyNav Interactive Liquid Navigation -->
-    <div id="gooey-nav-root" class="flex justify-center flex-1 max-w-2xl px-2"></div>
+      <!-- React Bits GooeyNav Interactive Liquid Navigation: Full width centered on mobile, flex-1 max-w-2xl on desktop -->
+      <div id="gooey-nav-root" class="w-full md:flex-1 md:max-w-2xl flex justify-center px-0 sm:px-1 overflow-x-auto hide-scrollbar"></div>
 
-    <!-- Right Controls: Theme Toggle & CV Action Link -->
-    <div class="flex items-center gap-2 sm:gap-3.5">
-      <!-- React Bits HoldButton Theme Controller Root -->
-      <div id="theme-hold-root" class="flex items-center"></div>
+      <!-- Desktop Right Controls: Theme Toggle & CV Action Link -->
+      <div class="hidden md:flex items-center gap-2 sm:gap-3.5">
+        <!-- React Bits HoldButton Theme Controller Root -->
+        <div id="theme-hold-root" class="flex items-center"></div>
 
-      <!-- CV Action Link -->
-      <a href="https://drive.google.com/file/d/1OkKjk7z9MdCexpCY57LlAkbwtGp0alJ0/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="cv-btn hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold shadow-sm">
-        <span>CV</span>
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-      </a>
+        <!-- CV Action Link -->
+        <a href="https://drive.google.com/file/d/1OkKjk7z9MdCexpCY57LlAkbwtGp0alJ0/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="cv-btn hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold shadow-sm">
+          <span>CV</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        </a>
+      </div>
     </div>
   </header>
 
@@ -1551,25 +1559,25 @@
       (function initThemeToggle() {
         const STORAGE_KEY = 'portfolio-theme';
         const root = document.documentElement;
-        const container = document.getElementById('theme-hold-root');
 
         const sunSvg = `<svg class="w-3.5 h-3.5 text-amber-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>`;
         const moonSvg = `<svg class="w-3.5 h-3.5 text-indigo-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>`;
 
-        let holdBtnInstance = null;
+        let desktopBtn = null;
+        let mobileBtn = null;
 
-        function getThemeConfig(isDark) {
+        function getThemeConfig(isDark, isMobile = false) {
           if (isDark) {
             return {
-              children: '<span class="hidden sm:inline">Hold for </span>Light',
-              doneLabel: 'Light Mode!',
+              children: isMobile ? 'Light' : '<span class="hidden sm:inline">Hold for </span>Light',
+              doneLabel: isMobile ? 'Light!' : 'Light Mode!',
               icon: sunSvg,
               doneIcon: sunSvg,
               backgroundColor: '#151b19',
               fillColor: '#f59e0b',
               textColor: '#f1f5f9',
               fillTextColor: '#090d0c',
-              size: 'md',
+              size: isMobile ? 'sm' : 'md',
               radius: 9999,
               fillDirection: 'right',
               holdTime: 1100,
@@ -1582,15 +1590,15 @@
             };
           } else {
             return {
-              children: '<span class="hidden sm:inline">Hold for </span>Dark',
-              doneLabel: 'Dark Mode!',
+              children: isMobile ? 'Dark' : '<span class="hidden sm:inline">Hold for </span>Dark',
+              doneLabel: isMobile ? 'Dark!' : 'Dark Mode!',
               icon: moonSvg,
               doneIcon: moonSvg,
               backgroundColor: '#eef2f6',
               fillColor: '#6366f1',
               textColor: '#0f172a',
               fillTextColor: '#ffffff',
-              size: 'md',
+              size: isMobile ? 'sm' : 'md',
               radius: 9999,
               fillDirection: 'right',
               holdTime: 1100,
@@ -1624,9 +1632,12 @@
             localStorage.setItem(STORAGE_KEY, theme);
           } catch (e) {}
 
-          // Update HoldButton config
-          if (holdBtnInstance) {
-            holdBtnInstance.setProps(getThemeConfig(isDark));
+          // Update HoldButton configs on both desktop and mobile
+          if (desktopBtn) {
+            desktopBtn.setProps(getThemeConfig(isDark, false));
+          }
+          if (mobileBtn) {
+            mobileBtn.setProps(getThemeConfig(isDark, true));
           }
 
           // Dynamically update WarpText headline color
@@ -1647,12 +1658,23 @@
         }
 
         function mountHoldButton() {
-          if (!container || !window.HoldButton) return;
+          if (!window.HoldButton) return;
           const isDark = root.classList.contains('dark');
-          const cfg = getThemeConfig(isDark);
-          cfg.onHold = () => toggleTheme();
-          cfg.onTap = () => toggleTheme();
-          holdBtnInstance = new window.HoldButton(container, cfg);
+          const desktopContainer = document.getElementById('theme-hold-root');
+          const mobileContainer = document.getElementById('theme-hold-mobile');
+
+          if (desktopContainer && !desktopBtn) {
+            const cfg = getThemeConfig(isDark, false);
+            cfg.onHold = () => toggleTheme();
+            cfg.onTap = () => toggleTheme();
+            desktopBtn = new window.HoldButton(desktopContainer, cfg);
+          }
+          if (mobileContainer && !mobileBtn) {
+            const cfgMobile = getThemeConfig(isDark, true);
+            cfgMobile.onHold = () => toggleTheme();
+            cfgMobile.onTap = () => toggleTheme();
+            mobileBtn = new window.HoldButton(mobileContainer, cfgMobile);
+          }
         }
 
         if (window.HoldButton) {
