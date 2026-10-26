@@ -1,0 +1,33 @@
+/* ========================================================================= */
+/* REACT BITS WARPTEXT COMPONENT STYLES                                      */
+/* ========================================================================= */
+.warp-text {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 120px;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: inherit;
+  cursor: pointer;
+}
+
+.warp-text canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.warp-text__fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4%;
+  text-align: center;
+  white-space: pre-line;
+  pointer-events: none;
+}

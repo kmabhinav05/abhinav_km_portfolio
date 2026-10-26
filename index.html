@@ -20,10 +20,14 @@
 
   <!-- 1. Offline Standalone Tailwind CSS v2.2.19 (Local & Instant) -->
   <link rel="stylesheet" href="assets/css/tailwind.min.css">
+  <link rel="stylesheet" href="assets/css/gooey-nav.css">
+  <link rel="stylesheet" href="assets/css/warp-text.css">
 
-  <!-- Matter.js Physics Engine & FolderFloat Component (Offline & Local) -->
+  <!-- React Bits Components (Offline & Local) -->
   <script src="assets/js/matter.min.js"></script>
   <script src="assets/js/folder-float.js" defer></script>
+  <script src="assets/js/gooey-nav.js" defer></script>
+  <script src="assets/js/warp-text.js" defer></script>
 
   <!-- 2. Self-Contained Complete Theme Stylesheet (Offline & CDN independent) -->
   <style>
@@ -457,26 +461,22 @@
   <div id="cursor-dot" class="custom-cursor-dot fixed top-0 left-0 w-3 h-3 bg-white rounded-full pointer-events-none z-50" style="mix-blend-mode: difference; transform: translate(-50%, -50%); will-change: transform; box-shadow: 0 0 6px rgba(255,255,255,0.9); position: fixed;"></div>
 
   <!-- ========================================================================= -->
-  <!-- 2. MINIMAL FIXED NAVIGATION (White background, black font, subtle links) -->
+  <!-- 2. MINIMAL FIXED NAVIGATION (React Bits GooeyNav WebGL2 Liquid Navigation)-->
   <!-- ========================================================================= -->
-  <header id="navbar" class="fixed top-0 left-0 w-full flex justify-between items-center py-4 sm:py-5 px-4 sm:px-8 md:px-12 text-black z-40 select-none">
+  <header id="navbar" class="fixed top-0 left-0 w-full flex justify-between items-center py-2.5 sm:py-3.5 px-4 sm:px-8 md:px-12 text-black z-40 select-none">
     <!-- Brand / Home link -->
-    <a href="#hero" class="text-base sm:text-lg tracking-tighter text-stone-900 font-bold px-2 py-1">
+    <a href="#hero" class="text-base sm:text-lg tracking-tighter text-stone-900 font-bold px-2 py-1 flex items-center">
       Abhinav<span class="text-stone-400 font-normal">.km</span>
     </a>
 
-    <!-- Navigation Menu Items -->
-    <nav class="flex items-center gap-1 sm:gap-4 md:gap-6 text-xs sm:text-sm font-medium">
-      <a href="#myskills" class="px-2.5 sm:px-3 py-1 rounded-xl text-stone-600 hover:text-black hover:bg-stone-100 transition">My Skills</a>
-      <a href="#projects" class="px-2.5 sm:px-3 py-1 rounded-xl text-stone-600 hover:text-black hover:bg-stone-100 transition">Work</a>
-      <a href="#profile" class="px-2.5 sm:px-3 py-1 rounded-xl text-stone-600 hover:text-black hover:bg-stone-100 transition">About</a>
-      <a href="#experience" class="px-2.5 sm:px-3 py-1 rounded-xl text-stone-600 hover:text-black hover:bg-stone-100 transition">Experience</a>
-      <a href="#contact" class="px-2.5 sm:px-3 py-1 rounded-xl text-stone-600 hover:text-black hover:bg-stone-100 transition">Contact</a>
-      <a href="https://drive.google.com/file/d/1OkKjk7z9MdCexpCY57LlAkbwtGp0alJ0/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-1 px-3.5 py-1 rounded-full bg-black text-white text-xs font-semibold hover:bg-stone-800 transition">
-        <span>CV</span>
-        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-      </a>
-    </nav>
+    <!-- React Bits GooeyNav Interactive Liquid Navigation -->
+    <div id="gooey-nav-root" class="flex justify-center flex-1 max-w-2xl px-2"></div>
+
+    <!-- CV Action Link -->
+    <a href="https://drive.google.com/file/d/1OkKjk7z9MdCexpCY57LlAkbwtGp0alJ0/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-black text-white text-xs font-semibold hover:bg-stone-800 transition shadow-sm">
+      <span>CV</span>
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+    </a>
   </header>
 
   <main class="w-full">
@@ -499,14 +499,26 @@
         <p class="hidden sm:block">Malappuram, Kerala, India 📍</p>
       </div>
 
-      <!-- Center Typography: Playfair Display Headline -->
-      <div class="w-full flex items-center justify-center my-auto py-12 relative z-10">
-        <div class="space-y-3 text-center max-w-4xl mx-auto">
+      <!-- Center Typography: Playfair Display Headline with React Bits WarpText -->
+      <div class="w-full flex items-center justify-center my-auto py-8 sm:py-12 relative z-10">
+        <div class="space-y-3 text-center max-w-5xl mx-auto w-full">
           <p class="text-sm sm:text-base font-semibold text-stone-600 tracking-wide uppercase font-mono">Hello, I am</p>
           
-          <h1 class="font-serif text-5xl sm:text-7xl md:text-8xl text-stone-900 font-bold tracking-tight">
-            Abhinav K M
-          </h1>
+          <!-- Accessible semantic heading for search engines & screen readers -->
+          <h1 class="sr-only">Abhinav K M</h1>
+
+          <!-- React Bits WarpText WebGL Component with Lens Bulge & Click Ripples -->
+          <div
+            id="hero-warp-name"
+            class="warp-text w-full mx-auto"
+            style="height: clamp(110px, 16vw, 165px); max-width: 960px;"
+            role="img"
+            aria-label="Abhinav K M"
+          >
+            <span class="warp-text__fallback font-serif text-5xl sm:text-7xl md:text-8xl text-stone-900 font-bold tracking-tight">
+              Abhinav K M
+            </span>
+          </div>
 
           <p class="text-base sm:text-xl text-stone-700 font-medium pt-2 max-w-xl mx-auto leading-relaxed">
             A passionate <span class="font-bold text-black border-b-2 border-stone-800">Data Analyst</span> turning raw data into actionable insights
