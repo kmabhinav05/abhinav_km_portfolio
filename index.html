@@ -1387,7 +1387,10 @@
 
         <!-- Interactive Contact Form: Name, Gmail, Message -->
         <div class="w-full max-w-xl mx-auto contact-form-card rounded-2xl p-6 sm:p-8 backdrop-blur-md transition-all duration-300">
-          <form id="portfolio-contact-form" class="space-y-5 text-left" novalidate>
+          <form id="portfolio-contact-form" action="https://formsubmit.co/kmabhinav25@gmail.com" method="POST" class="space-y-5 text-left" novalidate>
+            <input type="hidden" name="_subject" value="New Portfolio Message for Abhinav K M">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
             <!-- Name Input -->
             <div class="space-y-1.5">
               <label for="contact-name" class="block text-xs font-mono uppercase tracking-wider font-semibold">
@@ -1725,38 +1728,71 @@
             return;
           }
 
-          // Trigger BellToggle animation to "Sent Successfully!"
-          if (bellInstance) {
-            bellInstance.setOn(true);
-          }
-
-          // Build prefilled email client link
-          const subject = encodeURIComponent(`Portfolio Inquiry from ${name}`);
-          const body = encodeURIComponent(
-            `Hi Abhinav,\n\n${message}\n\n---\nBest regards,\n${name}\nGmail/Email: ${email}`
-          );
-          const mailtoUri = `mailto:kmabhinav25@gmail.com?subject=${subject}&body=${body}`;
-
           if (statusEl) {
-            statusEl.textContent = `Opening your email client to send to kmabhinav25@gmail.com... Thank you, ${name}!`;
-            statusEl.className = 'text-xs text-center mt-3 text-emerald-400 font-mono block';
+            statusEl.textContent = 'Sending message to kmabhinav25@gmail.com...';
+            statusEl.className = 'text-xs text-center mt-3 text-stone-300 font-mono block';
           }
 
-          // Trigger mail client
-          window.location.href = mailtoUri;
-
-          setTimeout(() => {
-            form.reset();
+          // Direct message transmission to kmabhinav25@gmail.com via FormSubmit AJAX API
+          fetch('https://formsubmit.co/ajax/kmabhinav25@gmail.com', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+              Name: name,
+              Email: email,
+              Message: message,
+              _subject: `New Portfolio Message from ${name} (${email})`,
+              _template: 'table',
+              _captcha: 'false'
+            })
+          })
+          .then(res => res.json())
+          .then(data => {
+            // Trigger BellToggle animation to "Sent Successfully!"
             if (bellInstance) {
-              bellInstance.setOn(false);
+              bellInstance.setOn(true);
             }
             if (statusEl) {
-              statusEl.className = 'text-xs text-center mt-3 hidden font-mono';
+              statusEl.textContent = `Message sent directly to kmabhinav25@gmail.com! Thank you, ${name}.`;
+              statusEl.className = 'text-xs text-center mt-3 text-emerald-400 font-mono block';
             }
-          }, 4500);
+            setTimeout(() => {
+              form.reset();
+              if (bellInstance) bellInstance.setOn(false);
+              if (statusEl) statusEl.className = 'text-xs text-center mt-3 hidden font-mono';
+            }, 5000);
+          })
+          .catch(err => {
+            // Fallback: Trigger BellToggle and open Gmail compose / mailto
+            if (bellInstance) {
+              bellInstance.setOn(true);
+            }
+            const subject = encodeURIComponent(`Portfolio Inquiry from ${name}`);
+            const body = encodeURIComponent(
+              `Hi Abhinav,\n\n${message}\n\n---\nBest regards,\n${name}\nGmail/Email: ${email}`
+            );
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=kmabhinav25@gmail.com&su=${subject}&body=${body}`;
+            const mailtoUri = `mailto:kmabhinav25@gmail.com?subject=${subject}&body=${body}`;
+
+            const win = window.open(gmailUrl, '_blank');
+            if (!win) window.location.href = mailtoUri;
+
+            if (statusEl) {
+              statusEl.textContent = `Message prepared for kmabhinav25@gmail.com. Thank you, ${name}!`;
+              statusEl.className = 'text-xs text-center mt-3 text-emerald-400 font-mono block';
+            }
+            setTimeout(() => {
+              form.reset();
+              if (bellInstance) bellInstance.setOn(false);
+              if (statusEl) statusEl.className = 'text-xs text-center mt-3 hidden font-mono';
+            }, 5000);
+          });
         }
 
-        form.addEventListener('submit', function(e) {
+                form.addEventListener('submit', function(e) {
           e.preventDefault();
           submitForm();
         });
