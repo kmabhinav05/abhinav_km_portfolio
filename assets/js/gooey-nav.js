@@ -245,7 +245,8 @@ void main() {
       overlay.appendChild(overlayLi);
     });
 
-    const pillRgb = parse('#18181b');
+    const isDark = document.documentElement.classList.contains('dark');
+    const pillRgb = parse(isDark ? '#f4f4f5' : '#18181b');
     const settings = {
       animationTime,
       particleCount,
@@ -256,8 +257,8 @@ void main() {
       hoverEffect,
       pillRgb,
       tints: (options.colors || ['#10b981', '#3b82f6', '#8b5cf6', '#f59e0b']).map(parse),
-      hoverRgb: parse('rgba(0, 0, 0, 0.06)'),
-      shadow: 0.25
+      hoverRgb: parse(isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)'),
+      shadow: isDark ? 0.4 : 0.25
     };
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -738,6 +739,14 @@ void main() {
 
     return {
       select,
+      setTheme: (themeName) => {
+        const isDarkTheme = themeName === 'dark';
+        settings.pillRgb = parse(isDarkTheme ? '#f4f4f5' : '#18181b');
+        settings.hoverRgb = parse(isDarkTheme ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)');
+        settings.shadow = isDarkTheme ? 0.4 : 0.25;
+        render();
+        wake();
+      },
       destroy: () => {
         disposed = true;
         cancelAnimationFrame(raf);

@@ -547,6 +547,11 @@ void main() {
     raf = requestAnimationFrame(loop);
 
     return {
+      setColor: newColor => {
+        props.color = newColor;
+        rasterize();
+      },
+      rasterize,
       destroy: () => {
         disposed = true;
         cancelAnimationFrame(raf);
@@ -562,11 +567,12 @@ void main() {
   function init() {
     const el = document.getElementById('hero-warp-name');
     if (el) {
+      const isDark = document.documentElement.classList.contains('dark');
       window.warpTextInstance = createWarpText(el, {
         text: 'Abhinav K M',
         fontFamily: "'Playfair Display', Georgia, serif",
         fontWeight: 700,
-        color: '#18181b',
+        color: isDark ? '#fcfcfc' : '#0f172a',
         fontSize: 'clamp(3rem, 7.5vw, 6.5rem)',
         letterSpacing: '-0.02em',
         warpStrength: 0.08,

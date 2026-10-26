@@ -24,6 +24,17 @@
   user-select: none;
 }
 
+html.dark .gooey-nav {
+  --gn-frame: rgba(24, 28, 26, 0.88);
+  --gn-frame-edge: rgba(255, 255, 255, 0.1);
+  --gn-frame-highlight: rgba(255, 255, 255, 0.1);
+  --gn-frame-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.6), 0 4px 10px -4px rgba(0, 0, 0, 0.4);
+  --gn-ink: #f4f4f5;
+  --gn-muted: #a1a1aa;
+  --gn-pill: #f4f4f5;
+  --gn-active-ink: #09090b;
+}
+
 .gooey-nav--sm {
   --gn-pad: 4px;
   --gn-gap: 2px;

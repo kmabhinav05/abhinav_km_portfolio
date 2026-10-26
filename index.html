@@ -29,6 +29,19 @@
   <script src="assets/js/gooey-nav.js" defer></script>
   <script src="assets/js/warp-text.js" defer></script>
 
+  <!-- Instant Theme Detection Script (Prevents Theme Flash) -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('portfolio-theme');
+        var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.classList.add(theme);
+      } catch (e) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+
   <!-- 2. Self-Contained Complete Theme Stylesheet (Offline & CDN independent) -->
   <style>
     /* Reset & Reference Base */
@@ -43,13 +56,12 @@
       -webkit-text-size-adjust: 100%;
     }
     body {
-      background-color: #050908 !important;
-      color: #ffffff;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       margin: 0;
       padding: 0;
       overflow-x: hidden;
       cursor: none; /* Inverting magnetic cursor */
+      transition: background-color 0.35s ease, color 0.35s ease;
     }
 
     /* Font Families */
@@ -63,36 +75,358 @@
       font-family: 'JetBrains Mono', 'IBM Plex Mono', Consolas, Monaco, monospace !important;
     }
 
-    /* Color Utilities */
-    .bg-white { background-color: #ffffff !important; }
-    .text-black { color: #000000 !important; }
-    .bg-black { background-color: #000000 !important; }
-    .text-white { color: #ffffff !important; }
-
-    .bg-stone-50 { background-color: #fafaf9 !important; }
-    .bg-stone-100 { background-color: #f5f5f4 !important; }
-    .bg-stone-800 { background-color: #292524 !important; }
-    .bg-stone-900 { background-color: #1c1917 !important; }
-    .bg-stone-950 { background-color: #0c0a09 !important; }
-
-    .text-stone-300 { color: #d6d3d1 !important; }
-    .text-stone-400 { color: #a8a29e !important; }
-    .text-stone-500 { color: #78716c !important; }
-    .text-stone-600 { color: #57534e !important; }
-    .text-stone-700 { color: #44403c !important; }
-    .text-stone-800 { color: #292524 !important; }
-    .text-stone-900 { color: #1c1917 !important; }
-
-    .border-stone-200 { border-color: #e7e5e4 !important; }
-    .border-stone-700 { border-color: #44403c !important; }
-    .border-stone-800 { border-color: #292524 !important; }
-    .border-stone-900 { border-color: #1c1917 !important; }
-
     /* Rounded shapes matching reference */
     .rounded-3xl { border-radius: 1.5rem !important; }
     .rounded-4xl { border-radius: 2.5rem !important; }
     .rounded-b-3xl { border-bottom-left-radius: 1.5rem !important; border-bottom-right-radius: 1.5rem !important; }
     .rounded-b-4xl { border-bottom-left-radius: 2.5rem !important; border-bottom-right-radius: 2.5rem !important; }
+
+    /* ========================================================================= */
+    /* THEME SYSTEM: LIGHT & DARK MODES WITH OPTIMIZED TYPOGRAPHY                */
+    /* ========================================================================= */
+
+    /* ------------------------------------------------------------------------- */
+    /* LIGHT MODE STYLES                                                         */
+    /* ------------------------------------------------------------------------- */
+    html.light body {
+      background-color: #f8fafc !important;
+      color: #0f172a !important;
+    }
+
+    html.light #navbar {
+      background-color: rgba(255, 255, 255, 0.94) !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+      color: #0f172a !important;
+    }
+    html.light .brand-text { color: #0f172a !important; }
+    html.light .brand-sub { color: #64748b !important; }
+
+    html.light .theme-toggle-btn {
+      background-color: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      color: #0f172a;
+    }
+    html.light .theme-toggle-btn:hover {
+      background-color: #e2e8f0;
+    }
+
+    html.light .cv-btn {
+      background-color: #0f172a !important;
+      color: #ffffff !important;
+    }
+    html.light .cv-btn:hover {
+      background-color: #1e293b !important;
+    }
+
+    /* Hero Light */
+    html.light #hero {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+    }
+    html.light #hero .hero-tag {
+      color: #64748b !important;
+    }
+    html.light #hero .hero-intro {
+      color: #475569 !important;
+    }
+    html.light #hero .hero-sub {
+      color: #334155 !important;
+    }
+    html.light #hero .hero-sub .highlight {
+      color: #0f172a !important;
+      border-color: #0f172a !important;
+    }
+    html.light #hero .hero-bottom {
+      color: #0f172a !important;
+    }
+    html.light #hero .hero-fade {
+      background: linear-gradient(to top, #ffffff, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.25)) !important;
+    }
+
+    /* My Skills Light */
+    html.light #myskills {
+      background-color: #f1f5f9 !important;
+      border-color: #e2e8f0 !important;
+      color: #0f172a !important;
+    }
+    html.light #myskills h2 {
+      color: #0f172a !important;
+    }
+    html.light #myskills .section-desc {
+      color: #475569 !important;
+    }
+    html.light #myskills .skill-tag {
+      color: #059669 !important;
+    }
+
+    /* Projects / My Works Light */
+    html.light #projects {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+    }
+    html.light #projects h2 {
+      color: #0f172a !important;
+    }
+    html.light #projects .section-desc {
+      color: #475569 !important;
+    }
+    html.light #projects .bento-card {
+      background-color: #f8fafc !important;
+      border: 1px solid #e2e8f0 !important;
+      box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05) !important;
+    }
+    html.light #projects .bento-card:hover {
+      border-color: #cbd5e1 !important;
+      box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.08) !important;
+    }
+    html.light #projects .bento-title {
+      color: #0f172a !important;
+    }
+    html.light #projects .bento-desc {
+      color: #334155 !important;
+    }
+    html.light #projects .bento-tag {
+      background-color: #e2e8f0 !important;
+      color: #1e293b !important;
+      border: 1px solid #cbd5e1 !important;
+    }
+    html.light #projects .bento-icon-btn {
+      background-color: #e2e8f0 !important;
+      color: #0f172a !important;
+    }
+    html.light #projects .bento-icon-btn:hover {
+      background-color: #cbd5e1 !important;
+    }
+    html.light #projects .bento-icon-btn svg {
+      color: #0f172a !important;
+    }
+
+    /* About Me Light */
+    html.light #profile {
+      background-color: #f8fafc !important;
+      color: #0f172a !important;
+      border: 1px solid #e2e8f0 !important;
+      box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.06) !important;
+    }
+    html.light #profile .about-faint {
+      color: #64748b !important;
+    }
+    html.light #profile .about-bold {
+      color: #0f172a !important;
+    }
+    html.light #profile .about-subhead {
+      color: #0f172a !important;
+    }
+    html.light #profile .about-body {
+      color: #334155 !important;
+    }
+    html.light #profile .about-body .highlight-bold {
+      color: #0f172a !important;
+    }
+
+    /* Experience Light */
+    html.light #experience {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+    }
+    html.light #experience h2 {
+      color: #0f172a !important;
+    }
+    html.light #experience .timeline-item {
+      border-left-color: #cbd5e1 !important;
+    }
+    html.light #experience .role-title {
+      color: #0f172a !important;
+    }
+    html.light #experience .company-text {
+      color: #475569 !important;
+    }
+    html.light #experience .date-pill {
+      background-color: #f1f5f9 !important;
+      color: #334155 !important;
+      border: 1px solid #e2e8f0 !important;
+    }
+    html.light #experience .exp-desc {
+      color: #334155 !important;
+    }
+
+    /* Contact Light */
+    html.light #contact {
+      background-color: #0f172a !important;
+      border-color: #1e293b !important;
+      color: #ffffff !important;
+    }
+
+    /* ------------------------------------------------------------------------- */
+    /* DARK MODE STYLES                                                          */
+    /* ------------------------------------------------------------------------- */
+    html.dark body {
+      background-color: #050908 !important;
+      color: #f8fafc !important;
+    }
+
+    html.dark #navbar {
+      background-color: rgba(9, 13, 12, 0.88) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+      color: #ffffff !important;
+    }
+    html.dark .brand-text { color: #ffffff !important; }
+    html.dark .brand-sub { color: #94a3b8 !important; }
+
+    html.dark .theme-toggle-btn {
+      background-color: #141a18;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #f8fafc;
+    }
+    html.dark .theme-toggle-btn:hover {
+      background-color: #1e2624;
+    }
+
+    html.dark .cv-btn {
+      background-color: #ffffff !important;
+      color: #090d0c !important;
+    }
+    html.dark .cv-btn:hover {
+      background-color: #f1f5f9 !important;
+    }
+
+    /* Hero Dark */
+    html.dark #hero {
+      background-color: #080c0b !important;
+      color: #ffffff !important;
+    }
+    html.dark #hero .hero-tag {
+      color: #94a3b8 !important;
+    }
+    html.dark #hero .hero-intro {
+      color: #94a3b8 !important;
+    }
+    html.dark #hero .hero-sub {
+      color: #cbd5e1 !important;
+    }
+    html.dark #hero .hero-sub .highlight {
+      color: #ffffff !important;
+      border-color: #ffffff !important;
+    }
+    html.dark #hero .hero-bottom {
+      color: #f1f5f9 !important;
+    }
+    html.dark #hero .hero-fade {
+      background: linear-gradient(to top, #080c0b, rgba(8, 12, 11, 0.7), rgba(8, 12, 11, 0.25)) !important;
+    }
+
+    /* My Skills Dark */
+    html.dark #myskills {
+      background-color: #080c0b !important;
+      border-color: rgba(255, 255, 255, 0.08) !important;
+      color: #ffffff !important;
+    }
+    html.dark #myskills h2 {
+      color: #ffffff !important;
+    }
+    html.dark #myskills .section-desc {
+      color: #94a3b8 !important;
+    }
+    html.dark #myskills .skill-tag {
+      color: #34d399 !important;
+    }
+
+    /* Projects / My Works Dark */
+    html.dark #projects {
+      background-color: #040605 !important;
+      color: #ffffff !important;
+    }
+    html.dark #projects h2 {
+      color: #ffffff !important;
+    }
+    html.dark #projects .section-desc {
+      color: #94a3b8 !important;
+    }
+    html.dark #projects .bento-card {
+      background-color: #111614 !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      box-shadow: none !important;
+    }
+    html.dark #projects .bento-card:hover {
+      border-color: rgba(255, 255, 255, 0.18) !important;
+    }
+    html.dark #projects .bento-title {
+      color: #ffffff !important;
+    }
+    html.dark #projects .bento-desc {
+      color: #cbd5e1 !important;
+    }
+    html.dark #projects .bento-tag {
+      background-color: #1b2220 !important;
+      color: #e2e8f0 !important;
+      border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    }
+    html.dark #projects .bento-icon-btn {
+      background-color: rgba(255, 255, 255, 0.1) !important;
+      color: #ffffff !important;
+    }
+    html.dark #projects .bento-icon-btn:hover {
+      background-color: rgba(255, 255, 255, 0.2) !important;
+    }
+    html.dark #projects .bento-icon-btn svg {
+      color: #ffffff !important;
+    }
+
+    /* About Me Dark */
+    html.dark #profile {
+      background-color: #0a0e0d !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6) !important;
+    }
+    html.dark #profile .about-faint {
+      color: #64748b !important;
+    }
+    html.dark #profile .about-bold {
+      color: #f8fafc !important;
+    }
+    html.dark #profile .about-subhead {
+      color: #ffffff !important;
+    }
+    html.dark #profile .about-body {
+      color: #cbd5e1 !important;
+    }
+    html.dark #profile .about-body .highlight-bold {
+      color: #ffffff !important;
+    }
+
+    /* Experience Dark */
+    html.dark #experience {
+      background-color: #040605 !important;
+      color: #ffffff !important;
+    }
+    html.dark #experience h2 {
+      color: #f8fafc !important;
+    }
+    html.dark #experience .timeline-item {
+      border-left-color: #27272a !important;
+    }
+    html.dark #experience .role-title {
+      color: #ffffff !important;
+    }
+    html.dark #experience .company-text {
+      color: #94a3b8 !important;
+    }
+    html.dark #experience .date-pill {
+      background-color: #141a18 !important;
+      color: #cbd5e1 !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+    html.dark #experience .exp-desc {
+      color: #cbd5e1 !important;
+    }
+
+    /* Contact Dark */
+    html.dark #contact {
+      background-color: #060908 !important;
+      border-color: rgba(255, 255, 255, 0.08) !important;
+      color: #ffffff !important;
+    }
 
     /* Touch fallback: show regular pointer */
     @media (pointer: coarse) {
@@ -463,20 +797,41 @@
   <!-- ========================================================================= -->
   <!-- 2. MINIMAL FIXED NAVIGATION (React Bits GooeyNav WebGL2 Liquid Navigation)-->
   <!-- ========================================================================= -->
-  <header id="navbar" class="fixed top-0 left-0 w-full flex justify-between items-center py-2.5 sm:py-3.5 px-4 sm:px-8 md:px-12 text-black z-40 select-none">
+  <header id="navbar" class="fixed top-0 left-0 w-full flex justify-between items-center py-2.5 sm:py-3.5 px-4 sm:px-8 md:px-12 z-40 select-none">
     <!-- Brand / Home link -->
-    <a href="#hero" class="text-base sm:text-lg tracking-tighter text-stone-900 font-bold px-2 py-1 flex items-center">
-      Abhinav<span class="text-stone-400 font-normal">.km</span>
+    <a href="#hero" class="text-base sm:text-lg tracking-tighter font-bold px-2 py-1 flex items-center">
+      <span class="brand-text">Abhinav</span><span class="brand-sub font-normal">.km</span>
     </a>
 
     <!-- React Bits GooeyNav Interactive Liquid Navigation -->
     <div id="gooey-nav-root" class="flex justify-center flex-1 max-w-2xl px-2"></div>
 
-    <!-- CV Action Link -->
-    <a href="https://drive.google.com/file/d/1OkKjk7z9MdCexpCY57LlAkbwtGp0alJ0/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-black text-white text-xs font-semibold hover:bg-stone-800 transition shadow-sm">
-      <span>CV</span>
-      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-    </a>
+    <!-- Right Controls: Theme Toggle & CV Action Link -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <!-- Theme Toggle Button (Sun / Moon) -->
+      <button
+        id="theme-toggle"
+        type="button"
+        class="theme-toggle-btn shadow-sm"
+        aria-label="Toggle light or dark theme"
+        title="Toggle Theme"
+      >
+        <!-- Sun Icon (shown in dark mode) -->
+        <svg id="theme-icon-sun" class="w-4 h-4 hidden text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <!-- Moon Icon (shown in light mode) -->
+        <svg id="theme-icon-moon" class="w-4 h-4 text-stone-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      </button>
+
+      <!-- CV Action Link -->
+      <a href="https://drive.google.com/file/d/1OkKjk7z9MdCexpCY57LlAkbwtGp0alJ0/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="cv-btn hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold shadow-sm">
+        <span>CV</span>
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+      </a>
+    </div>
   </header>
 
   <main class="w-full">
@@ -484,17 +839,17 @@
     <!-- ========================================================================= -->
     <!-- 3. HERO SECTION WITH REACTBITS GRAINIENT / AURORA BACKGROUND              -->
     <!-- ========================================================================= -->
-    <section id="hero" class="w-full min-h-screen pt-28 sm:pt-24 pb-8 px-6 sm:px-10 md:px-16 rounded-b-3xl md:rounded-b-4xl flex flex-col justify-between items-start bg-white text-black relative select-none shadow-2xl overflow-hidden">
+    <section id="hero" class="w-full min-h-screen pt-28 sm:pt-24 pb-8 px-6 sm:px-10 md:px-16 rounded-b-3xl md:rounded-b-4xl flex flex-col justify-between items-start relative select-none shadow-2xl overflow-hidden">
       
       <!-- ReactBits Grainient Canvas Background -->
       <canvas id="aurora-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-80" aria-hidden="true"></canvas>
 
       <!-- Soft White Grain Texture Overlay for tactile finish -->
       <div class="grain-overlay absolute inset-0 pointer-events-none z-[1] opacity-70"></div>
-      <div class="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-white/30 pointer-events-none z-[2]"></div>
+      <div class="hero-fade absolute inset-0 pointer-events-none z-[2]"></div>
 
       <!-- Top Tag -->
-      <div class="w-full flex justify-between items-center text-xs text-stone-500 font-mono relative z-10">
+      <div class="hero-tag w-full flex justify-between items-center text-xs font-mono relative z-10">
         <p>BCA Graduate &bull; Data Analyst Trainee</p>
         <p class="hidden sm:block">Malappuram, Kerala, India 📍</p>
       </div>
@@ -502,7 +857,7 @@
       <!-- Center Typography: Playfair Display Headline with React Bits WarpText -->
       <div class="w-full flex items-center justify-center my-auto py-8 sm:py-12 relative z-10">
         <div class="space-y-3 text-center max-w-5xl mx-auto w-full">
-          <p class="text-sm sm:text-base font-semibold text-stone-600 tracking-wide uppercase font-mono">Hello, I am</p>
+          <p class="hero-intro text-sm sm:text-base font-semibold tracking-wide uppercase font-mono">Hello, I am</p>
           
           <!-- Accessible semantic heading for search engines & screen readers -->
           <h1 class="sr-only">Abhinav K M</h1>
@@ -515,29 +870,29 @@
             role="img"
             aria-label="Abhinav K M"
           >
-            <span class="warp-text__fallback font-serif text-5xl sm:text-7xl md:text-8xl text-stone-900 font-bold tracking-tight">
+            <span class="warp-text__fallback font-serif text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight">
               Abhinav K M
             </span>
           </div>
 
-          <p class="text-base sm:text-xl text-stone-700 font-medium pt-2 max-w-xl mx-auto leading-relaxed">
-            A passionate <span class="font-bold text-black border-b-2 border-stone-800">Data Analyst</span> turning raw data into actionable insights
+          <p class="hero-sub text-base sm:text-xl font-medium pt-2 max-w-xl mx-auto leading-relaxed">
+            A passionate <span class="highlight font-bold border-b-2">Data Analyst</span> turning raw data into actionable insights
           </p>
         </div>
       </div>
 
       <!-- Bottom Interactive Typewriter -->
-      <div class="w-full flex justify-between items-end text-stone-800 pt-4 relative z-10">
+      <div class="hero-bottom w-full flex justify-between items-end pt-4 relative z-10">
         <div class="h-8 flex items-center">
-          <p class="text-sm sm:text-lg font-semibold text-stone-800 font-mono flex items-center gap-2">
+          <p class="text-sm sm:text-lg font-semibold font-mono flex items-center gap-2">
             <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
             <span id="typewriter-text">SQL &bull; PostgreSQL &bull; Excel &bull; Power BI</span>
             <span class="font-normal">|</span>
           </p>
         </div>
 
-        <div class="hidden md:flex items-center gap-3 text-xs font-mono text-stone-600">
-          <a href="#projects" class="hover:text-black transition">Scroll down &darr;</a>
+        <div class="hidden md:flex items-center gap-3 text-xs font-mono opacity-75">
+          <a href="#projects" class="hover:opacity-100 transition">Scroll down &darr;</a>
         </div>
       </div>
     </section>
@@ -545,17 +900,17 @@
     <!-- ========================================================================= -->
     <!-- 4. MY SKILLS INTERACTIVE SECTION (React Bits FolderFloat with Matter.js)   -->
     <!-- ========================================================================= -->
-    <section id="myskills" class="px-4 sm:px-8 md:px-12 bg-[#080c0b] py-20 sm:py-28 space-y-12 sm:space-y-16 w-full text-white border-t border-b border-stone-800/80 relative overflow-hidden">
+    <section id="myskills" class="px-4 sm:px-8 md:px-12 py-20 sm:py-28 space-y-12 sm:space-y-16 w-full border-t border-b relative overflow-hidden transition-colors duration-300">
       
       <!-- Section Title Header -->
       <div class="max-w-4xl space-y-3">
-        <span class="font-mono text-xs text-emerald-400 font-semibold uppercase tracking-widest block">
+        <span class="skill-tag font-mono text-xs font-semibold uppercase tracking-widest block">
           01 // Interactive Skill Folders &bull; React Bits Physics
         </span>
-        <h2 class="font-serif text-5xl sm:text-7xl md:text-8xl text-white font-medium tracking-tight">
+        <h2 class="font-serif text-5xl sm:text-7xl md:text-8xl font-medium tracking-tight">
           My Skills.
         </h2>
-        <p class="text-stone-400 text-sm sm:text-base font-mono max-w-2xl leading-relaxed">
+        <p class="section-desc text-sm sm:text-base font-mono max-w-2xl leading-relaxed">
           Hover or tap any folder to unlock floating skill pills. Powered by zero-gravity Matter.js physics — drag, stir, and throw them in real-time.
         </p>
       </div>
@@ -758,16 +1113,16 @@
     </section>
 
     <!-- ========================================================================= -->
-    <!-- 5. WORKS SECTION (Dark black background, massive serif header, bento)    -->
+    <!-- 5. WORKS SECTION (Responsive bento grid with dynamic dark/light contrast)-->
     <!-- ========================================================================= -->
-    <section id="projects" class="px-4 sm:px-8 md:px-12 bg-black py-20 sm:py-28 space-y-12 sm:space-y-16 w-full text-white">
+    <section id="projects" class="px-4 sm:px-8 md:px-12 py-20 sm:py-28 space-y-12 sm:space-y-16 w-full transition-colors duration-300">
       
       <!-- Section Title -->
       <div>
-        <h2 class="font-serif text-6xl sm:text-8xl md:text-9xl text-white font-thin tracking-tight">
+        <h2 class="font-serif text-6xl sm:text-8xl md:text-9xl font-thin tracking-tight">
           My Works.
         </h2>
-        <p class="text-stone-400 text-xs sm:text-sm font-mono mt-3 max-w-xl">
+        <p class="section-desc text-xs sm:text-sm font-mono mt-3 max-w-xl">
           Curated analytics projects, business intelligence dashboards, and SQL data modeling extracted from verified CV.
         </p>
       </div>
@@ -777,35 +1132,35 @@
         
         <!-- MAIN FEATURED PROJECT 1: Sales Analysis Dashboard (7 cols) -->
         <div class="md:col-span-7 h-full w-full reveal-item">
-          <div class="group relative overflow-hidden bg-stone-900 border border-stone-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between min-h-[440px] hover:border-stone-700 transition">
+          <div class="bento-card group relative overflow-hidden rounded-3xl p-6 sm:p-8 flex flex-col justify-between min-h-[440px] transition">
             
             <div class="flex justify-between items-start">
-              <span class="px-3 py-1 rounded-full text-xs font-mono text-emerald-400 bg-emerald-950/80 border border-emerald-800/60">
+              <span class="px-3 py-1 rounded-full text-xs font-mono text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 font-semibold">
                 Production Project
               </span>
               <div class="flex gap-2">
-                <a href="https://github.com/kmabhinav05" target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository" class="p-2.5 bg-white/10 rounded-xl hover:bg-white/20 transition">
-                  <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-white"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                <a href="https://github.com/kmabhinav05" target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository" class="bento-icon-btn p-2.5 rounded-xl transition">
+                  <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
                 </a>
               </div>
             </div>
 
             <div class="space-y-4 pt-12">
               <div class="space-y-2">
-                <h3 class="font-serif text-2xl sm:text-4xl text-white font-medium">
+                <h3 class="bento-title font-serif text-2xl sm:text-4xl font-medium">
                   Sales Analysis Dashboard | Excel
                 </h3>
-                <p class="text-sm sm:text-base text-stone-300 leading-relaxed font-normal">
+                <p class="bento-desc text-sm sm:text-base leading-relaxed font-normal">
                   Analyzed over 1,000 order records to identify revenue trends, seasonal spikes, and customer spending habits. Built an interactive Excel dashboard with multi-level slicers, Pivot Tables, and DAX calculations.
                 </p>
               </div>
 
               <div class="flex flex-wrap gap-2 pt-2">
-                <span class="px-3 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">Advanced Excel</span>
-                <span class="px-3 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">Pivot Tables</span>
-                <span class="px-3 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">Power Query</span>
-                <span class="px-3 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">DAX</span>
-                <span class="px-3 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">KPI Analysis</span>
+                <span class="bento-tag px-3 py-1 text-xs rounded-md font-mono">Advanced Excel</span>
+                <span class="bento-tag px-3 py-1 text-xs rounded-md font-mono">Pivot Tables</span>
+                <span class="bento-tag px-3 py-1 text-xs rounded-md font-mono">Power Query</span>
+                <span class="bento-tag px-3 py-1 text-xs rounded-md font-mono">DAX</span>
+                <span class="bento-tag px-3 py-1 text-xs rounded-md font-mono">KPI Analysis</span>
               </div>
             </div>
 
@@ -814,34 +1169,34 @@
 
         <!-- PROJECT 2: SQL Data Modeling & Warehouse (5 cols) -->
         <div class="md:col-span-5 h-full w-full reveal-item">
-          <div class="group relative overflow-hidden bg-stone-900 border border-stone-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between min-h-[440px] hover:border-stone-700 transition">
+          <div class="bento-card group relative overflow-hidden rounded-3xl p-6 sm:p-8 flex flex-col justify-between min-h-[440px] transition">
             
             <div class="flex justify-between items-start">
-              <span class="px-3 py-1 rounded-full text-xs font-mono text-blue-400 bg-blue-950/80 border border-blue-800/60">
+              <span class="px-3 py-1 rounded-full text-xs font-mono text-blue-500 bg-blue-500/10 border border-blue-500/20 font-semibold">
                 Database Engineering
               </span>
               <div class="flex gap-2">
-                <a href="https://github.com/kmabhinav05" target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository" class="p-2.5 bg-white/10 rounded-xl hover:bg-white/20 transition">
-                  <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-white"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                <a href="https://github.com/kmabhinav05" target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository" class="bento-icon-btn p-2.5 rounded-xl transition">
+                  <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
                 </a>
               </div>
             </div>
 
             <div class="space-y-4 pt-12">
               <div class="space-y-2">
-                <h3 class="font-serif text-2xl sm:text-3xl text-white font-medium">
+                <h3 class="bento-title font-serif text-2xl sm:text-3xl font-medium">
                   PostgreSQL &amp; MySQL Queries
                 </h3>
-                <p class="text-sm text-stone-300 leading-relaxed font-normal">
+                <p class="bento-desc text-sm leading-relaxed font-normal">
                   Designed structured relational query workflows using Common Table Expressions (CTEs), multi-table JOINs, subqueries, and window functions for analytical aggregations.
                 </p>
               </div>
 
               <div class="flex flex-wrap gap-2 pt-2">
-                <span class="px-3 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">PostgreSQL</span>
-                <span class="px-3 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">MySQL</span>
-                <span class="px-3 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">CTEs</span>
-                <span class="px-3 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">Window Functions</span>
+                <span class="bento-tag px-3 py-1 text-xs rounded-md font-mono">PostgreSQL</span>
+                <span class="bento-tag px-3 py-1 text-xs rounded-md font-mono">MySQL</span>
+                <span class="bento-tag px-3 py-1 text-xs rounded-md font-mono">CTEs</span>
+                <span class="bento-tag px-3 py-1 text-xs rounded-md font-mono">Window Functions</span>
               </div>
             </div>
 
@@ -850,40 +1205,40 @@
 
         <!-- PROJECT 3: Python Data Analytics & EDA (5 cols) -->
         <div class="md:col-span-5 h-full w-full reveal-item">
-          <div class="bg-stone-900 border border-stone-800 rounded-3xl p-6 sm:p-7 flex flex-col justify-between min-h-[300px] hover:border-stone-700 transition">
-            <span class="text-xs font-mono text-yellow-400 uppercase">Data Exploration</span>
+          <div class="bento-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between min-h-[300px] transition">
+            <span class="text-xs font-mono text-amber-500 font-semibold uppercase">Data Exploration</span>
             <div class="space-y-2 my-auto py-4">
-              <h3 class="font-serif text-xl sm:text-2xl text-white font-medium">
+              <h3 class="bento-title font-serif text-xl sm:text-2xl font-medium">
                 Python EDA &amp; Cleaning Suite
               </h3>
-              <p class="text-xs sm:text-sm text-stone-300 leading-relaxed">
+              <p class="bento-desc text-xs sm:text-sm leading-relaxed">
                 Automated statistical cleaning, null imputation, and visual distribution modeling built on Pandas, NumPy, and Seaborn.
               </p>
             </div>
             <div class="flex flex-wrap gap-2">
-              <span class="px-2.5 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">Pandas</span>
-              <span class="px-2.5 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">NumPy</span>
-              <span class="px-2.5 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">Seaborn</span>
+              <span class="bento-tag px-2.5 py-1 text-xs rounded-md font-mono">Pandas</span>
+              <span class="bento-tag px-2.5 py-1 text-xs rounded-md font-mono">NumPy</span>
+              <span class="bento-tag px-2.5 py-1 text-xs rounded-md font-mono">Seaborn</span>
             </div>
           </div>
         </div>
 
         <!-- PROJECT 4: Power BI Enterprise Dashboards (7 cols) -->
         <div class="md:col-span-7 h-full w-full reveal-item">
-          <div class="bg-stone-900 border border-stone-800 rounded-3xl p-6 sm:p-7 flex flex-col justify-between min-h-[300px] hover:border-stone-700 transition">
-            <span class="text-xs font-mono text-purple-400 uppercase">Business Intelligence</span>
+          <div class="bento-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between min-h-[300px] transition">
+            <span class="text-xs font-mono text-purple-500 font-semibold uppercase">Business Intelligence</span>
             <div class="space-y-2 my-auto py-4">
-              <h3 class="font-serif text-xl sm:text-2xl text-white font-medium">
+              <h3 class="bento-title font-serif text-xl sm:text-2xl font-medium">
                 Interactive Power BI KPI Visualizations
               </h3>
-              <p class="text-xs sm:text-sm text-stone-300 leading-relaxed">
+              <p class="bento-desc text-xs sm:text-sm leading-relaxed">
                 Star schema modeling, dynamic measure slicing, trend forecasting, and executive management reporting suites.
               </p>
             </div>
             <div class="flex flex-wrap gap-2">
-              <span class="px-2.5 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">Power BI</span>
-              <span class="px-2.5 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">DAX</span>
-              <span class="px-2.5 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">Data Modeling</span>
+              <span class="bento-tag px-2.5 py-1 text-xs rounded-md font-mono">Power BI</span>
+              <span class="bento-tag px-2.5 py-1 text-xs rounded-md font-mono">DAX</span>
+              <span class="bento-tag px-2.5 py-1 text-xs rounded-md font-mono">Data Modeling</span>
             </div>
           </div>
         </div>
@@ -894,14 +1249,14 @@
     <!-- ========================================================================= -->
     <!-- 6. ABOUT ME SECTION (White rounded container, giant 'About Me.' text)    -->
     <!-- ========================================================================= -->
-    <section id="profile" class="px-6 md:px-12 lg:px-16 py-20 rounded-3xl md:rounded-4xl w-full bg-white text-black shadow-2xl relative select-none">
+    <section id="profile" class="px-6 md:px-12 lg:px-16 py-20 rounded-3xl md:rounded-4xl w-full shadow-2xl relative select-none transition-colors duration-300">
       
       <!-- Giant Headline: Matching reference site "About" + "Me." -->
       <div class="w-full overflow-x-hidden hide-scrollbar">
-        <h2 class="font-serif text-5xl sm:text-7xl md:text-8xl text-stone-800 font-bold leading-none">
+        <h2 class="about-faint font-serif text-5xl sm:text-7xl md:text-8xl font-bold leading-none">
           About
         </h2>
-        <h2 class="font-serif text-8xl sm:text-[180px] md:text-[280px] text-stone-900 font-bold leading-none tracking-tighter -mt-2 sm:-mt-6">
+        <h2 class="about-bold font-serif text-8xl sm:text-[180px] md:text-[280px] font-bold leading-none tracking-tighter -mt-2 sm:-mt-6">
           Me.
         </h2>
       </div>
@@ -911,26 +1266,26 @@
         
         <!-- Block 1: Who Am I -->
         <div class="space-y-3 reveal-item">
-          <h3 class="font-bold text-lg sm:text-xl text-stone-800 font-serif">Who Am I</h3>
-          <p class="text-sm sm:text-base leading-relaxed text-stone-600 font-medium">
-            I'm <span class="font-bold text-black">Abhinav K M</span>, a motivated <span class="font-bold text-black">BCA Graduate</span> and aspiring <span class="font-bold text-black">Data Analyst</span> based in Malappuram, Kerala. Currently working as a Data Analyst Trainee at Techno Dot Academy of R&amp;D&amp;I, applying data cleaning, querying, and dashboard development across commercial datasets.
+          <h3 class="about-subhead font-bold text-lg sm:text-xl font-serif">Who Am I</h3>
+          <p class="about-body text-sm sm:text-base leading-relaxed font-medium">
+            I'm <span class="highlight-bold font-bold">Abhinav K M</span>, a motivated <span class="highlight-bold font-bold">BCA Graduate</span> and aspiring <span class="highlight-bold font-bold">Data Analyst</span> based in Malappuram, Kerala. Currently working as a Data Analyst Trainee at Techno Dot Academy of R&amp;D&amp;I, applying data cleaning, querying, and dashboard development across commercial datasets.
           </p>
         </div>
 
         <!-- Block 2: What I Do -->
         <div class="space-y-3 reveal-item">
-          <h3 class="font-bold text-lg sm:text-xl text-stone-800 font-serif">What I Do</h3>
-          <p class="text-sm sm:text-base text-stone-600 font-medium leading-relaxed">
-            I specialize in the core analytical workflow: <span class="font-bold text-black">Raw Data &rarr; Cleansing &rarr; Statistical Modeling &rarr; Actionable Business Insights</span>. 
-            My daily stack includes <span class="font-bold text-black">Excel &amp; DAX</span>, <span class="font-bold text-black">PostgreSQL &amp; MySQL</span>, <span class="font-bold text-black">Python (Pandas &amp; NumPy)</span>, and <span class="font-bold text-black">Power BI</span>.
+          <h3 class="about-subhead font-bold text-lg sm:text-xl font-serif">What I Do</h3>
+          <p class="about-body text-sm sm:text-base font-medium leading-relaxed">
+            I specialize in the core analytical workflow: <span class="highlight-bold font-bold">Raw Data &rarr; Cleansing &rarr; Statistical Modeling &rarr; Actionable Business Insights</span>. 
+            My daily stack includes <span class="highlight-bold font-bold">Excel &amp; DAX</span>, <span class="highlight-bold font-bold">PostgreSQL &amp; MySQL</span>, <span class="highlight-bold font-bold">Python (Pandas &amp; NumPy)</span>, and <span class="highlight-bold font-bold">Power BI</span>.
           </p>
         </div>
 
         <!-- Block 3: Education & Foundation -->
         <div class="space-y-3 reveal-item">
-          <h3 class="font-bold text-lg sm:text-xl text-stone-800 font-serif">Academic Foundation</h3>
-          <p class="text-sm sm:text-base text-stone-600 font-medium leading-relaxed">
-            Completed my <span class="font-bold text-black">Bachelor of Computer Applications (BCA)</span> from the <span class="font-bold text-black">University of Calicut</span> (2023–2026). Certified in <span class="font-bold text-black">Data Analytics Using AI</span>.
+          <h3 class="about-subhead font-bold text-lg sm:text-xl font-serif">Academic Foundation</h3>
+          <p class="about-body text-sm sm:text-base font-medium leading-relaxed">
+            Completed my <span class="highlight-bold font-bold">Bachelor of Computer Applications (BCA)</span> from the <span class="highlight-bold font-bold">University of Calicut</span> (2023–2026). Certified in <span class="highlight-bold font-bold">Data Analytics Using AI</span>.
           </p>
         </div>
 
@@ -941,10 +1296,10 @@
     <!-- ========================================================================= -->
     <!-- 7. EXPERIENCE SECTION                                                    -->
     <!-- ========================================================================= -->
-    <section id="experience" class="px-6 md:px-12 lg:px-16 py-20 w-full text-white bg-black">
+    <section id="experience" class="px-6 md:px-12 lg:px-16 py-20 w-full transition-colors duration-300">
       
       <div class="w-full overflow-x-hidden hide-scrollbar mb-12">
-        <h2 class="font-serif text-6xl sm:text-8xl md:text-9xl text-stone-200 font-bold">
+        <h2 class="font-serif text-6xl sm:text-8xl md:text-9xl font-bold">
           Experience.
         </h2>
       </div>
@@ -952,29 +1307,29 @@
       <div class="space-y-12 max-w-4xl">
         
         <!-- Entry 1 -->
-        <div class="border-l-2 border-stone-800 pl-6 sm:pl-8 space-y-3 reveal-item">
-          <h3 class="text-xl sm:text-2xl font-bold text-stone-100 font-serif">
+        <div class="timeline-item border-l-2 pl-6 sm:pl-8 space-y-3 reveal-item">
+          <h3 class="role-title text-xl sm:text-2xl font-bold font-serif">
             Data Analyst Trainee
           </h3>
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-stone-400 text-sm">
-            <span>Techno Dot Academy of R&amp;D&amp;I &bull; Malappuram, Kerala</span>
-            <span class="font-mono text-xs px-3 py-1 bg-stone-900 rounded-full w-fit">06/2026 – Present</span>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-sm">
+            <span class="company-text">Techno Dot Academy of R&amp;D&amp;I &bull; Malappuram, Kerala</span>
+            <span class="date-pill font-mono text-xs px-3 py-1 rounded-full w-fit">06/2026 – Present</span>
           </div>
-          <p class="text-stone-300 text-sm leading-relaxed pt-1">
+          <p class="exp-desc text-sm leading-relaxed pt-1">
             Analyzing commercial datasets, running complex SQL queries, and constructing Power BI dashboards.
           </p>
         </div>
 
         <!-- Entry 2 -->
-        <div class="border-l-2 border-stone-800 pl-6 sm:pl-8 space-y-3 reveal-item">
-          <h3 class="text-xl sm:text-2xl font-bold text-stone-100 font-serif">
+        <div class="timeline-item border-l-2 pl-6 sm:pl-8 space-y-3 reveal-item">
+          <h3 class="role-title text-xl sm:text-2xl font-bold font-serif">
             Bachelor of Computer Applications (BCA)
           </h3>
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-stone-400 text-sm">
-            <span>University of Calicut &bull; Malappuram, Kerala</span>
-            <span class="font-mono text-xs px-3 py-1 bg-stone-900 rounded-full w-fit">2023 – 2026</span>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-sm">
+            <span class="company-text">University of Calicut &bull; Malappuram, Kerala</span>
+            <span class="date-pill font-mono text-xs px-3 py-1 rounded-full w-fit">2023 – 2026</span>
           </div>
-          <p class="text-stone-300 text-sm leading-relaxed pt-1">
+          <p class="exp-desc text-sm leading-relaxed pt-1">
             Comprehensive foundation in database architectures, programming principles, and data management.
           </p>
         </div>
@@ -1452,6 +1807,72 @@
           requestAnimationFrame(loopRays);
         }
         requestAnimationFrame(loopRays);
+      })();
+
+      // 6. Interactive Light & Dark Theme Controller
+      (function initThemeToggle() {
+        const STORAGE_KEY = 'portfolio-theme';
+        const root = document.documentElement;
+
+        function updateTheme(theme) {
+          const isDark = theme === 'dark';
+          if (isDark) {
+            root.classList.add('dark');
+            root.classList.remove('light');
+          } else {
+            root.classList.add('light');
+            root.classList.remove('dark');
+          }
+
+          try {
+            localStorage.setItem(STORAGE_KEY, theme);
+          } catch (e) {}
+
+          // Update icons
+          const sunIcon = document.getElementById('theme-icon-sun');
+          const moonIcon = document.getElementById('theme-icon-moon');
+          if (sunIcon && moonIcon) {
+            if (isDark) {
+              sunIcon.classList.remove('hidden');
+              moonIcon.classList.add('hidden');
+            } else {
+              sunIcon.classList.add('hidden');
+              moonIcon.classList.remove('hidden');
+            }
+          }
+
+          // Dynamically update WarpText headline color
+          if (window.warpTextInstance && typeof window.warpTextInstance.setColor === 'function') {
+            window.warpTextInstance.setColor(isDark ? '#fcfcfc' : '#0f172a');
+          }
+
+          // Dynamically update GooeyNav WebGL theme
+          if (window.gooeyNavInstance && typeof window.gooeyNavInstance.setTheme === 'function') {
+            window.gooeyNavInstance.setTheme(theme);
+          }
+        }
+
+        const toggleBtn = document.getElementById('theme-toggle');
+        if (toggleBtn) {
+          toggleBtn.addEventListener('click', () => {
+            const current = root.classList.contains('dark') ? 'dark' : 'light';
+            const next = current === 'dark' ? 'light' : 'dark';
+            updateTheme(next);
+          });
+        }
+
+        // Initialize state
+        const initialTheme = root.classList.contains('dark') ? 'dark' : 'light';
+        updateTheme(initialTheme);
+
+        // System preference change listener
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+          try {
+            if (!localStorage.getItem(STORAGE_KEY)) {
+              updateTheme(e.matches ? 'dark' : 'light');
+            }
+          } catch (err) {}
+        });
       })();
     });
   </script>
