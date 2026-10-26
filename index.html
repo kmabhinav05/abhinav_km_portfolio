@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Abhinav K M – Data Analyst Portfolio</title>
+  <meta name="description" content="Hi, I'm Abhinav K M, a professional Data Analyst specializing in Excel, SQL, PostgreSQL, Python, Pandas, NumPy, and Power BI dashboards. Explore my verified projects, analytical methodology, and business intelligence portfolio.">
+  <meta name="author" content="Abhinav K M">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Abhinav K M – Data Analyst Portfolio">
+  <meta property="og:description" content="Motivated BCA graduate & Data Analyst Trainee turning raw datasets into actionable business intelligence.">
+  <meta property="og:url" content="https://linkedin.com/in/abhinav-k-m">
+
+  <!-- Google Fonts (Online Backup) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,600&display=swap" rel="stylesheet">
+
+  <!-- 1. Offline Standalone Tailwind CSS v2.2.19 (Local & Instant) -->
+  <link rel="stylesheet" href="assets/css/tailwind.min.css">
+
+  <!-- 2. Self-Contained Complete Theme Stylesheet (Offline & CDN independent) -->
+  <style>
+    /* Reset & Reference Base */
+    *, ::before, ::after {
+      box-sizing: border-box;
+      border-width: 0;
+      border-style: solid;
+      border-color: currentColor;
+    }
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+    body {
+      background-color: #050908 !important;
+      color: #ffffff;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      cursor: none; /* Inverting magnetic cursor */
+    }
+
+    /* Font Families */
+    .font-serif {
+      font-family: 'Playfair Display', Georgia, Cambria, 'Times New Roman', Times, serif !important;
+    }
+    .font-sans {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', 'IBM Plex Mono', Consolas, Monaco, monospace !important;
+    }
+
+    /* Color Utilities */
+    .bg-white { background-color: #ffffff !important; }
+    .text-black { color: #000000 !important; }
+    .bg-black { background-color: #000000 !important; }
+    .text-white { color: #ffffff !important; }
+
+    .bg-stone-50 { background-color: #fafaf9 !important; }
+    .bg-stone-100 { background-color: #f5f5f4 !important; }
+    .bg-stone-800 { background-color: #292524 !important; }
+    .bg-stone-900 { background-color: #1c1917 !important; }
+    .bg-stone-950 { background-color: #0c0a09 !important; }
+
+    .text-stone-300 { color: #d6d3d1 !important; }
+    .text-stone-400 { color: #a8a29e !important; }
+    .text-stone-500 { color: #78716c !important; }
+    .text-stone-600 { color: #57534e !important; }
+    .text-stone-700 { color: #44403c !important; }
+    .text-stone-800 { color: #292524 !important; }
+    .text-stone-900 { color: #1c1917 !important; }
+
+    .border-stone-200 { border-color: #e7e5e4 !important; }
+    .border-stone-700 { border-color: #44403c !important; }
+    .border-stone-800 { border-color: #292524 !important; }
+    .border-stone-900 { border-color: #1c1917 !important; }
+
+    /* Rounded shapes matching reference */
+    .rounded-3xl { border-radius: 1.5rem !important; }
+    .rounded-4xl { border-radius: 2.5rem !important; }
+    .rounded-b-3xl { border-bottom-left-radius: 1.5rem !important; border-bottom-right-radius: 1.5rem !important; }
+    .rounded-b-4xl { border-bottom-left-radius: 2.5rem !important; border-bottom-right-radius: 2.5rem !important; }
+
+    /* Touch fallback: show regular pointer */
+    @media (pointer: coarse) {
+      body {
+        cursor: auto !important;
+      }
+      .custom-cursor, .custom-cursor-dot {
+        display: none !important;
+      }
+    }
+
+    /* Fixed Navigation */
+    #navbar {
+      background-color: rgba(255, 255, 255, 0.96) !important;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    /* Grain texture overlay */
+    .grain-overlay {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/filter%3E%3C/svg%3E");
+    }
+
+    /* Reference Flicker Animation */
+    @keyframes flicker {
+      0% { opacity: 1; }
+      2% { opacity: 0.2; }
+      3% { opacity: 1; }
+      6% { opacity: 0.5; }
+      7% { opacity: 1; }
+      9% { opacity: 0.1; }
+      10% { opacity: 1; }
+      11% { opacity: 0.3; }
+      14% { opacity: 1; }
+      20% { opacity: 0.6; }
+      25% { opacity: 1; }
+      30% { opacity: 0.2; }
+      31% { opacity: 1; }
+      40% { opacity: 0.4; }
+      41% { opacity: 1; }
+      60% { opacity: 0.3; }
+      61% { opacity: 1; }
+      65% { opacity: 0.8; }
+      70% { opacity: 1; }
+      80% { opacity: 0.5; }
+      81% { opacity: 1; }
+      90% { opacity: 0.2; }
+      91% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    .flicker {
+      animation: flicker 4.5s infinite;
+    }
+
+    /* Scroll reveal transitions */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-item.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hide scrollbar */
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="selection:bg-white selection:text-black">
+
+  <!-- ========================================================================= -->
+  <!-- 1. DUAL INVERTING MAGNETIC CURSOR (Mix-blend-difference)                   -->
+  <!-- ========================================================================= -->
+  <div id="cursor-blob" class="custom-cursor fixed top-0 left-0 w-12 h-12 bg-white rounded-full pointer-events-none z-50" style="mix-blend-mode: difference; transform: translate(-50%, -50%); will-change: transform; filter: blur(1px); box-shadow: 0 0 20px rgba(255,255,255,0.35); position: fixed;"></div>
+  <div id="cursor-dot" class="custom-cursor-dot fixed top-0 left-0 w-3 h-3 bg-white rounded-full pointer-events-none z-50" style="mix-blend-mode: difference; transform: translate(-50%, -50%); will-change: transform; box-shadow: 0 0 6px rgba(255,255,255,0.9); position: fixed;"></div>
+
+  <!-- ========================================================================= -->
+  <!-- 2. MINIMAL FIXED NAVIGATION (White background, black font, subtle links) -->
+  <!-- ========================================================================= -->
+  <header id="navbar" class="fixed top-0 left-0 w-full flex justify-between items-center py-4 sm:py-5 px-4 sm:px-8 md:px-12 text-black z-40 select-none">
+    <!-- Brand / Home link -->
+    <a href="#hero" class="text-base sm:text-lg tracking-tighter text-stone-900 font-bold px-2 py-1">
+      Abhinav<span class="text-stone-400 font-normal">.km</span>
+    </a>
+
+    <!-- Navigation Menu Items -->
+    <nav class="flex items-center gap-1 sm:gap-4 md:gap-6 text-xs sm:text-sm font-medium">
+      <a href="#projects" class="px-2.5 sm:px-3 py-1 rounded-xl text-stone-600 hover:text-black hover:bg-stone-100 transition">Work</a>
+      <a href="#profile" class="px-2.5 sm:px-3 py-1 rounded-xl text-stone-600 hover:text-black hover:bg-stone-100 transition">About</a>
+      <a href="#skills" class="px-2.5 sm:px-3 py-1 rounded-xl text-stone-600 hover:text-black hover:bg-stone-100 transition">Skills</a>
+      <a href="#experience" class="px-2.5 sm:px-3 py-1 rounded-xl text-stone-600 hover:text-black hover:bg-stone-100 transition">Experience</a>
+      <a href="#contact" class="px-2.5 sm:px-3 py-1 rounded-xl text-stone-600 hover:text-black hover:bg-stone-100 transition">Contact</a>
+      <a href="https://drive.google.com/file/d/1OkKjk7z9MdCexpCY57LlAkbwtGp0alJ0/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-1 px-3.5 py-1 rounded-full bg-black text-white text-xs font-semibold hover:bg-stone-800 transition">
+        <span>CV</span>
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+      </a>
+    </nav>
+  </header>
+
+  <main class="w-full">
+
+    <!-- ========================================================================= -->
+    <!-- 3. HERO SECTION WITH REACTBITS GRAINIENT / AURORA BACKGROUND              -->
+    <!-- ========================================================================= -->
+    <section id="hero" class="w-full min-h-screen pt-28 sm:pt-24 pb-8 px-6 sm:px-10 md:px-16 rounded-b-3xl md:rounded-b-4xl flex flex-col justify-between items-start bg-white text-black relative select-none shadow-2xl overflow-hidden">
+      
+      <!-- ReactBits Grainient Canvas Background -->
+      <canvas id="aurora-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-80" aria-hidden="true"></canvas>
+
+      <!-- Soft White Grain Texture Overlay for tactile finish -->
+      <div class="grain-overlay absolute inset-0 pointer-events-none z-[1] opacity-70"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-white/30 pointer-events-none z-[2]"></div>
+
+      <!-- Top Tag -->
+      <div class="w-full flex justify-between items-center text-xs text-stone-500 font-mono relative z-10">
+        <p>BCA Graduate &bull; Data Analyst Trainee</p>
+        <p class="hidden sm:block">Malappuram, Kerala, India 📍</p>
+      </div>
+
+      <!-- Center Typography: Playfair Display Headline -->
+      <div class="w-full flex items-center justify-center my-auto py-12 relative z-10">
+        <div class="space-y-3 text-center max-w-4xl mx-auto">
+          <p class="text-sm sm:text-base font-semibold text-stone-600 tracking-wide uppercase font-mono">Hello, I am</p>
+          
+          <h1 class="font-serif text-5xl sm:text-7xl md:text-8xl text-stone-900 font-bold tracking-tight">
+            Abhinav K M
+          </h1>
+
+          <p class="text-base sm:text-xl text-stone-700 font-medium pt-2 max-w-xl mx-auto leading-relaxed">
+            A passionate <span class="font-bold text-black border-b-2 border-stone-800">Data Analyst</span> turning raw data into actionable insights
+          </p>
+        </div>
+      </div>
+
+      <!-- Bottom Interactive Typewriter -->
+      <div class="w-full flex justify-between items-end text-stone-800 pt-4 relative z-10">
+        <div class="h-8 flex items-center">
+          <p class="text-sm sm:text-lg font-semibold text-stone-800 font-mono flex items-center gap-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span id="typewriter-text">SQL &bull; PostgreSQL &bull; Excel &bull; Power BI</span>
+            <span class="font-normal">|</span>
+          </p>
+        </div>
+
+        <div class="hidden md:flex items-center gap-3 text-xs font-mono text-stone-600">
+          <a href="#projects" class="hover:text-black transition">Scroll down &darr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 4. WORKS SECTION (Dark black background, massive serif header, bento)    -->
+    <!-- ========================================================================= -->
+    <section id="projects" class="px-4 sm:px-8 md:px-12 bg-black py-20 sm:py-28 space-y-12 sm:space-y-16 w-full text-white">
+      
+      <!-- Section Title -->
+      <div>
+        <h2 class="font-serif text-6xl sm:text-8xl md:text-9xl text-white font-thin tracking-tight">
+          My Works.
+        </h2>
+        <p class="text-stone-400 text-xs sm:text-sm font-mono mt-3 max-w-xl">
+          Curated analytics projects, business intelligence dashboards, and SQL data modeling extracted from verified CV.
+        </p>
+      </div>
+
+      <!-- Bento Grid (7 cols / 5 cols split) -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        
+        <!-- MAIN FEATURED PROJECT 1: Sales Analysis Dashboard (7 cols) -->
+        <div class="md:col-span-7 h-full w-full reveal-item">
+          <div class="group relative overflow-hidden bg-stone-900 border border-stone-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between min-h-[440px] hover:border-stone-700 transition">
+            
+            <div class="flex justify-between items-start">
+              <span class="px-3 py-1 rounded-full text-xs font-mono text-emerald-400 bg-emerald-950/80 border border-emerald-800/60">
+                Production Project
+              </span>
+              <div class="flex gap-2">
+                <a href="https://github.com/kmabhinav05" target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository" class="p-2.5 bg-white/10 rounded-xl hover:bg-white/20 transition">
+                  <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-white"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                </a>
+              </div>
+            </div>
+
+            <div class="space-y-4 pt-12">
+              <div class="space-y-2">
+                <h3 class="font-serif text-2xl sm:text-4xl text-white font-medium">
+                  Sales Analysis Dashboard | Excel
+                </h3>
+                <p class="text-sm sm:text-base text-stone-300 leading-relaxed font-normal">
+                  Analyzed over 1,000 order records to identify revenue trends, seasonal spikes, and customer spending habits. Built an interactive Excel dashboard with multi-level slicers, Pivot Tables, and DAX calculations.
+                </p>
+              </div>
+
+              <div class="flex flex-wrap gap-2 pt-2">
+                <span class="px-3 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">Advanced Excel</span>
+                <span class="px-3 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">Pivot Tables</span>
+                <span class="px-3 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">Power Query</span>
+                <span class="px-3 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">DAX</span>
+                <span class="px-3 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">KPI Analysis</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- PROJECT 2: SQL Data Modeling & Warehouse (5 cols) -->
+        <div class="md:col-span-5 h-full w-full reveal-item">
+          <div class="group relative overflow-hidden bg-stone-900 border border-stone-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between min-h-[440px] hover:border-stone-700 transition">
+            
+            <div class="flex justify-between items-start">
+              <span class="px-3 py-1 rounded-full text-xs font-mono text-blue-400 bg-blue-950/80 border border-blue-800/60">
+                Database Engineering
+              </span>
+              <div class="flex gap-2">
+                <a href="https://github.com/kmabhinav05" target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository" class="p-2.5 bg-white/10 rounded-xl hover:bg-white/20 transition">
+                  <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-white"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                </a>
+              </div>
+            </div>
+
+            <div class="space-y-4 pt-12">
+              <div class="space-y-2">
+                <h3 class="font-serif text-2xl sm:text-3xl text-white font-medium">
+                  PostgreSQL &amp; MySQL Queries
+                </h3>
+                <p class="text-sm text-stone-300 leading-relaxed font-normal">
+                  Designed structured relational query workflows using Common Table Expressions (CTEs), multi-table JOINs, subqueries, and window functions for analytical aggregations.
+                </p>
+              </div>
+
+              <div class="flex flex-wrap gap-2 pt-2">
+                <span class="px-3 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">PostgreSQL</span>
+                <span class="px-3 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">MySQL</span>
+                <span class="px-3 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">CTEs</span>
+                <span class="px-3 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">Window Functions</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- PROJECT 3: Python Data Analytics & EDA (5 cols) -->
+        <div class="md:col-span-5 h-full w-full reveal-item">
+          <div class="bg-stone-900 border border-stone-800 rounded-3xl p-6 sm:p-7 flex flex-col justify-between min-h-[300px] hover:border-stone-700 transition">
+            <span class="text-xs font-mono text-yellow-400 uppercase">Data Exploration</span>
+            <div class="space-y-2 my-auto py-4">
+              <h3 class="font-serif text-xl sm:text-2xl text-white font-medium">
+                Python EDA &amp; Cleaning Suite
+              </h3>
+              <p class="text-xs sm:text-sm text-stone-300 leading-relaxed">
+                Automated statistical cleaning, null imputation, and visual distribution modeling built on Pandas, NumPy, and Seaborn.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-2.5 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">Pandas</span>
+              <span class="px-2.5 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">NumPy</span>
+              <span class="px-2.5 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">Seaborn</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECT 4: Power BI Enterprise Dashboards (7 cols) -->
+        <div class="md:col-span-7 h-full w-full reveal-item">
+          <div class="bg-stone-900 border border-stone-800 rounded-3xl p-6 sm:p-7 flex flex-col justify-between min-h-[300px] hover:border-stone-700 transition">
+            <span class="text-xs font-mono text-purple-400 uppercase">Business Intelligence</span>
+            <div class="space-y-2 my-auto py-4">
+              <h3 class="font-serif text-xl sm:text-2xl text-white font-medium">
+                Interactive Power BI KPI Visualizations
+              </h3>
+              <p class="text-xs sm:text-sm text-stone-300 leading-relaxed">
+                Star schema modeling, dynamic measure slicing, trend forecasting, and executive management reporting suites.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-2.5 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">Power BI</span>
+              <span class="px-2.5 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">DAX</span>
+              <span class="px-2.5 py-1 text-xs text-white bg-stone-800 rounded-md font-mono">Data Modeling</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 5. ABOUT ME SECTION (White rounded container, giant 'About Me.' text)    -->
+    <!-- ========================================================================= -->
+    <section id="profile" class="px-6 md:px-12 lg:px-16 py-20 rounded-3xl md:rounded-4xl w-full bg-white text-black shadow-2xl relative select-none">
+      
+      <!-- Giant Headline: Matching reference site "About" + "Me." -->
+      <div class="w-full overflow-x-hidden hide-scrollbar">
+        <h2 class="font-serif text-5xl sm:text-7xl md:text-8xl text-stone-800 font-bold leading-none">
+          About
+        </h2>
+        <h2 class="font-serif text-8xl sm:text-[180px] md:text-[280px] text-stone-900 font-bold leading-none tracking-tighter -mt-2 sm:-mt-6">
+          Me.
+        </h2>
+      </div>
+
+      <!-- Editorial Narrative Blocks -->
+      <div class="text-sm sm:text-base md:text-lg space-y-12 sm:space-y-16 py-8 sm:py-12 max-w-4xl">
+        
+        <!-- Block 1: Who Am I -->
+        <div class="space-y-3 reveal-item">
+          <h3 class="font-bold text-lg sm:text-xl text-stone-800 font-serif">Who Am I</h3>
+          <p class="text-sm sm:text-base leading-relaxed text-stone-600 font-medium">
+            I'm <span class="font-bold text-black">Abhinav K M</span>, a motivated <span class="font-bold text-black">BCA Graduate</span> and aspiring <span class="font-bold text-black">Data Analyst</span> based in Malappuram, Kerala. Currently working as a Data Analyst Trainee at Techno Dot Academy of R&amp;D&amp;I, applying data cleaning, querying, and dashboard development across commercial datasets.
+          </p>
+        </div>
+
+        <!-- Block 2: What I Do -->
+        <div class="space-y-3 reveal-item">
+          <h3 class="font-bold text-lg sm:text-xl text-stone-800 font-serif">What I Do</h3>
+          <p class="text-sm sm:text-base text-stone-600 font-medium leading-relaxed">
+            I specialize in the core analytical workflow: <span class="font-bold text-black">Raw Data &rarr; Cleansing &rarr; Statistical Modeling &rarr; Actionable Business Insights</span>. 
+            My daily stack includes <span class="font-bold text-black">Excel &amp; DAX</span>, <span class="font-bold text-black">PostgreSQL &amp; MySQL</span>, <span class="font-bold text-black">Python (Pandas &amp; NumPy)</span>, and <span class="font-bold text-black">Power BI</span>.
+          </p>
+        </div>
+
+        <!-- Block 3: Education & Foundation -->
+        <div class="space-y-3 reveal-item">
+          <h3 class="font-bold text-lg sm:text-xl text-stone-800 font-serif">Academic Foundation</h3>
+          <p class="text-sm sm:text-base text-stone-600 font-medium leading-relaxed">
+            Completed my <span class="font-bold text-black">Bachelor of Computer Applications (BCA)</span> from the <span class="font-bold text-black">University of Calicut</span> (2023–2026). Certified in <span class="font-bold text-black">Data Analytics Using AI</span>.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 6. TECHNICAL TOOLKIT & SKILLS                                            -->
+    <!-- ========================================================================= -->
+    <section id="skills" class="px-6 md:px-12 lg:px-16 py-20 sm:py-24 w-full bg-[#050908] text-white">
+      <div class="max-w-6xl mx-auto space-y-12">
+        
+        <div>
+          <span class="font-mono text-xs text-stone-400 uppercase tracking-widest block mb-2">03 // Technical Arsenal</span>
+          <h2 class="font-serif text-4xl sm:text-6xl text-stone-100 font-medium">
+            Analytical Toolkit.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          <!-- Category 1: Microsoft Excel -->
+          <div class="p-6 rounded-2xl bg-stone-900 border border-stone-800 space-y-4 reveal-item">
+            <div class="flex items-center justify-between pb-3 border-b border-stone-800">
+              <h3 class="font-serif text-xl font-bold text-white">Microsoft Excel</h3>
+              <span class="text-xs font-mono text-emerald-400">Advanced</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">VLOOKUP</span>
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">XLOOKUP</span>
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">INDEX-MATCH</span>
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">Pivot Tables</span>
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">Power Query</span>
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">DAX</span>
+            </div>
+          </div>
+
+          <!-- Category 2: SQL & Databases -->
+          <div class="p-6 rounded-2xl bg-stone-900 border border-stone-800 space-y-4 reveal-item">
+            <div class="flex items-center justify-between pb-3 border-b border-stone-800">
+              <h3 class="font-serif text-xl font-bold text-white">SQL Databases</h3>
+              <span class="text-xs font-mono text-blue-400">Querying</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">PostgreSQL</span>
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">MySQL</span>
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">Complex Joins</span>
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">CTEs</span>
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">Window Functions</span>
+            </div>
+          </div>
+
+          <!-- Category 3: Python Data Stack -->
+          <div class="p-6 rounded-2xl bg-stone-900 border border-stone-800 space-y-4 reveal-item">
+            <div class="flex items-center justify-between pb-3 border-b border-stone-800">
+              <h3 class="font-serif text-xl font-bold text-white">Python Analytics</h3>
+              <span class="text-xs font-mono text-yellow-400">Scripts</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">Pandas</span>
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">NumPy</span>
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">Matplotlib</span>
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">Seaborn</span>
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">Plotly</span>
+            </div>
+          </div>
+
+          <!-- Category 4: Power BI -->
+          <div class="p-6 rounded-2xl bg-stone-900 border border-stone-800 space-y-4 reveal-item">
+            <div class="flex items-center justify-between pb-3 border-b border-stone-800">
+              <h3 class="font-serif text-xl font-bold text-white">Power BI</h3>
+              <span class="text-xs font-mono text-purple-400">Dashboards</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">Data Modeling</span>
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">DAX Measures</span>
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">Interactive Dashboards</span>
+            </div>
+          </div>
+
+          <!-- Category 5: Methodology -->
+          <div class="p-6 rounded-2xl bg-stone-900 border border-stone-800 space-y-4 md:col-span-2 reveal-item">
+            <div class="flex items-center justify-between pb-3 border-b border-stone-800">
+              <h3 class="font-serif text-xl font-bold text-white">Analysis Methodology</h3>
+              <span class="text-xs font-mono text-stone-400">Core</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">Data Cleaning</span>
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">Data Transformation</span>
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">EDA</span>
+              <span class="px-3 py-1 rounded-lg text-xs font-mono bg-stone-800 text-stone-300">Trend &amp; KPI Analysis</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 7. EXPERIENCE SECTION                                                    -->
+    <!-- ========================================================================= -->
+    <section id="experience" class="px-6 md:px-12 lg:px-16 py-20 w-full text-white bg-black">
+      
+      <div class="w-full overflow-x-hidden hide-scrollbar mb-12">
+        <h2 class="font-serif text-6xl sm:text-8xl md:text-9xl text-stone-200 font-bold">
+          Experience.
+        </h2>
+      </div>
+
+      <div class="space-y-12 max-w-4xl">
+        
+        <!-- Entry 1 -->
+        <div class="border-l-2 border-stone-800 pl-6 sm:pl-8 space-y-3 reveal-item">
+          <h3 class="text-xl sm:text-2xl font-bold text-stone-100 font-serif">
+            Data Analyst Trainee
+          </h3>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-stone-400 text-sm">
+            <span>Techno Dot Academy of R&amp;D&amp;I &bull; Malappuram, Kerala</span>
+            <span class="font-mono text-xs px-3 py-1 bg-stone-900 rounded-full w-fit">06/2026 – Present</span>
+          </div>
+          <p class="text-stone-300 text-sm leading-relaxed pt-1">
+            Analyzing commercial datasets, running complex SQL queries, and constructing Power BI dashboards.
+          </p>
+        </div>
+
+        <!-- Entry 2 -->
+        <div class="border-l-2 border-stone-800 pl-6 sm:pl-8 space-y-3 reveal-item">
+          <h3 class="text-xl sm:text-2xl font-bold text-stone-100 font-serif">
+            Bachelor of Computer Applications (BCA)
+          </h3>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-stone-400 text-sm">
+            <span>University of Calicut &bull; Malappuram, Kerala</span>
+            <span class="font-mono text-xs px-3 py-1 bg-stone-900 rounded-full w-fit">2023 – 2026</span>
+          </div>
+          <p class="text-stone-300 text-sm leading-relaxed pt-1">
+            Comprehensive foundation in database architectures, programming principles, and data management.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 8. CONTACT & FOOTER SECTION WITH REACTBITS SIDE RAYS SHADER               -->
+    <!-- ========================================================================= -->
+    <section id="contact" class="w-full px-6 py-20 sm:py-28 md:px-12 space-y-16 text-white rounded-3xl md:rounded-4xl bg-stone-950 border-t border-stone-900 relative overflow-hidden">
+      
+      <!-- ReactBits Side-Rays WebGL Canvas Background -->
+      <canvas id="siderays-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0" aria-hidden="true"></canvas>
+
+      <!-- Soft Dark Gradient Falloff -->
+      <div class="absolute inset-0 bg-radial-gradient from-transparent via-stone-950/40 to-stone-950/80 pointer-events-none z-[1]"></div>
+
+      <div class="relative z-10 space-y-16">
+        <h2 class="flicker font-serif text-5xl sm:text-7xl md:text-8xl text-center font-bold tracking-tight select-none">
+          Where to find me.
+        </h2>
+
+        <div class="space-y-8 text-center max-w-3xl mx-auto">
+          <p class="text-stone-400 text-base sm:text-lg">
+            Just drop a mail at :
+          </p>
+
+          <a href="mailto:kmabhinav25@gmail.com" class="inline-block text-2xl sm:text-4xl font-semibold font-serif hover:text-stone-300 transition underline underline-offset-8">
+            kmabhinav25@gmail.com
+          </a>
+
+          <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+            <a href="tel:+919207302577" class="flex items-center gap-2 rounded-2xl py-2 px-4 text-xs sm:text-sm bg-emerald-900/90 hover:bg-emerald-800 text-white font-medium transition backdrop-blur-sm border border-emerald-700/50 shadow-lg">
+              <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <span>+91 9207302577</span>
+            </a>
+
+            <a href="https://github.com/kmabhinav05" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" class="p-2.5 rounded-full bg-stone-900/90 hover:bg-stone-800 text-white transition backdrop-blur-sm border border-stone-800 shadow-lg">
+              <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </a>
+
+            <a href="https://linkedin.com/in/abhinav-k-m" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" class="p-2.5 rounded-full bg-blue-900/90 hover:bg-blue-800 text-white transition backdrop-blur-sm border border-blue-800 shadow-lg">
+              <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+
+            <a href="https://drive.google.com/file/d/1OkKjk7z9MdCexpCY57LlAkbwtGp0alJ0/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Download CV" class="p-2.5 rounded-full bg-amber-900/90 hover:bg-amber-800 text-white transition backdrop-blur-sm border border-amber-800 shadow-lg" title="Download CV">
+              <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            </a>
+          </div>
+        </div>
+
+        <p class="text-xs text-stone-500 text-center font-serif pt-12">
+          Thank you for checking out &bull; Designed &amp; Crafted for Abhinav K M
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- 9. SCRIPT: MAGNETIC BLOB CURSOR, TYPEWRITER & INTERSECTION OBSERVER      -->
+  <!-- ========================================================================= -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 1. Dual Inverting Magnetic Cursor
+      const blob = document.getElementById('cursor-blob');
+      const dot = document.getElementById('cursor-dot');
+
+      if (blob && dot && window.matchMedia('(pointer: fine)').matches) {
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let blobX = mouseX;
+        let blobY = mouseY;
+
+        window.addEventListener('mousemove', (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+        });
+
+        function renderCursor() {
+          blobX += (mouseX - blobX) * 0.18;
+          blobY += (mouseY - blobY) * 0.18;
+          blob.style.transform = `translate(${blobX}px, ${blobY}px) translate(-50%, -50%)`;
+          requestAnimationFrame(renderCursor);
+        }
+        renderCursor();
+
+        const interactiveSelectors = 'a, button, input';
+        document.querySelectorAll(interactiveSelectors).forEach((el) => {
+          el.addEventListener('mouseenter', () => {
+            blob.style.width = '64px';
+            blob.style.height = '64px';
+          });
+          el.addEventListener('mouseleave', () => {
+            blob.style.width = '48px';
+            blob.style.height = '48px';
+          });
+        });
+      }
+
+      // 2. Typewriter Effect
+      const typewriterEl = document.getElementById('typewriter-text');
+      if (typewriterEl) {
+        const phrases = [
+          'SQL • PostgreSQL • MySQL',
+          'Excel • Pivot Tables • DAX',
+          'Python • Pandas • NumPy',
+          'Power BI • Data Modeling',
+          'EDA • Trend & KPI Analysis'
+        ];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+          const currentPhrase = phrases[phraseIndex];
+          if (isDeleting) {
+            typewriterEl.textContent = currentPhrase.substring(0, charIndex - 1);
+            charIndex--;
+          } else {
+            typewriterEl.textContent = currentPhrase.substring(0, charIndex + 1);
+            charIndex++;
+          }
+
+          let typingSpeed = isDeleting ? 35 : 75;
+
+          if (!isDeleting && charIndex === currentPhrase.length) {
+            typingSpeed = 2000;
+            isDeleting = true;
+          } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            typingSpeed = 300;
+          }
+
+          setTimeout(type, typingSpeed);
+        }
+        type();
+      }
+
+      // 3. Scroll Reveal Observer
+      const revealItems = document.querySelectorAll('.reveal-item');
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+
+        revealItems.forEach(item => observer.observe(item));
+      } else {
+        revealItems.forEach(item => item.classList.add('revealed'));
+      }
+
+      // 4. ReactBits Grainient / Aurora WebGL Shader Engine
+      (function initGrainientAurora() {
+        const canvas = document.getElementById('aurora-canvas');
+        if (!canvas) return;
+        const gl = canvas.getContext('webgl2', { alpha: true, antialias: true }) || canvas.getContext('webgl', { alpha: true });
+        if (!gl) return;
+
+        // Vertex Shader
+        const vsSource = `
+          attribute vec2 aPosition;
+          varying vec2 vUv;
+          void main() {
+            vUv = aPosition * 0.5 + 0.5;
+            gl_Position = vec4(aPosition, 0.0, 1.0);
+          }
+        `;
+
+        // Fragment Shader: Fluid Grainient Flow with Aurora Wave Palettes
+        const fsSource = `
+          precision highp float;
+          varying vec2 vUv;
+          uniform float uTime;
+          uniform vec2 uResolution;
+          uniform vec2 uPointer;
+
+          // Simplex-style pseudo noise
+          vec3 permute(vec3 x) { return mod(((x * 34.0) + 1.0) * x, 289.0); }
+          float snoise(vec2 v) {
+            const vec4 C = vec4(0.2113248654, 0.3660254038, -0.5773502692, 0.0243902439);
+            vec2 i = floor(v + dot(v, C.yy));
+            vec2 x0 = v - i + dot(i, C.xx);
+            vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+            vec4 x12 = x0.xyxy + C.xxzz;
+            x12.xy -= i1;
+            i = mod(i, 289.0);
+            vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
+            vec3 m = max(0.5 - vec3(dot(x0, x0), dot(x12.xy, x12.xy), dot(x12.zw, x12.zw)), 0.0);
+            m = m * m;
+            m = m * m;
+            vec3 x = 2.0 * fract(p * C.www) - 1.0;
+            vec3 h = abs(x) - 0.5;
+            vec3 ox = floor(x + 0.5);
+            vec3 a0 = x - ox;
+            m *= 1.792842914 - 0.85373472 * (a0 * a0 + h * h);
+            vec3 g;
+            g.x = a0.x * x0.x + h.x * x0.y;
+            g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+            return 130.0 * dot(m, g);
+          }
+
+          void main() {
+            vec2 uv = gl_FragCoord.xy / uResolution.xy;
+            float t = uTime * 0.45;
+
+            // Interactive mouse stir
+            vec2 mouseOffset = (uPointer - 0.5) * 0.2;
+            vec2 p = uv + mouseOffset;
+
+            // Layered wavy flow
+            float n1 = snoise(p * 2.2 + vec2(t * 0.2, t * 0.15));
+            float n2 = snoise(p * 3.5 - vec2(t * 0.25, -t * 0.18) + n1 * 0.45);
+            float n3 = snoise(p * 1.5 + vec2(-t * 0.12, t * 0.3) + n2 * 0.3);
+
+            // ReactBits Aurora Preset Palette stops
+            vec3 cBase   = vec3(0.98, 0.98, 0.99); // Soft white ambient
+            vec3 cViolet = vec3(0.48, 0.28, 0.95); // Deep Aurora Violet
+            vec3 cCyan   = vec3(0.12, 0.76, 0.88); // Electric Cyan
+            vec3 cTeal   = vec3(0.18, 0.92, 0.65); // Radiant Emerald / Teal
+            vec3 cPink   = vec3(0.92, 0.35, 0.72); // Rose highlight
+
+            // Color blending
+            float w1 = smoothstep(-0.6, 0.8, n1);
+            float w2 = smoothstep(-0.4, 0.9, n2);
+            float w3 = smoothstep(-0.5, 0.7, n3);
+
+            vec3 col = mix(cBase, cViolet, w1 * 0.45);
+            col = mix(col, cCyan, w2 * 0.4);
+            col = mix(col, cTeal, w3 * 0.35);
+            col = mix(col, cPink, (n1 * n2) * 0.25);
+
+            // Subtle film grain
+            float grain = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);
+            col += (grain - 0.5) * 0.035;
+
+            gl_FragColor = vec4(col, 0.85);
+          }
+        `;
+
+        function createShader(gl, type, source) {
+          const shader = gl.createShader(type);
+          gl.shaderSource(shader, source);
+          gl.compileShader(shader);
+          return shader;
+        }
+
+        const vs = createShader(gl, gl.VERTEX_SHADER, vsSource);
+        const fs = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+        const program = gl.createProgram();
+        gl.attachShader(program, vs);
+        gl.attachShader(program, fs);
+        gl.linkProgram(program);
+        gl.useProgram(program);
+
+        const posBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW);
+
+        const aPosition = gl.getAttribLocation(program, 'aPosition');
+        gl.enableVertexAttribArray(aPosition);
+        gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
+
+        const uTimeLoc = gl.getUniformLocation(program, 'uTime');
+        const uResLoc = gl.getUniformLocation(program, 'uResolution');
+        const uPointerLoc = gl.getUniformLocation(program, 'uPointer');
+
+        let pointer = { x: 0.5, y: 0.5, targetX: 0.5, targetY: 0.5 };
+        window.addEventListener('mousemove', (e) => {
+          pointer.targetX = e.clientX / window.innerWidth;
+          pointer.targetY = 1.0 - (e.clientY / window.innerHeight);
+        });
+
+        function resize() {
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          canvas.width = canvas.clientWidth * dpr;
+          canvas.height = canvas.clientHeight * dpr;
+          gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        let startTime = performance.now();
+        function render(now) {
+          const elapsed = (now - startTime) / 1000;
+          pointer.x += (pointer.targetX - pointer.x) * 0.05;
+          pointer.y += (pointer.targetY - pointer.y) * 0.05;
+
+          gl.uniform1f(uTimeLoc, elapsed);
+          gl.uniform2f(uResLoc, canvas.width, canvas.height);
+          gl.uniform2f(uPointerLoc, pointer.x, pointer.y);
+
+          gl.drawArrays(gl.TRIANGLES, 0, 6);
+          requestAnimationFrame(render);
+        }
+        requestAnimationFrame(render);
+      })();
+
+      // 5. ReactBits Side-Rays WebGL Shader Engine (for "Where to find me" contact section)
+      (function initSideRays() {
+        const canvas = document.getElementById('siderays-canvas');
+        if (!canvas) return;
+        const gl = canvas.getContext('webgl2', { alpha: true, antialias: true }) || canvas.getContext('webgl', { alpha: true });
+        if (!gl) return;
+
+        const vsSource = `#version 300 es
+          const vec2 corners[3] = vec2[3](vec2(-1.0, -1.0), vec2(3.0, -1.0), vec2(-1.0, 3.0));
+          void main() {
+            gl_Position = vec4(corners[gl_VertexID], 0.0, 1.0);
+          }
+        `;
+
+        const fsSource = `#version 300 es
+          precision highp float;
+          uniform vec2 uResolution;
+          uniform float uTime;
+          uniform vec3 uColorA;
+          uniform vec3 uColorB;
+          uniform float uBlend;
+          uniform float uIntensity;
+          uniform float uSpread;
+          uniform float uDensity;
+          uniform float uSharpness;
+          uniform float uFalloff;
+          uniform float uGlow;
+          uniform float uAim;
+          uniform float uSway;
+          out vec4 fragColor;
+
+          float hash(vec2 p) {
+            p = fract(p * vec2(123.34, 456.21));
+            p += dot(p, p + 45.32);
+            return fract(p.x * p.y);
+          }
+
+          float noise(vec2 p) {
+            vec2 i = floor(p);
+            vec2 f = p - i;
+            vec2 w = f * f * f * (f * (f * 6.0 - 15.0) + 10.0);
+            return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), w.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), w.x), w.y);
+          }
+
+          float shafts(float u, float t, float seed, float aa) {
+            float sway = (0.4 * sin(t * 0.31 + seed) + 0.24 * sin(t * 0.17 + seed * 2.3)) * uSway;
+            float n = 0.7 * noise(vec2(u + sway + seed, t * 0.3)) + 0.3 * noise(vec2(u * 2.4 + sway * 1.5 + seed * 1.7, t * 0.45 + 3.0));
+            float width = mix(0.5, 0.1, uSharpness);
+            float s = mix(smoothstep(0.5 - width, 0.5 + width, n), 0.5, aa);
+            return mix(0.05, 1.0, s);
+          }
+
+          void main() {
+            float aspect = uResolution.x / uResolution.y;
+            vec2 q = (gl_FragCoord.xy - 0.5 * uResolution) / uResolution.y;
+            
+            // Side origin: Top-right streaming into center
+            vec2 source = vec2(aspect * 0.5 + 0.1, 0.62);
+            float heading = -2.48 + uAim + 0.035 * sin(uTime * 0.21) * uSway;
+            vec2 v = q - source;
+            float r = length(v);
+            float angle = mod(atan(v.y, v.x) - heading + 3.14159265, 6.28318531) - 3.14159265;
+            float t = uTime;
+            float u = angle * uDensity;
+            float aa = smoothstep(0.12, 0.45, fwidth(u));
+
+            float offset = uSpread * 0.22;
+            float fanA = exp(-pow((angle + offset) / uSpread, 2.0) * 1.4);
+            float fanB = exp(-pow((angle - offset) / (uSpread * 1.15), 2.0) * 1.4);
+            float lightA = fanA * shafts(u, t, 0.0, aa);
+            float lightB = fanB * shafts(u * 0.83, t * 0.6, 17.0, aa);
+
+            float reach = 1.0 / (1.0 + pow(r / 0.45, uFalloff));
+            vec3 glowColor = mix(uColorA, uColorB, uBlend);
+            vec3 light = (uColorA * lightA * (1.0 - uBlend) + uColorB * lightB * uBlend) * 2.4 * reach;
+            light += glowColor * uGlow * exp(-pow(r / 0.45, 2.0));
+            light *= uIntensity;
+
+            float peak = max(light.r, max(light.g, light.b));
+            float mapped = 1.0 - exp(-peak);
+            vec3 tone = light * (mapped / max(peak, 1e-4));
+            float alpha = clamp(max(tone.r, max(tone.g, tone.b)) * 0.9, 0.0, 0.85);
+
+            fragColor = vec4(tone, alpha);
+          }
+        `;
+
+        function compile(gl, type, src) {
+          const s = gl.createShader(type);
+          gl.shaderSource(s, src);
+          gl.compileShader(s);
+          return s;
+        }
+
+        const vs = compile(gl, gl.VERTEX_SHADER, vsSource);
+        const fs = compile(gl, gl.FRAGMENT_SHADER, fsSource);
+        if (!gl.getShaderParameter(fs, gl.COMPILE_STATUS)) {
+          // Fallback to simpler WebGL1 if WebGL2 shader fails
+          return;
+        }
+
+        const prg = gl.createProgram();
+        gl.attachShader(prg, vs);
+        gl.attachShader(prg, fs);
+        gl.linkProgram(prg);
+        gl.useProgram(prg);
+
+        const vao = gl.createVertexArray ? gl.createVertexArray() : null;
+        if (vao) gl.bindVertexArray(vao);
+
+        const uRes = gl.getUniformLocation(prg, 'uResolution');
+        const uTime = gl.getUniformLocation(prg, 'uTime');
+        const uColorA = gl.getUniformLocation(prg, 'uColorA');
+        const uColorB = gl.getUniformLocation(prg, 'uColorB');
+        const uBlend = gl.getUniformLocation(prg, 'uBlend');
+        const uIntensity = gl.getUniformLocation(prg, 'uIntensity');
+        const uSpread = gl.getUniformLocation(prg, 'uSpread');
+        const uDensity = gl.getUniformLocation(prg, 'uDensity');
+        const uSharpness = gl.getUniformLocation(prg, 'uSharpness');
+        const uFalloff = gl.getUniformLocation(prg, 'uFalloff');
+        const uGlow = gl.getUniformLocation(prg, 'uGlow');
+        const uAim = gl.getUniformLocation(prg, 'uAim');
+        const uSway = gl.getUniformLocation(prg, 'uSway');
+
+        // Color stops from ReactBits Side-Rays: Amber Warm (#FFC46B) to Ice Blue (#96c8ff)
+        gl.uniform3f(uColorA, 1.0, 0.768, 0.42); // Warm ray
+        gl.uniform3f(uColorB, 0.588, 0.784, 1.0); // Cyan/Ice blue ray
+        gl.uniform1f(uBlend, 0.6);
+        gl.uniform1f(uIntensity, 1.8);
+        gl.uniform1f(uSpread, 0.45);
+        gl.uniform1f(uDensity, 6.0);
+        gl.uniform1f(uSharpness, 0.55);
+        gl.uniform1f(uFalloff, 1.6);
+        gl.uniform1f(uGlow, 0.9);
+        gl.uniform1f(uAim, 0.0);
+        gl.uniform1f(uSway, 0.8);
+
+        let aimTarget = 0.0;
+        let aimCurrent = 0.0;
+        window.addEventListener('mousemove', (e) => {
+          const rect = canvas.getBoundingClientRect();
+          if (e.clientY >= rect.top - 200 && e.clientY <= rect.bottom + 200) {
+            aimTarget = ((e.clientX / window.innerWidth) - 0.5) * 0.4;
+          }
+        });
+
+        function resizeSideRays() {
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          canvas.width = canvas.clientWidth * dpr;
+          canvas.height = canvas.clientHeight * dpr;
+          gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+        window.addEventListener('resize', resizeSideRays);
+        resizeSideRays();
+
+        let t0 = performance.now();
+        function loopRays(now) {
+          const elapsed = (now - t0) / 1000 * 0.7;
+          aimCurrent += (aimTarget - aimCurrent) * 0.04;
+
+          gl.useProgram(prg);
+          if (vao) gl.bindVertexArray(vao);
+          gl.uniform2f(uRes, canvas.width, canvas.height);
+          gl.uniform1f(uTime, elapsed);
+          gl.uniform1f(uAim, aimCurrent);
+
+          gl.drawArrays(gl.TRIANGLES, 0, 3);
+          requestAnimationFrame(loopRays);
+        }
+        requestAnimationFrame(loopRays);
+      })();
+    });
+  </script>
+
+</body>
+</html>

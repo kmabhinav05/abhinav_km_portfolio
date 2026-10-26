@@ -1,0 +1,425 @@
+/* Custom & Theme Styles for Abhinav K M - Data Analyst Portfolio */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --color-primary: #0B1220;
+  --color-secondary: #334155;
+  --color-accent: #14B8A6;
+  --color-highlight: #A3E635;
+  --color-bg: #F8FAFC;
+  --color-text: #111827;
+}
+
+body {
+  font-family: 'Manrope', sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* SMOOTH THEME TRANSITION OPTIMIZATIONS                                      */
+/* -------------------------------------------------------------------------- */
+body, header, section, div, span, p, a, button, input, textarea, svg, path {
+  transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              color 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              fill 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              stroke 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Icon rotation micro-animation on toggle */
+.theme-toggle-btn svg {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease !important;
+}
+
+.theme-toggle-btn:hover svg {
+  transform: rotate(20deg) scale(1.15);
+}
+
+/* Custom Theme Color Utilities */
+.bg-midnight { background-color: #0B1220 !important; }
+.text-midnight { color: #0B1220 !important; }
+.border-midnight { border-color: #0B1220 !important; }
+
+.bg-slateCustom { background-color: #334155 !important; }
+.text-slateCustom { color: #334155 !important; }
+
+.bg-tealAccent { background-color: #14B8A6 !important; }
+.text-tealAccent { color: #14B8A6 !important; }
+.border-tealAccent { border-color: #14B8A6 !important; }
+
+.bg-limeHighlight { background-color: #A3E635 !important; }
+.text-limeHighlight { color: #A3E635 !important; }
+
+.bg-warmWhite { background-color: #F8FAFC !important; }
+.text-charcoal { color: #111827 !important; }
+
+/* Custom Font Families */
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: 'Space Grotesk', sans-serif !important;
+}
+
+body, p, span, div, a, button, input, textarea, .font-body {
+  font-family: 'Manrope', sans-serif;
+}
+
+code, pre, .font-mono, .data-label {
+  font-family: 'IBM Plex Mono', monospace !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8FAFC;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Background grid pattern */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(51, 65, 85, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(51, 65, 85, 0.05) 1px, transparent 1px);
+}
+
+.bg-dot-pattern {
+  background-size: 24px 24px;
+  background-image: radial-gradient(circle, rgba(11, 18, 32, 0.08) 1px, transparent 1px);
+}
+
+/* Glassmorphism subtle effect */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.glass-panel-dark {
+  background: rgba(11, 18, 32, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(51, 65, 85, 0.4);
+}
+
+/* Card hover lift */
+.hover-lift {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -10px rgba(11, 18, 32, 0.08);
+}
+
+/* -------------------------------------------------------------------------- */
+/* LIGHT MODE OPTIMIZATIONS                                                   */
+/* -------------------------------------------------------------------------- */
+
+/* 1. Header Navigation Options -> Black in Light Mode */
+header nav .nav-link {
+  position: relative;
+  color: #0B1220 !important;
+  font-weight: 600;
+}
+
+header nav .nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #14B8A6;
+  transition: width 0.2s ease-in-out;
+}
+
+header nav .nav-link:hover {
+  color: #14B8A6 !important;
+}
+
+header nav .nav-link.active {
+  color: #14B8A6 !important;
+  font-weight: 700;
+}
+
+header nav .nav-link.active::after,
+header nav .nav-link:hover::after {
+  width: 100%;
+}
+
+/* 2. Header Brand Title & Subtitle in Light Mode */
+header .brand-title {
+  color: #0B1220 !important;
+}
+
+header .brand-sub {
+  color: #475569 !important;
+}
+
+/* 3. Theme Toggle Button in Light Mode */
+header .theme-toggle-btn {
+  background-color: #F1F5F9 !important;
+  border-color: #CBD5E1 !important;
+  color: #0B1220 !important;
+}
+
+header .theme-toggle-btn .moon-icon {
+  color: #0B1220 !important;
+}
+
+/* 4. Header Email in Light Mode */
+header .header-email {
+  color: #0B1220 !important;
+}
+
+/* 5. Mobile Menu Button Icon in Light Mode */
+header #mobile-menu-btn {
+  color: #0B1220 !important;
+}
+
+header #mobile-menu-btn svg {
+  stroke: #0B1220 !important;
+}
+
+/* 6. Download CV Button in Light Mode */
+header .download-cv-btn {
+  background-color: #0B1220 !important;
+  color: #FFFFFF !important;
+  border-color: #0B1220 !important;
+}
+
+/* Mobile Dropdown Links in Light Mode */
+#mobile-menu a.mobile-nav-link {
+  color: #0B1220 !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* DARK MODE AUTOMATIC OVERRIDES                                              */
+/* -------------------------------------------------------------------------- */
+
+html.dark body {
+  background-color: #070C14 !important;
+  color: #F8FAFC !important;
+}
+
+html.dark .bg-warmWhite,
+html.dark section.bg-warmWhite {
+  background-color: #070C14 !important;
+}
+
+html.dark section.bg-slate-50,
+html.dark .bg-slate-50 {
+  background-color: #0B1220 !important;
+}
+
+/* Card Overrides in Dark Mode */
+html.dark .bg-white {
+  background-color: #0F172A !important;
+  border-color: #1E293B !important;
+  color: #F8FAFC !important;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Header Elements in Dark Mode / Dark Section */
+html.dark header,
+header.header-dark-mode {
+  background-color: rgba(7, 12, 20, 0.95) !important;
+  border-color: #1E293B !important;
+}
+
+html.dark header .brand-title,
+header.header-dark-mode .brand-title {
+  color: #FFFFFF !important;
+}
+
+html.dark header .brand-sub,
+header.header-dark-mode .brand-sub {
+  color: #94A3B8 !important;
+}
+
+html.dark header nav .nav-link,
+header.header-dark-mode nav .nav-link {
+  color: #FFFFFF !important;
+}
+
+html.dark header nav .nav-link:hover,
+header.header-dark-mode nav .nav-link:hover {
+  color: #14B8A6 !important;
+}
+
+html.dark header nav .nav-link.active,
+header.header-dark-mode nav .nav-link.active {
+  color: #A3E635 !important;
+}
+
+html.dark header .theme-toggle-btn,
+header.header-dark-mode .theme-toggle-btn {
+  background-color: #1E293B !important;
+  border-color: #334155 !important;
+  color: #FFFFFF !important;
+}
+
+html.dark header .header-email,
+header.header-dark-mode .header-email {
+  color: #FFFFFF !important;
+}
+
+html.dark header #mobile-menu-btn,
+header.header-dark-mode #mobile-menu-btn {
+  color: #FFFFFF !important;
+}
+
+html.dark header #mobile-menu-btn svg,
+header.header-dark-mode #mobile-menu-btn svg {
+  stroke: #FFFFFF !important;
+}
+
+html.dark header .download-cv-btn,
+header.header-dark-mode .download-cv-btn {
+  background-color: #14B8A6 !important;
+  color: #0B1220 !important;
+  border-color: #14B8A6 !important;
+}
+
+html.dark #mobile-menu,
+header.header-dark-mode #mobile-menu {
+  background-color: #0F172A !important;
+  border-color: #1E293B !important;
+}
+
+html.dark #mobile-menu a.mobile-nav-link,
+header.header-dark-mode #mobile-menu a.mobile-nav-link {
+  color: #FFFFFF !important;
+  border-color: #1E293B !important;
+}
+
+/* Typography Overrides in Dark Mode */
+html.dark .text-midnight {
+  color: #F8FAFC !important;
+}
+
+html.dark .text-slate-600, 
+html.dark .text-slate-700 {
+  color: #94A3B8 !important;
+}
+
+html.dark .text-slate-500 {
+  color: #64748B !important;
+}
+
+html.dark .border-slate-200,
+html.dark .border-slate-100,
+html.dark .border-slate-200\/60,
+html.dark .border-slate-200\/80 {
+  border-color: #1E293B !important;
+}
+
+html.dark .bg-slate-100 {
+  background-color: #1E293B !important;
+  color: #E2E8F0 !important;
+}
+
+/* Skill Tags in Dark Mode */
+html.dark .skill-tag {
+  background-color: #1E293B !important;
+  color: #F8FAFC !important;
+  border-color: #334155 !important;
+}
+
+html.dark .skill-tag:hover {
+  border-color: #14B8A6 !important;
+  color: #14B8A6 !important;
+}
+
+/* Process Step Cards in Dark Mode */
+html.dark .process-step-card:not(.bg-midnight) {
+  background-color: #0F172A !important;
+  border-color: #1E293B !important;
+  color: #F8FAFC !important;
+}
+
+/* Form Controls in Dark Mode */
+html.dark input,
+html.dark textarea {
+  background-color: #020617 !important;
+  border-color: #1E293B !important;
+  color: #FFFFFF !important;
+}
+
+html.dark input:focus,
+html.dark textarea:focus {
+  border-color: #14B8A6 !important;
+}
+
+/* Modals in Dark Mode */
+html.dark #project-modal > div,
+html.dark #cv-modal > div {
+  background-color: #0F172A !important;
+  border-color: #1E293B !important;
+  color: #F8FAFC !important;
+}
+
+html.dark #cv-printable-area {
+  background-color: #0F172A !important;
+  color: #F8FAFC !important;
+}
+
+html.dark #cv-printable-area h1,
+html.dark #cv-printable-area h2,
+html.dark #cv-printable-area h3 {
+  color: #FFFFFF !important;
+}
+
+/* Printable CV modal styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #cv-printable-area, #cv-printable-area * {
+    visibility: visible;
+  }
+  #cv-printable-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    color: black !important;
+    background: white !important;
+  }
+}
+
+/* Mobile & Touch Responsive Enhancements */
+@media (max-width: 640px) {
+  .hero-buttons-container > a,
+  .hero-buttons-container > button {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  
+  .process-step-card {
+    padding: 1rem !important;
+  }
+
+  /* Prevent text clipping on ultra-small screens */
+  h1 {
+    word-break: break-word;
+  }
+}
