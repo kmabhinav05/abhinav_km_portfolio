@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="assets/css/staggered-text.css">
   <link rel="stylesheet" href="assets/css/glow-cursor.css">
   <link rel="stylesheet" href="assets/css/grainient.css">
+  <link rel="stylesheet" href="assets/css/liquid-chrome.css">
   <link rel="stylesheet" href="assets/css/hold-button.css">
 
   <!-- React Bits Components (Offline & Local) -->
@@ -35,6 +36,7 @@
   <script src="assets/js/staggered-text.js" defer></script>
   <script src="assets/js/glow-cursor.js" defer></script>
   <script src="assets/js/grainient.js" defer></script>
+  <script src="assets/js/liquid-chrome.js" defer></script>
   <script src="assets/js/hold-button.js" defer></script>
 
   <!-- Instant Theme Detection Script (Prevents Theme Flash) -->
@@ -252,9 +254,18 @@
 
     /* Contact Light */
     html.light #contact {
-      background-color: #0f172a !important;
-      border-color: #1e293b !important;
-      color: #ffffff !important;
+      background-color: transparent !important;
+      border: none !important;
+      color: #0f172a !important;
+    }
+    html.light #contact h2 {
+      color: #0f172a !important;
+    }
+    html.light #contact p {
+      color: #475569 !important;
+    }
+    html.light #contact a {
+      color: #0f172a !important;
     }
 
     /* ------------------------------------------------------------------------- */
@@ -416,8 +427,8 @@
 
     /* Contact Dark */
     html.dark #contact {
-      background-color: #060908 !important;
-      border-color: rgba(255, 255, 255, 0.08) !important;
+      background-color: transparent !important;
+      border: none !important;
       color: #ffffff !important;
     }
 
@@ -1364,15 +1375,15 @@
     </section>
 
     <!-- ========================================================================= -->
-    <!-- 8. CONTACT & FOOTER SECTION WITH REACTBITS SIDE RAYS SHADER               -->
+    <!-- 8. CONTACT & FOOTER SECTION WITH REACTBITS LIQUID CHROME SHADER           -->
     <!-- ========================================================================= -->
-    <section id="contact" class="w-full px-6 py-20 sm:py-28 md:px-12 space-y-16 text-white bg-stone-950 border-t border-stone-800/60 relative overflow-hidden">
+    <section id="contact" class="w-full px-6 py-20 sm:py-28 md:px-12 space-y-16 text-white relative overflow-hidden transition-colors duration-300">
       
-      <!-- ReactBits Side-Rays WebGL Canvas Background -->
-      <canvas id="siderays-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0" aria-hidden="true"></canvas>
+      <!-- ReactBits LiquidChrome WebGL2 Fluid Simulation with Seamless Blend Mask -->
+      <div id="contact-liquid-chrome" class="liquid-chrome absolute inset-0 w-full h-full pointer-events-none z-0 contact-blend-mask" aria-hidden="true"><canvas class="liquid-chrome__canvas"></canvas></div>
 
-      <!-- Soft Dark Gradient Falloff -->
-      <div class="absolute inset-0 bg-radial-gradient from-transparent via-stone-950/40 to-stone-950/80 pointer-events-none z-[1]"></div>
+
+      
 
       <div class="relative z-10 space-y-16">
         <h2 class="staggered-text flicker font-serif text-5xl sm:text-7xl md:text-8xl text-center font-bold tracking-tight select-none"
@@ -1490,201 +1501,7 @@
 
       // 4. ReactBits Grainient Interactive Liquid Background (initialized via assets/js/grainient.js)
 
-      // 5. ReactBits Side-Rays WebGL Shader Engine (for "Where to find me" contact section)
-      (function initSideRays() {
-        const canvas = document.getElementById('siderays-canvas');
-        if (!canvas) return;
-        const gl = canvas.getContext('webgl2', { alpha: true, antialias: true }) || canvas.getContext('webgl', { alpha: true });
-        if (!gl) return;
-
-        const vsSource = `#version 300 es
-          const vec2 corners[3] = vec2[3](vec2(-1.0, -1.0), vec2(3.0, -1.0), vec2(-1.0, 3.0));
-          void main() {
-            gl_Position = vec4(corners[gl_VertexID], 0.0, 1.0);
-          }
-        `;
-
-        const fsSource = `#version 300 es
-          precision highp float;
-          uniform vec2 uResolution;
-          uniform float uTime;
-          uniform vec3 uColorA;
-          uniform vec3 uColorB;
-          uniform float uBlend;
-          uniform float uIntensity;
-          uniform float uSpread;
-          uniform float uDensity;
-          uniform float uSharpness;
-          uniform float uFalloff;
-          uniform float uGlow;
-          uniform float uAim;
-          uniform float uSway;
-          out vec4 fragColor;
-
-          float hash(vec2 p) {
-            p = fract(p * vec2(123.34, 456.21));
-            p += dot(p, p + 45.32);
-            return fract(p.x * p.y);
-          }
-
-          float noise(vec2 p) {
-            vec2 i = floor(p);
-            vec2 f = p - i;
-            vec2 w = f * f * f * (f * (f * 6.0 - 15.0) + 10.0);
-            return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), w.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), w.x), w.y);
-          }
-
-          float shafts(float u, float t, float seed, float aa) {
-            float sway = (0.4 * sin(t * 0.31 + seed) + 0.24 * sin(t * 0.17 + seed * 2.3)) * uSway;
-            float n = 0.7 * noise(vec2(u + sway + seed, t * 0.3)) + 0.3 * noise(vec2(u * 2.4 + sway * 1.5 + seed * 1.7, t * 0.45 + 3.0));
-            float width = mix(0.5, 0.1, uSharpness);
-            float s = mix(smoothstep(0.5 - width, 0.5 + width, n), 0.5, aa);
-            return mix(0.05, 1.0, s);
-          }
-
-          void main() {
-            float aspect = uResolution.x / uResolution.y;
-            vec2 q = (gl_FragCoord.xy - 0.5 * uResolution) / uResolution.y;
-            
-            // Side origin: Top-right streaming into center
-            vec2 source = vec2(aspect * 0.5 + 0.1, 0.62);
-            float heading = -2.48 + uAim + 0.035 * sin(uTime * 0.21) * uSway;
-            vec2 v = q - source;
-            float r = length(v);
-            float angle = mod(atan(v.y, v.x) - heading + 3.14159265, 6.28318531) - 3.14159265;
-            float t = uTime;
-            float u = angle * uDensity;
-            float aa = smoothstep(0.12, 0.45, fwidth(u));
-
-            float offset = uSpread * 0.22;
-            float fanA = exp(-pow((angle + offset) / uSpread, 2.0) * 1.4);
-            float fanB = exp(-pow((angle - offset) / (uSpread * 1.15), 2.0) * 1.4);
-            float lightA = fanA * shafts(u, t, 0.0, aa);
-            float lightB = fanB * shafts(u * 0.83, t * 0.6, 17.0, aa);
-
-            float reach = 1.0 / (1.0 + pow(r / 0.45, uFalloff));
-            vec3 glowColor = mix(uColorA, uColorB, uBlend);
-            vec3 light = (uColorA * lightA * (1.0 - uBlend) + uColorB * lightB * uBlend) * 2.4 * reach;
-            light += glowColor * uGlow * exp(-pow(r / 0.45, 2.0));
-            light *= uIntensity;
-
-            float peak = max(light.r, max(light.g, light.b));
-            float mapped = 1.0 - exp(-peak);
-            vec3 tone = light * (mapped / max(peak, 1e-4));
-            float alpha = clamp(max(tone.r, max(tone.g, tone.b)) * 0.9, 0.0, 0.85);
-
-            fragColor = vec4(tone, alpha);
-          }
-        `;
-
-        function compile(gl, type, src) {
-          const s = gl.createShader(type);
-          gl.shaderSource(s, src);
-          gl.compileShader(s);
-          return s;
-        }
-
-        const vs = compile(gl, gl.VERTEX_SHADER, vsSource);
-        const fs = compile(gl, gl.FRAGMENT_SHADER, fsSource);
-        if (!gl.getShaderParameter(fs, gl.COMPILE_STATUS)) {
-          // Fallback to simpler WebGL1 if WebGL2 shader fails
-          return;
-        }
-
-        const prg = gl.createProgram();
-        gl.attachShader(prg, vs);
-        gl.attachShader(prg, fs);
-        gl.linkProgram(prg);
-        gl.useProgram(prg);
-
-        const vao = gl.createVertexArray ? gl.createVertexArray() : null;
-        if (vao) gl.bindVertexArray(vao);
-
-        const uRes = gl.getUniformLocation(prg, 'uResolution');
-        const uTime = gl.getUniformLocation(prg, 'uTime');
-        const uColorA = gl.getUniformLocation(prg, 'uColorA');
-        const uColorB = gl.getUniformLocation(prg, 'uColorB');
-        const uBlend = gl.getUniformLocation(prg, 'uBlend');
-        const uIntensity = gl.getUniformLocation(prg, 'uIntensity');
-        const uSpread = gl.getUniformLocation(prg, 'uSpread');
-        const uDensity = gl.getUniformLocation(prg, 'uDensity');
-        const uSharpness = gl.getUniformLocation(prg, 'uSharpness');
-        const uFalloff = gl.getUniformLocation(prg, 'uFalloff');
-        const uGlow = gl.getUniformLocation(prg, 'uGlow');
-        const uAim = gl.getUniformLocation(prg, 'uAim');
-        const uSway = gl.getUniformLocation(prg, 'uSway');
-
-        // Color stops from ReactBits Side-Rays: Amber Warm (#FFC46B) to Ice Blue (#96c8ff)
-        gl.uniform3f(uColorA, 1.0, 0.768, 0.42); // Warm ray
-        gl.uniform3f(uColorB, 0.588, 0.784, 1.0); // Cyan/Ice blue ray
-        gl.uniform1f(uBlend, 0.6);
-        gl.uniform1f(uIntensity, 1.8);
-        gl.uniform1f(uSpread, 0.45);
-        gl.uniform1f(uDensity, 6.0);
-        gl.uniform1f(uSharpness, 0.55);
-        gl.uniform1f(uFalloff, 1.6);
-        gl.uniform1f(uGlow, 0.9);
-        gl.uniform1f(uAim, 0.0);
-        gl.uniform1f(uSway, 0.8);
-
-        let aimTarget = 0.0;
-        let aimCurrent = 0.0;
-        window.addEventListener('mousemove', (e) => {
-          const rect = canvas.getBoundingClientRect();
-          if (e.clientY >= rect.top - 200 && e.clientY <= rect.bottom + 200) {
-            aimTarget = ((e.clientX / window.innerWidth) - 0.5) * 0.4;
-          }
-        });
-
-        function resizeSideRays() {
-          const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-          canvas.width = canvas.clientWidth * dpr;
-          canvas.height = canvas.clientHeight * dpr;
-          gl.viewport(0, 0, canvas.width, canvas.height);
-        }
-        window.addEventListener('resize', resizeSideRays);
-        resizeSideRays();
-
-        let t0 = performance.now();
-        let isRaysActive = false;
-        let raysRaf = null;
-
-        function loopRays(now) {
-          if (!isRaysActive) return;
-          const elapsed = (now - t0) / 1000 * 0.7;
-          aimCurrent += (aimTarget - aimCurrent) * 0.04;
-
-          gl.useProgram(prg);
-          if (vao) gl.bindVertexArray(vao);
-          gl.uniform2f(uRes, canvas.width, canvas.height);
-          gl.uniform1f(uTime, elapsed);
-          gl.uniform1f(uAim, aimCurrent);
-
-          gl.drawArrays(gl.TRIANGLES, 0, 3);
-          raysRaf = requestAnimationFrame(loopRays);
-        }
-
-        const contactSection = document.getElementById('contact');
-        if ('IntersectionObserver' in window && contactSection) {
-          const raysObserver = new IntersectionObserver((entries) => {
-            const entry = entries[0];
-            if (entry && entry.isIntersecting) {
-              if (!isRaysActive) {
-                isRaysActive = true;
-                cancelAnimationFrame(raysRaf);
-                raysRaf = requestAnimationFrame(loopRays);
-              }
-            } else {
-              isRaysActive = false;
-              cancelAnimationFrame(raysRaf);
-            }
-          }, { threshold: 0.05 });
-          raysObserver.observe(contactSection);
-        } else {
-          isRaysActive = true;
-          raysRaf = requestAnimationFrame(loopRays);
-        }
-      })();
+      // 5. ReactBits LiquidChrome WebGL2 Fluid Simulation initialized via assets/js/liquid-chrome.js
 
       // 6. Interactive Light & Dark Theme Controller powered by React Bits HoldButton
       (function initThemeToggle() {
@@ -1778,6 +1595,9 @@
             window.gooeyNavInstance.setTheme(theme);
             if (window.grainientInstance && typeof window.grainientInstance.setTheme === 'function') {
               window.grainientInstance.setTheme(theme);
+            }
+            if (window.liquidChromeInstance && typeof window.liquidChromeInstance.setTheme === 'function') {
+              window.liquidChromeInstance.setTheme(theme);
             }
           }
         }

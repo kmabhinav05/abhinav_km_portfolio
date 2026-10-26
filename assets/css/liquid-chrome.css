@@ -1,0 +1,42 @@
+/* ========================================================================= */
+/* React Bits LiquidChrome Component CSS                                     */
+/* Docs: https://reactbits.dev/components/liquid-chrome                      */
+/* ========================================================================= */
+
+.liquid-chrome {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.liquid-chrome__canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Seamless blend mask for contact section transition */
+.contact-blend-mask {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0.85) 20%, black 35%, black 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0.85) 20%, black 35%, black 100%);
+}
+
+/* Feathered gradient blend transition from Experience into Contact */
+.contact-blend-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(to bottom, var(--contact-blend-from, rgba(6, 9, 8, 0)) 0%, rgba(6, 9, 8, 0.4) 40%, rgba(6, 9, 8, 0.85) 80%, rgba(6, 9, 8, 0.95) 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+html.light .contact-blend-overlay {
+  background: linear-gradient(to bottom, rgba(248, 250, 252, 0) 0%, rgba(15, 23, 42, 0.4) 40%, rgba(15, 23, 42, 0.85) 80%, rgba(15, 23, 42, 0.95) 100%);
+}
