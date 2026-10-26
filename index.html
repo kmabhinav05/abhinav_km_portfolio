@@ -21,6 +21,10 @@
   <!-- 1. Offline Standalone Tailwind CSS v2.2.19 (Local & Instant) -->
   <link rel="stylesheet" href="assets/css/tailwind.min.css">
 
+  <!-- Matter.js Physics Engine & FolderFloat Component (Offline & Local) -->
+  <script src="assets/js/matter.min.js"></script>
+  <script src="assets/js/folder-float.js" defer></script>
+
   <!-- 2. Self-Contained Complete Theme Stylesheet (Offline & CDN independent) -->
   <style>
     /* Reset & Reference Base */
@@ -159,6 +163,289 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
+
+    /* ========================================================================= */
+    /* REACT BITS FOLDERFLOAT COMPONENT STYLES                                   */
+    /* ========================================================================= */
+    .folder-float {
+      --ff-w: 220px;
+      --ff-h: 154px;
+      --ff-r: 16px;
+      --ff-tab: 15px;
+      --ff-back: #1c1917;
+      --ff-front: #292524;
+      --ff-paper: #f5f5f4;
+      --ff-item: #fafaf9;
+      --ff-item-ink: #0c0a09;
+      --ff-label: #f5f5f4;
+      --ff-spread: 190px;
+      --ff-lift: 30px;
+      --ff-angle: 34deg;
+      --ff-rest: 16deg;
+      --ff-open: 520ms;
+      --ff-close: 312ms;
+      --ff-stagger: 45ms;
+      --ff-n: 6;
+      --ff-spring: cubic-bezier(0.34, 1.57, 0.64, 1);
+      --ff-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+
+      position: relative;
+      display: inline-block;
+      width: var(--ff-w);
+      padding-top: var(--ff-tab);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .folder-float__folder {
+      position: relative;
+      width: var(--ff-w);
+      height: var(--ff-h);
+    }
+
+    .folder-float__back {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      border-radius: var(--ff-r);
+      background: var(--ff-back);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transform: perspective(600px) rotateX(8deg);
+      transform-origin: 50% 100%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .folder-float__back::before {
+      content: '';
+      position: absolute;
+      top: calc(-1 * var(--ff-tab));
+      left: 0;
+      width: 44%;
+      height: calc(var(--ff-tab) + var(--ff-r));
+      border-radius: var(--ff-r) var(--ff-r) 0 0;
+      background: inherit;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-left: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .folder-float__paper {
+      position: absolute;
+      top: 10%;
+      z-index: 1;
+      right: 8%;
+      left: 8%;
+      height: 50%;
+      border-radius: 6px;
+      background: var(--ff-paper);
+      opacity: 0;
+      transform: translateY(10px);
+      transition:
+        transform var(--ff-close) var(--ff-ease-out),
+        opacity var(--ff-close) ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .folder-float__front {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 6px;
+      height: 76%;
+      padding: 16px 18px;
+      box-sizing: border-box;
+      border-radius: var(--ff-r);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.01)), var(--ff-front);
+      color: var(--ff-label);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 -12px 28px rgba(0, 0, 0, 0.45);
+      transform: perspective(600px) rotateX(calc(-1 * var(--ff-rest)));
+      transform-origin: 50% 100%;
+      transition: transform var(--ff-open) var(--ff-ease-out);
+    }
+
+    .folder-float__label {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .folder-float__sub {
+      font-size: 11px;
+      opacity: 0.65;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .folder-float__trigger {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 3;
+      height: 76%;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      border-radius: var(--ff-r);
+      background: transparent;
+      cursor: pointer;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .folder-float[data-open] .folder-float__front {
+      transform: perspective(600px) rotateX(calc(-1 * var(--ff-angle)));
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+
+    .folder-float[data-open] .folder-float__paper {
+      opacity: 1;
+      transform: translateY(0);
+      transition:
+        transform var(--ff-open) var(--ff-ease-out),
+        opacity 200ms ease;
+    }
+
+    .folder-float__items {
+      position: absolute;
+      top: var(--ff-tab);
+      left: 50%;
+      z-index: 20;
+      width: 0;
+      height: 0;
+    }
+
+    .folder-float[data-open] .folder-float__items::before {
+      content: '';
+      position: absolute;
+      top: calc(-1 * (var(--ff-lift) + 140px));
+      left: calc(-1 * (var(--ff-spread) + 100px));
+      width: calc(2 * var(--ff-spread) + 200px);
+      height: calc(var(--ff-lift) + 140px);
+    }
+
+    .folder-float__item {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      margin: 0;
+      padding: 0 16px;
+      height: 36px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 18px;
+      background: var(--ff-item);
+      color: var(--ff-item-ink);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+      cursor: pointer;
+      outline: none;
+      opacity: 0;
+      transform: translate(-50%, 44px) scale(0.6);
+      transform-origin: 50% 50%;
+      pointer-events: none;
+      -webkit-tap-highlight-color: transparent;
+      transition:
+        transform var(--ff-close) var(--ff-ease-out) calc((var(--ff-n) - 1 - var(--i)) * var(--ff-stagger) * 0.5),
+        opacity 160ms ease calc((var(--ff-n) - 1 - var(--i)) * var(--ff-stagger) * 0.5 + var(--ff-close) * 0.45),
+        scale 160ms var(--ff-ease-out);
+    }
+
+    .folder-float[data-open] .folder-float__item {
+      opacity: 1;
+      transform: translate(calc(-50% + var(--x, 0px)), var(--y, 0px)) rotate(var(--r, 0deg)) scale(1);
+      pointer-events: auto;
+      transition:
+        transform var(--ff-open) var(--ff-spring) calc(var(--i) * var(--ff-stagger)),
+        opacity 160ms ease calc(var(--i) * var(--ff-stagger)),
+        scale 160ms var(--ff-ease-out);
+    }
+
+    .folder-float[data-live] .folder-float__item {
+      cursor: grab;
+      transition: scale 160ms var(--ff-ease-out);
+    }
+
+    .folder-float__item[data-drag] {
+      cursor: grabbing !important;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.5);
+      scale: 1.05;
+      z-index: 50;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .folder-float[data-open] .folder-float__item:hover {
+        scale: 1.08;
+      }
+    }
+
+    .folder-float[data-open] .folder-float__item:active {
+      scale: 0.96;
+    }
+
+    .folder-float__item[data-pop] {
+      animation: folder-float-pop 320ms var(--ff-ease-out);
+    }
+
+    .folder-float__drift {
+      display: block;
+      animation: folder-float-drift 3.2s ease-in-out infinite;
+      animation-delay: calc(var(--i) * -0.7s);
+      animation-play-state: paused;
+    }
+
+    .folder-float[data-open] .folder-float__drift {
+      animation-play-state: running;
+    }
+
+    .folder-float[data-physics] .folder-float__drift,
+    .folder-float[data-live] .folder-float__drift {
+      animation: none;
+    }
+
+    @keyframes folder-float-drift {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    @keyframes folder-float-pop {
+      30% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .folder-float__front,
+      .folder-float__paper {
+        transition: opacity 200ms ease;
+      }
+      .folder-float[data-open] .folder-float__front {
+        transform: perspective(600px) rotateX(calc(-1 * var(--ff-rest)));
+      }
+      .folder-float__paper {
+        transform: none !important;
+      }
+      .folder-float__item {
+        transition: opacity 200ms ease;
+      }
+      .folder-float[data-open] .folder-float__item {
+        transition: opacity 200ms ease calc(var(--i) * var(--ff-stagger));
+      }
+      .folder-float__drift {
+        animation: none;
+      }
+    }
   </style>
 </head>
 <body class="selection:bg-white selection:text-black">
@@ -180,9 +467,9 @@
 
     <!-- Navigation Menu Items -->
     <nav class="flex items-center gap-1 sm:gap-4 md:gap-6 text-xs sm:text-sm font-medium">
+      <a href="#myskills" class="px-2.5 sm:px-3 py-1 rounded-xl text-stone-600 hover:text-black hover:bg-stone-100 transition">My Skills</a>
       <a href="#projects" class="px-2.5 sm:px-3 py-1 rounded-xl text-stone-600 hover:text-black hover:bg-stone-100 transition">Work</a>
       <a href="#profile" class="px-2.5 sm:px-3 py-1 rounded-xl text-stone-600 hover:text-black hover:bg-stone-100 transition">About</a>
-      <a href="#skills" class="px-2.5 sm:px-3 py-1 rounded-xl text-stone-600 hover:text-black hover:bg-stone-100 transition">Skills</a>
       <a href="#experience" class="px-2.5 sm:px-3 py-1 rounded-xl text-stone-600 hover:text-black hover:bg-stone-100 transition">Experience</a>
       <a href="#contact" class="px-2.5 sm:px-3 py-1 rounded-xl text-stone-600 hover:text-black hover:bg-stone-100 transition">Contact</a>
       <a href="https://drive.google.com/file/d/1OkKjk7z9MdCexpCY57LlAkbwtGp0alJ0/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-1 px-3.5 py-1 rounded-full bg-black text-white text-xs font-semibold hover:bg-stone-800 transition">
@@ -244,7 +531,222 @@
     </section>
 
     <!-- ========================================================================= -->
-    <!-- 4. WORKS SECTION (Dark black background, massive serif header, bento)    -->
+    <!-- 4. MY SKILLS INTERACTIVE SECTION (React Bits FolderFloat with Matter.js)   -->
+    <!-- ========================================================================= -->
+    <section id="myskills" class="px-4 sm:px-8 md:px-12 bg-[#080c0b] py-20 sm:py-28 space-y-12 sm:space-y-16 w-full text-white border-t border-b border-stone-800/80 relative overflow-hidden">
+      
+      <!-- Section Title Header -->
+      <div class="max-w-4xl space-y-3">
+        <span class="font-mono text-xs text-emerald-400 font-semibold uppercase tracking-widest block">
+          01 // Interactive Skill Folders &bull; React Bits Physics
+        </span>
+        <h2 class="font-serif text-5xl sm:text-7xl md:text-8xl text-white font-medium tracking-tight">
+          My Skills.
+        </h2>
+        <p class="text-stone-400 text-sm sm:text-base font-mono max-w-2xl leading-relaxed">
+          Hover or tap any folder to unlock floating skill pills. Powered by zero-gravity Matter.js physics — drag, stir, and throw them in real-time.
+        </p>
+      </div>
+
+      <!-- 4 FolderFloat Containers Grid with ample floating headroom -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 pt-36 pb-16 justify-items-center items-end">
+        
+        <!-- Folder 1: Microsoft Excel -->
+        <div class="flex flex-col items-center">
+          <div
+            class="folder-float"
+            data-folder-id="excel"
+            data-trigger="hover"
+            style="
+              --ff-w: 220px;
+              --ff-h: 152px;
+              --ff-r: 16px;
+              --ff-tab: 15px;
+              --ff-back: #064e3b;
+              --ff-front: #065f46;
+              --ff-paper: #ecfdf5;
+              --ff-item: #d1fae5;
+              --ff-item-ink: #064e3b;
+              --ff-label: #f0fdf4;
+              --ff-spread: 180px;
+              --ff-lift: 28px;
+              --ff-angle: 34deg;
+              --ff-rest: 16deg;
+              --ff-open: 520ms;
+              --ff-close: 312ms;
+              --ff-stagger: 45ms;
+              --ff-n: 6;
+            "
+          >
+            <div class="folder-float__items">
+              <!-- Dynamically mapped pills rendered via JS layout -->
+            </div>
+            <div class="folder-float__folder">
+              <span class="folder-float__back" aria-hidden="true"></span>
+              <span class="folder-float__paper" aria-hidden="true"></span>
+              <span class="folder-float__front" aria-hidden="true">
+                <span class="folder-float__label">
+                  <svg class="w-4 h-4 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                  Microsoft Excel
+                </span>
+                <span class="folder-float__sub">6 analytical tools</span>
+              </span>
+              <button
+                type="button"
+                class="folder-float__trigger"
+                aria-label="Microsoft Excel, 6 tools"
+              ></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Folder 2: SQL Databases -->
+        <div class="flex flex-col items-center">
+          <div
+            class="folder-float"
+            data-folder-id="sql"
+            data-trigger="hover"
+            style="
+              --ff-w: 220px;
+              --ff-h: 152px;
+              --ff-r: 16px;
+              --ff-tab: 15px;
+              --ff-back: #1e3a8a;
+              --ff-front: #1d4ed8;
+              --ff-paper: #eff6ff;
+              --ff-item: #dbeafe;
+              --ff-item-ink: #1e3a8a;
+              --ff-label: #eff6ff;
+              --ff-spread: 180px;
+              --ff-lift: 28px;
+              --ff-angle: 34deg;
+              --ff-rest: 16deg;
+              --ff-open: 520ms;
+              --ff-close: 312ms;
+              --ff-stagger: 45ms;
+              --ff-n: 6;
+            "
+          >
+            <div class="folder-float__items"></div>
+            <div class="folder-float__folder">
+              <span class="folder-float__back" aria-hidden="true"></span>
+              <span class="folder-float__paper" aria-hidden="true"></span>
+              <span class="folder-float__front" aria-hidden="true">
+                <span class="folder-float__label">
+                  <svg class="w-4 h-4 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21 3.582 4 8 4s8-1.79 8-4"></path></svg>
+                  SQL Databases
+                </span>
+                <span class="folder-float__sub">6 query capabilities</span>
+              </span>
+              <button
+                type="button"
+                class="folder-float__trigger"
+                aria-label="SQL Databases, 6 tools"
+              ></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Folder 3: Python Stack -->
+        <div class="flex flex-col items-center">
+          <div
+            class="folder-float"
+            data-folder-id="python"
+            data-trigger="hover"
+            style="
+              --ff-w: 220px;
+              --ff-h: 152px;
+              --ff-r: 16px;
+              --ff-tab: 15px;
+              --ff-back: #78350f;
+              --ff-front: #b45309;
+              --ff-paper: #fffbeb;
+              --ff-item: #fef3c7;
+              --ff-item-ink: #78350f;
+              --ff-label: #fffbeb;
+              --ff-spread: 180px;
+              --ff-lift: 28px;
+              --ff-angle: 34deg;
+              --ff-rest: 16deg;
+              --ff-open: 520ms;
+              --ff-close: 312ms;
+              --ff-stagger: 45ms;
+              --ff-n: 5;
+            "
+          >
+            <div class="folder-float__items"></div>
+            <div class="folder-float__folder">
+              <span class="folder-float__back" aria-hidden="true"></span>
+              <span class="folder-float__paper" aria-hidden="true"></span>
+              <span class="folder-float__front" aria-hidden="true">
+                <span class="folder-float__label">
+                  <svg class="w-4 h-4 text-amber-300" viewBox="0 0 24 24" fill="none"><path d="M11.927 0C5.64 0 6.004 2.732 6.004 2.732l.006 2.827h6.046v.855H3.582S0 5.986 0 12.333c0 6.348 3.13 6.13 3.13 6.13h1.87v-2.645s-.103-3.13 3.129-3.13h5.27s2.99.044 2.99-2.946V3.582S16.85 0 11.927 0zM8.91 1.763a1.18 1.18 0 1 1 0 2.36 1.18 1.18 0 0 1 0-2.36z" fill="currentColor"/><path d="M12.073 24c6.287 0 5.923-2.732 5.923-2.732l-.006-2.827h-6.046v-.855h8.472S24 18.014 24 11.667c0-6.348-3.13-6.13-3.13-6.13h-1.87v2.645s.103 3.13-3.129 3.13h-5.27s-2.99-.044-2.99 2.946v6.418S7.15 24 12.073 24zm3.017-1.763a1.18 1.18 0 1 1 0-2.36 1.18 1.18 0 0 1 0 2.36z" fill="#fef08a"/></svg>
+                  Python Stack
+                </span>
+                <span class="folder-float__sub">5 analytics libraries</span>
+              </span>
+              <button
+                type="button"
+                class="folder-float__trigger"
+                aria-label="Python Stack, 5 libraries"
+              ></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Folder 4: Power BI & Analytics -->
+        <div class="flex flex-col items-center">
+          <div
+            class="folder-float"
+            data-folder-id="powerbi"
+            data-trigger="hover"
+            style="
+              --ff-w: 220px;
+              --ff-h: 152px;
+              --ff-r: 16px;
+              --ff-tab: 15px;
+              --ff-back: #581c87;
+              --ff-front: #7e22ce;
+              --ff-paper: #faf5ff;
+              --ff-item: #f3e8ff;
+              --ff-item-ink: #581c87;
+              --ff-label: #faf5ff;
+              --ff-spread: 180px;
+              --ff-lift: 28px;
+              --ff-angle: 34deg;
+              --ff-rest: 16deg;
+              --ff-open: 520ms;
+              --ff-close: 312ms;
+              --ff-stagger: 45ms;
+              --ff-n: 5;
+            "
+          >
+            <div class="folder-float__items"></div>
+            <div class="folder-float__folder">
+              <span class="folder-float__back" aria-hidden="true"></span>
+              <span class="folder-float__paper" aria-hidden="true"></span>
+              <span class="folder-float__front" aria-hidden="true">
+                <span class="folder-float__label">
+                  <svg class="w-4 h-4 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
+                  Power BI &amp; BI
+                </span>
+                <span class="folder-float__sub">5 dashboard methods</span>
+              </span>
+              <button
+                type="button"
+                class="folder-float__trigger"
+                aria-label="Power BI & BI, 5 methods"
+              ></button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 5. WORKS SECTION (Dark black background, massive serif header, bento)    -->
     <!-- ========================================================================= -->
     <section id="projects" class="px-4 sm:px-8 md:px-12 bg-black py-20 sm:py-28 space-y-12 sm:space-y-16 w-full text-white">
       
