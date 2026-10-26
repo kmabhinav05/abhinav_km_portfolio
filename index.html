@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="assets/css/warp-text.css">
   <link rel="stylesheet" href="assets/css/staggered-text.css">
   <link rel="stylesheet" href="assets/css/chroma-waves.css">
+  <link rel="stylesheet" href="assets/css/gyroscope-cursor.css">
 
   <!-- React Bits Components (Offline & Local) -->
   <script src="assets/js/matter.min.js"></script>
@@ -32,6 +33,7 @@
   <script src="assets/js/warp-text.js" defer></script>
   <script src="assets/js/staggered-text.js" defer></script>
   <script src="assets/js/chroma-waves.js" defer></script>
+  <script src="assets/js/gyroscope-cursor.js" defer></script>
 
   <!-- Instant Theme Detection Script (Prevents Theme Flash) -->
   <script>
@@ -793,10 +795,9 @@
 <body class="selection:bg-white selection:text-black">
 
   <!-- ========================================================================= -->
-  <!-- 1. DUAL INVERTING MAGNETIC CURSOR (Mix-blend-difference)                   -->
+  <!-- 1. REACT BITS GYROSCOPE CURSOR (Directional Arrow with Spring Physics)    -->
   <!-- ========================================================================= -->
-  <div id="cursor-blob" class="custom-cursor fixed top-0 left-0 w-12 h-12 bg-white rounded-full pointer-events-none z-50" style="mix-blend-mode: difference; transform: translate(-50%, -50%); will-change: transform; filter: blur(1px); box-shadow: 0 0 20px rgba(255,255,255,0.35); position: fixed;"></div>
-  <div id="cursor-dot" class="custom-cursor-dot fixed top-0 left-0 w-3 h-3 bg-white rounded-full pointer-events-none z-50" style="mix-blend-mode: difference; transform: translate(-50%, -50%); will-change: transform; box-shadow: 0 0 6px rgba(255,255,255,0.9); position: fixed;"></div>
+  <!-- Auto-rendered by assets/js/gyroscope-cursor.js with color="#00d1ff" & outlineColor="#00fff4" -->
 
   <!-- ========================================================================= -->
   <!-- 2. MINIMAL FIXED NAVIGATION (React Bits GooeyNav WebGL2 Liquid Navigation)-->
@@ -1461,46 +1462,11 @@
   </main>
 
   <!-- ========================================================================= -->
-  <!-- 9. SCRIPT: MAGNETIC BLOB CURSOR, TYPEWRITER & INTERSECTION OBSERVER      -->
+  <!-- 9. SCRIPT: TYPEWRITER & INTERSECTION OBSERVER                               -->
   <!-- ========================================================================= -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // 1. Dual Inverting Magnetic Cursor
-      const blob = document.getElementById('cursor-blob');
-      const dot = document.getElementById('cursor-dot');
-
-      if (blob && dot && window.matchMedia('(pointer: fine)').matches) {
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        let blobX = mouseX;
-        let blobY = mouseY;
-
-        window.addEventListener('mousemove', (e) => {
-          mouseX = e.clientX;
-          mouseY = e.clientY;
-          dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-        });
-
-        function renderCursor() {
-          blobX += (mouseX - blobX) * 0.18;
-          blobY += (mouseY - blobY) * 0.18;
-          blob.style.transform = `translate(${blobX}px, ${blobY}px) translate(-50%, -50%)`;
-          requestAnimationFrame(renderCursor);
-        }
-        renderCursor();
-
-        const interactiveSelectors = 'a, button, input';
-        document.querySelectorAll(interactiveSelectors).forEach((el) => {
-          el.addEventListener('mouseenter', () => {
-            blob.style.width = '64px';
-            blob.style.height = '64px';
-          });
-          el.addEventListener('mouseleave', () => {
-            blob.style.width = '48px';
-            blob.style.height = '48px';
-          });
-        });
-      }
+      // 1. React Bits Gyroscope Cursor initialized via assets/js/gyroscope-cursor.js
 
       // 2. Typewriter Effect
       const typewriterEl = document.getElementById('typewriter-text');
