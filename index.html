@@ -22,12 +22,14 @@
   <link rel="stylesheet" href="assets/css/tailwind.min.css">
   <link rel="stylesheet" href="assets/css/gooey-nav.css">
   <link rel="stylesheet" href="assets/css/warp-text.css">
+  <link rel="stylesheet" href="assets/css/staggered-text.css">
 
   <!-- React Bits Components (Offline & Local) -->
   <script src="assets/js/matter.min.js"></script>
   <script src="assets/js/folder-float.js" defer></script>
   <script src="assets/js/gooey-nav.js" defer></script>
   <script src="assets/js/warp-text.js" defer></script>
+  <script src="assets/js/staggered-text.js" defer></script>
 
   <!-- Instant Theme Detection Script (Prevents Theme Flash) -->
   <script>
@@ -907,7 +909,14 @@
         <span class="skill-tag font-mono text-xs font-semibold uppercase tracking-widest block">
           01 // Interactive Skill Folders &bull; React Bits Physics
         </span>
-        <h2 class="font-serif text-5xl sm:text-7xl md:text-8xl font-medium tracking-tight">
+        <h2 class="staggered-text font-serif text-5xl sm:text-7xl md:text-8xl font-medium tracking-tight"
+            data-staggered-text="My Skills."
+            data-segment-by="chars"
+            data-direction="top"
+            data-stagger-direction="forward"
+            data-delay="40"
+            data-duration="0.65"
+            data-blur="true">
           My Skills.
         </h2>
         <p class="section-desc text-sm sm:text-base font-mono max-w-2xl leading-relaxed">
@@ -1138,7 +1147,14 @@
       
       <!-- Section Title -->
       <div>
-        <h2 class="font-serif text-6xl sm:text-8xl md:text-9xl font-thin tracking-tight">
+        <h2 class="staggered-text font-serif text-6xl sm:text-8xl md:text-9xl font-thin tracking-tight"
+            data-staggered-text="My Works."
+            data-segment-by="chars"
+            data-direction="top"
+            data-stagger-direction="forward"
+            data-delay="40"
+            data-duration="0.65"
+            data-blur="true">
           My Works.
         </h2>
         <p class="section-desc text-xs sm:text-sm font-mono mt-3 max-w-xl">
@@ -1318,7 +1334,14 @@
     <section id="experience" class="px-6 md:px-12 lg:px-16 py-20 w-full transition-colors duration-300">
       
       <div class="w-full overflow-x-hidden hide-scrollbar mb-12">
-        <h2 class="font-serif text-6xl sm:text-8xl md:text-9xl font-bold">
+        <h2 class="staggered-text font-serif text-6xl sm:text-8xl md:text-9xl font-bold"
+            data-staggered-text="Experience."
+            data-segment-by="chars"
+            data-direction="top"
+            data-stagger-direction="forward"
+            data-delay="40"
+            data-duration="0.65"
+            data-blur="true">
           Experience.
         </h2>
       </div>
@@ -1369,7 +1392,14 @@
       <div class="absolute inset-0 bg-radial-gradient from-transparent via-stone-950/40 to-stone-950/80 pointer-events-none z-[1]"></div>
 
       <div class="relative z-10 space-y-16">
-        <h2 class="flicker font-serif text-5xl sm:text-7xl md:text-8xl text-center font-bold tracking-tight select-none">
+        <h2 class="staggered-text flicker font-serif text-5xl sm:text-7xl md:text-8xl text-center font-bold tracking-tight select-none"
+            data-staggered-text="Where to find me."
+            data-segment-by="words"
+            data-direction="top"
+            data-stagger-direction="forward"
+            data-delay="70"
+            data-duration="0.65"
+            data-blur="true">
           Where to find me.
         </h2>
 
