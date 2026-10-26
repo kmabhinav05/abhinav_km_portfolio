@@ -190,7 +190,7 @@
       const w = rect.width || window.innerWidth;
       const h = rect.height || window.innerHeight;
 
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
       this.canvas.width = Math.floor(w * dpr);
       this.canvas.height = Math.floor(h * dpr);
 
@@ -285,6 +285,20 @@
       this.onResize = () => this.resize();
       window.addEventListener('resize', this.onResize);
 
+      this.onVisibilityChange = () => {
+        if (document.hidden) {
+          if (this.animId) {
+            cancelAnimationFrame(this.animId);
+            this.animId = null;
+          }
+        } else {
+          if (!this.animId) {
+            this.start();
+          }
+        }
+      };
+      document.addEventListener('visibilitychange', this.onVisibilityChange);
+
       this.observer = new MutationObserver(() => {
         this.checkThemeColors();
       });
@@ -341,6 +355,7 @@
     destroy() {
       if (this.animId) cancelAnimationFrame(this.animId);
       window.removeEventListener('resize', this.onResize);
+      if (this.onVisibilityChange) document.removeEventListener('visibilitychange', this.onVisibilityChange);
       if (this.observer) this.observer.disconnect();
     }
 

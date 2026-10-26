@@ -23,7 +23,6 @@
   <link rel="stylesheet" href="assets/css/gooey-nav.css">
   <link rel="stylesheet" href="assets/css/warp-text.css">
   <link rel="stylesheet" href="assets/css/staggered-text.css">
-  <link rel="stylesheet" href="assets/css/chroma-waves.css">
   <link rel="stylesheet" href="assets/css/glow-cursor.css">
   <link rel="stylesheet" href="assets/css/aurora-blur.css">
 
@@ -33,7 +32,6 @@
   <script src="assets/js/gooey-nav.js" defer></script>
   <script src="assets/js/warp-text.js" defer></script>
   <script src="assets/js/staggered-text.js" defer></script>
-  <script src="assets/js/chroma-waves.js" defer></script>
   <script src="assets/js/glow-cursor.js" defer></script>
   <script src="assets/js/aurora-blur.js" defer></script>
 
@@ -148,13 +146,13 @@
       color: #0f172a !important;
     }
     html.light #hero .hero-fade {
-      background: linear-gradient(to top, #ffffff, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.25)) !important;
+      display: none !important;
     }
 
     /* My Skills Light */
     html.light #myskills {
-      background-color: #f1f5f9 !important;
-      border-color: #e2e8f0 !important;
+      background-color: transparent !important;
+      border-color: transparent !important;
       color: #0f172a !important;
     }
     html.light #myskills h2 {
@@ -169,7 +167,7 @@
 
     /* Projects / My Works Light */
     html.light #projects {
-      background-color: #ffffff !important;
+      background-color: transparent !important;
       color: #0f172a !important;
     }
     html.light #projects h2 {
@@ -179,8 +177,8 @@
       color: #475569 !important;
     }
     html.light #projects .bento-card {
-      background-color: #f8fafc !important;
-      border: 1px solid #e2e8f0 !important;
+      background-color: rgba(255, 255, 255, 0.78) !important;
+      border: 1px solid rgba(226, 232, 240, 0.9) !important;
       box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05) !important;
     }
     html.light #projects .bento-card:hover {
@@ -211,10 +209,10 @@
 
     /* About Me Light */
     html.light #profile {
-      background-color: #f8fafc !important;
+      background-color: transparent !important;
       color: #0f172a !important;
-      border: 1px solid #e2e8f0 !important;
-      box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.06) !important;
+      border: none !important;
+      box-shadow: none !important;
     }
     html.light #profile .about-faint {
       color: #64748b !important;
@@ -234,7 +232,7 @@
 
     /* Experience Light */
     html.light #experience {
-      background-color: #ffffff !important;
+      background-color: transparent !important;
       color: #0f172a !important;
     }
     html.light #experience h2 {
@@ -250,7 +248,7 @@
       color: #475569 !important;
     }
     html.light #experience .date-pill {
-      background-color: #f1f5f9 !important;
+      background-color: rgba(241, 245, 249, 0.85) !important;
       color: #334155 !important;
       border: 1px solid #e2e8f0 !important;
     }
@@ -320,13 +318,13 @@
       color: #f1f5f9 !important;
     }
     html.dark #hero .hero-fade {
-      background: linear-gradient(to top, #080c0b, rgba(8, 12, 11, 0.7), rgba(8, 12, 11, 0.25)) !important;
+      display: none !important;
     }
 
     /* My Skills Dark */
     html.dark #myskills {
-      background-color: #080c0b !important;
-      border-color: rgba(255, 255, 255, 0.08) !important;
+      background-color: transparent !important;
+      border-color: transparent !important;
       color: #ffffff !important;
     }
     html.dark #myskills h2 {
@@ -341,7 +339,7 @@
 
     /* Projects / My Works Dark */
     html.dark #projects {
-      background-color: #040605 !important;
+      background-color: transparent !important;
       color: #ffffff !important;
     }
     html.dark #projects h2 {
@@ -351,7 +349,7 @@
       color: #94a3b8 !important;
     }
     html.dark #projects .bento-card {
-      background-color: #111614 !important;
+      background-color: rgba(17, 22, 20, 0.78) !important;
       border: 1px solid rgba(255, 255, 255, 0.08) !important;
       box-shadow: none !important;
     }
@@ -382,10 +380,10 @@
 
     /* About Me Dark */
     html.dark #profile {
-      background-color: #0a0e0d !important;
+      background-color: transparent !important;
       color: #ffffff !important;
-      border: 1px solid rgba(255, 255, 255, 0.08) !important;
-      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6) !important;
+      border: none !important;
+      box-shadow: none !important;
     }
     html.dark #profile .about-faint {
       color: #64748b !important;
@@ -405,7 +403,7 @@
 
     /* Experience Dark */
     html.dark #experience {
-      background-color: #040605 !important;
+      background-color: transparent !important;
       color: #ffffff !important;
     }
     html.dark #experience h2 {
@@ -421,7 +419,7 @@
       color: #94a3b8 !important;
     }
     html.dark #experience .date-pill {
-      background-color: #141a18 !important;
+      background-color: rgba(20, 26, 24, 0.85) !important;
       color: #cbd5e1 !important;
       border: 1px solid rgba(255, 255, 255, 0.08) !important;
     }
@@ -857,7 +855,7 @@
     <!-- ========================================================================= -->
     <!-- 3. HERO SECTION (With React Bits Aurora Blur Background)                  -->
     <!-- ========================================================================= -->
-    <section id="hero" class="w-full min-h-screen pt-28 sm:pt-24 pb-8 px-6 sm:px-10 md:px-16 rounded-b-3xl md:rounded-b-4xl flex flex-col justify-between items-start relative select-none shadow-2xl overflow-hidden bg-transparent">
+    <section id="hero" class="w-full min-h-screen pt-28 sm:pt-24 pb-12 px-6 sm:px-10 md:px-16 flex flex-col justify-between items-start relative select-none overflow-hidden bg-transparent">
       
       <!-- Soft Grain Texture Overlay for tactile finish -->
       <div class="grain-overlay absolute inset-0 pointer-events-none z-[1] opacity-40"></div>
@@ -915,7 +913,7 @@
     <!-- ========================================================================= -->
     <!-- 4. MY SKILLS INTERACTIVE SECTION (React Bits FolderFloat with Matter.js)   -->
     <!-- ========================================================================= -->
-    <section id="myskills" class="px-4 sm:px-8 md:px-12 py-20 sm:py-28 space-y-12 sm:space-y-16 w-full border-t border-b relative overflow-hidden transition-colors duration-300">
+    <section id="myskills" class="px-4 sm:px-8 md:px-12 py-20 sm:py-28 space-y-12 sm:space-y-16 w-full relative overflow-hidden transition-colors duration-300">
       
       <!-- Section Title Header -->
       <div class="max-w-4xl space-y-3">
@@ -1295,9 +1293,9 @@
     </section>
 
     <!-- ========================================================================= -->
-    <!-- 6. ABOUT ME SECTION (White rounded container, giant 'About Me.' text)    -->
+    <!-- 6. ABOUT ME SECTION (Editorial Narrative Flow)                            -->
     <!-- ========================================================================= -->
-    <section id="profile" class="px-6 md:px-12 lg:px-16 py-20 rounded-3xl md:rounded-4xl w-full shadow-2xl relative select-none transition-colors duration-300">
+    <section id="profile" class="px-6 md:px-12 lg:px-16 py-20 sm:py-28 w-full relative select-none transition-colors duration-300">
       
       <!-- Giant Headline: Matching reference site "About" + "Me." -->
       <div class="w-full overflow-x-hidden hide-scrollbar">
@@ -1396,7 +1394,7 @@
     <!-- ========================================================================= -->
     <!-- 8. CONTACT & FOOTER SECTION WITH REACTBITS SIDE RAYS SHADER               -->
     <!-- ========================================================================= -->
-    <section id="contact" class="w-full px-6 py-20 sm:py-28 md:px-12 space-y-16 text-white rounded-3xl md:rounded-4xl bg-stone-950 border-t border-stone-900 relative overflow-hidden">
+    <section id="contact" class="w-full px-6 py-20 sm:py-28 md:px-12 space-y-16 text-white bg-stone-950 border-t border-stone-800/60 relative overflow-hidden">
       
       <!-- ReactBits Side-Rays WebGL Canvas Background -->
       <canvas id="siderays-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0" aria-hidden="true"></canvas>
@@ -1518,7 +1516,7 @@
         revealItems.forEach(item => item.classList.add('revealed'));
       }
 
-      // 4. ReactBits ChromaWaves Engine (initialized via assets/js/chroma-waves.js)
+      // 4. ReactBits AuroraBlur Universal Animated Background (initialized via assets/js/aurora-blur.js)
 
       // 5. ReactBits Side-Rays WebGL Shader Engine (for "Where to find me" contact section)
       (function initSideRays() {
@@ -1667,7 +1665,7 @@
         });
 
         function resizeSideRays() {
-          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
           canvas.width = canvas.clientWidth * dpr;
           canvas.height = canvas.clientHeight * dpr;
           gl.viewport(0, 0, canvas.width, canvas.height);
@@ -1676,7 +1674,11 @@
         resizeSideRays();
 
         let t0 = performance.now();
+        let isRaysActive = false;
+        let raysRaf = null;
+
         function loopRays(now) {
+          if (!isRaysActive) return;
           const elapsed = (now - t0) / 1000 * 0.7;
           aimCurrent += (aimTarget - aimCurrent) * 0.04;
 
@@ -1687,9 +1689,29 @@
           gl.uniform1f(uAim, aimCurrent);
 
           gl.drawArrays(gl.TRIANGLES, 0, 3);
-          requestAnimationFrame(loopRays);
+          raysRaf = requestAnimationFrame(loopRays);
         }
-        requestAnimationFrame(loopRays);
+
+        const contactSection = document.getElementById('contact');
+        if ('IntersectionObserver' in window && contactSection) {
+          const raysObserver = new IntersectionObserver((entries) => {
+            const entry = entries[0];
+            if (entry && entry.isIntersecting) {
+              if (!isRaysActive) {
+                isRaysActive = true;
+                cancelAnimationFrame(raysRaf);
+                raysRaf = requestAnimationFrame(loopRays);
+              }
+            } else {
+              isRaysActive = false;
+              cancelAnimationFrame(raysRaf);
+            }
+          }, { threshold: 0.05 });
+          raysObserver.observe(contactSection);
+        } else {
+          isRaysActive = true;
+          raysRaf = requestAnimationFrame(loopRays);
+        }
       })();
 
       // 6. Interactive Light & Dark Theme Controller

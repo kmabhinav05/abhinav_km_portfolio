@@ -12,7 +12,8 @@
   pointer-events: none;
   overflow: hidden;
   opacity: 1;
-  transition: opacity 0.4s ease;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
 .aurora-blur-fixed canvas,
@@ -31,58 +32,41 @@
   pointer-events: none;
 }
 
-/* Translucent frosted styling for sections over Aurora Blur */
-html.dark #myskills {
-  background-color: rgba(9, 12, 16, 0.55) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
+/* ========================================================================= */
+/* SEAMLESS FULL-PAGE FLOW (Zero backdrop-filter overhead for pure 60fps)     */
+/* ========================================================================= */
 
-html.dark #projects {
-  background-color: rgba(5, 7, 10, 0.5) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-
-html.dark #about {
-  background-color: rgba(3, 5, 8, 0.45) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-
+/* Dark Mode: Full-page continuous flow over animated Aurora */
+html.dark #hero,
+html.dark #myskills,
+html.dark #projects,
+html.dark #profile,
 html.dark #experience {
-  background-color: rgba(6, 9, 12, 0.55) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background-color: transparent !important;
 }
 
-html.light #myskills {
-  background-color: rgba(241, 245, 249, 0.7) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-
-html.light #projects {
-  background-color: rgba(255, 255, 255, 0.7) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-
-html.light #about {
-  background-color: rgba(248, 250, 252, 0.65) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-
+/* Light Mode: Full-page continuous flow over animated Aurora */
+html.light #hero,
+html.light #myskills,
+html.light #projects,
+html.light #profile,
 html.light #experience {
-  background-color: rgba(255, 255, 255, 0.7) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background-color: transparent !important;
 }
 
-/* Ensure #contact section preserves its solid Side Rays background and completely covers Aurora */
+/* Precise scroll offset for seamless navbar switching without overlapping */
+#hero,
+#myskills,
+#projects,
+#profile,
+#experience,
+#contact {
+  scroll-margin-top: 80px;
+}
+
+/* Contact / Footer Section: solid ground with Side Rays shader */
 #contact {
   position: relative !important;
   z-index: 20 !important;
-  background-color: #09090b !important;
+  background-color: #060908 !important;
 }

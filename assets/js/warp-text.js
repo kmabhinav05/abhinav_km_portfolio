@@ -530,8 +530,29 @@ void main() {
 
       gl.drawArrays(gl.TRIANGLES, 0, 3);
 
-      raf = requestAnimationFrame(loop);
+      if (isVisible) {
+        raf = requestAnimationFrame(loop);
+      }
     };
+
+    let isVisible = true;
+    let visibilityObserver = null;
+    if ('IntersectionObserver' in window) {
+      visibilityObserver = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        if (entry && entry.isIntersecting) {
+          if (!isVisible) {
+            isVisible = true;
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(loop);
+          }
+        } else {
+          isVisible = false;
+          cancelAnimationFrame(raf);
+        }
+      }, { threshold: 0.05 });
+      visibilityObserver.observe(container);
+    }
 
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(container);
@@ -555,6 +576,7 @@ void main() {
       destroy: () => {
         disposed = true;
         cancelAnimationFrame(raf);
+        if (visibilityObserver) visibilityObserver.disconnect();
         resizeObserver.disconnect();
         canvas.removeEventListener('pointermove', onPointerMove);
         canvas.removeEventListener('pointerleave', onPointerLeave);
