@@ -1,0 +1,25 @@
+/* ========================================================================= */
+/* Chroma Waves - React Bits Pro Component                                   */
+/* Docs: https://pro.reactbits.dev/docs/components/chroma-waves               */
+/* ========================================================================= */
+
+.chroma-waves {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.chroma-waves canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.chroma-waves-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
